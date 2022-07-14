@@ -53,5 +53,5 @@ ranks = {
     3:"Gold",
     4:"Platinum"
 }
-rich_presence_conditional_display(game_pointer() != 0 && active_category() == 3, "Solving")
+rich_presence_conditional_display(game_pointer() != 0 && active_category() == 3, "Taking the {0} Rank ")
 rich_presence_display("In Menu")
