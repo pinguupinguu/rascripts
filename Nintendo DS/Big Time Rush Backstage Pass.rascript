@@ -6,7 +6,41 @@
 //          0x0c=Profile Select Screen
 select_screen = 0xc
 function save_protection() => prev(dword(0x0B1E10)) != select_screen
-
+// $135408: [32bit] Active Song ID
+//          0x00=Big Night at Rocque Records!
+//          0x01=Boyfriend on the Tour Bus!
+//          0x02=Elevate at the Palm Woods!
+//          0x03=I Know You Know at Rocque Records
+//          0x04=Til I Forget About You at the Backstage Theatre!
+//          0x05=Worldwide at the Palm Woods!
+//          0x06=You're Not Alone at the Backstage Theatre!
+//          0x07=Windows Down on the Tour Bus!
+function active_song() => dword(0x135408)
+songs = {
+    0:"Big Night at Rocque Records",
+    1:"Boyfriend on the Tour Bus",
+    2:"Elevate at the Palm Woods",
+    3:"I Know You Know at Rocque Records",
+    4:"Till I Forget About You at the Backstage Theatre",
+    5:"Worldwide at the Palm Woods",
+    6:"You're Not Alone at the Backstage Theatre",
+    7:"Windows Down on the Tour Bus"
+}
+// $12CEDC: [32bit] Game State
+//          0x00=In Menu
+//          0x01=In Game
+in_game = 1
+function game_state() => dword(0x12CEDC)
+// $1354EC: [32bit] Active Mode
+//          0x00=Normal
+//          0x01=Hard
+function mode() => dword(0x1354EC)
+active_mode = {
+    0:"Normal!",
+    1:"Hard!"
+}
+// $135400: [32bit] Current Track Score
+function current_score() => dword(0x135400)
 // $1354C8: [8bit] Stage Clear - Backstage Theatre (Normal Mode)
 //          0x00=No
 //          0x01=Yes
@@ -156,10 +190,13 @@ achievement(
 you_know = 0x13544C
 achievement(
     "Do You Know Though?",
-    "Get a perfect score on I Know You Know in Normal Mode",
+    "Get a maximum score of 72.400 playing I Know You Know in Normal Mode",
     points=5,
     trigger=
-        score_perfect(you_know, 10)   
+        mode() == 0 &&
+        active_song() == 3 &&
+        prev(current_score()) < 72400 &&
+        current_score() == 72400
 )
 achievement(
     "I Know You Know This!",
@@ -295,9 +332,9 @@ not_alone = 0x1354A8
 achievement(
     "With Your Pals!",
     "Get a perfect score on You're Not Alone in Normal Mode",
-    points=5,
+    points=10,
     trigger=
-        score_perfect(not_alone, 10)
+        score_perfect(not_alone, 5)
 )
 achievement(
     "Never Alone!",
@@ -331,43 +368,6 @@ achievement(
         score_perfect(forget_about_you, 11)
 )
 //==========RICH PRESENCE==========
-// $12CEDC: [32bit] Game State
-//          0x00=In Menu
-//          0x01=In Game
-in_game = 1
-function game_state() => dword(0x12CEDC)
-// $1354EC: [32bit] Active Mode
-//          0x00=Normal
-//          0x01=Hard
-function mode() => dword(0x1354EC)
-active_mode = {
-    0:"Normal!",
-    1:"Hard!"
-}
-// $135408: [32bit] Active Song ID
-//          0x00=Big Night at Rocque Records!
-//          0x01=Boyfriend on the Tour Bus!
-//          0x02=Elevate at the Palm Woods!
-//          0x03=I Know You Know at Rocque Records
-//          0x04=Til I Forget About You at the Backstage Theatre!
-//          0x05=Worldwide at the Palm Woods!
-//          0x06=You're Not Alone at the Backstage Theatre!
-//          0x07=Windows Down on the Tour Bus!
-function active_song() => dword(0x135408)
-songs = {
-    0:"Big Night at Rocque Records",
-    1:"Boyfriend on the Tour Bus",
-    2:"Elevate at the Palm Woods",
-    3:"I Know You Know at Rocque Records",
-    4:"Till I Forget About You at the Backstage Theatre",
-    5:"Worldwide at the Palm Woods",
-    6:"You're Not Alone at the Backstage Theatre",
-    7:"Windows Down on the Tour Bus"
-}
-// $135400: [32bit] Current Track Score
-function current_score() => dword(0x135400)
-
-
 
 rich_presence_conditional_display(game_state() == in_game, "Performing {0} on {1} 🏆 {2}",
     rich_presence_lookup("Song", active_song(), songs),
