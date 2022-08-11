@@ -1,11 +1,8 @@
 // Wheel of Fortune
 // #ID = 15994
-
-
 //CONSTANTS
 HUMAN = 0
 COMP = 1
-
 // $0E00: Number of Players
 //        0x00=Solo
 //        0x01=2 Players
@@ -55,8 +52,6 @@ my_id = 223625
 for i in range(0, 4){
 if (i == 0) my_points = 3
 else my_points = 5
-
-
     achievement(
         versus_one_names[i],
         "Win Round " + i + 1 + " against CPU Player 2",
@@ -78,8 +73,6 @@ versus_two_names = {
     3:"Boasting Dollars",
     4:"Player Two AND Three Defeated!"
 }
-
-
 for i in range(0, 4){
     achievement(
         versus_two_names[i],
@@ -110,12 +103,10 @@ function bonus_flag() => byte(0xedc)
 //        0x00=No
 //        0x01=Yes
 function cursor() => byte(0x13d6)
-
 // $13E8: [8bit] Timer Active
 //        0x01=Yes
 //        0x02=No
 function timer_active() => byte(0x13e8)
-
 function bonus_round_win() => bonus_flag() == 0 && prev(cursor()) == 1 && cursor() == 0 && prev(timer_active()) == 1 && timer_active() == 2
 // $0E68: [8bit] Chosen Prize Index
 //        0x00=A Trip to the Caribbean
@@ -133,7 +124,6 @@ prizes = {
 }
 function prize_addr() => word(0x000ed0)
 prize_ids = [8, 7, 9, 0xa, 0x6]
-
 // $0ED0: [16bit] Selected Prize
 //        0x1bc = About to Give
 //        0x06=A Diamond Ring!
@@ -150,15 +140,14 @@ for i in range(0, 4){
         id=my_id,
         trigger=
             load_protect() && 
-            round() == 0xff && 
+            round() == 0xff &&
+            player_turn() == 0 &&
             bonus_flag() == 0 &&
             prev(prize_addr()) == 0x1bb &&
             prize_addr() == prize_ids[i]            
     )
    my_id = my_id + 1
 }
-
-
 achievement(
     "Free Spin for Free Points!",
     "Obtain and use a free spin!",
@@ -225,7 +214,6 @@ ascii_list = {
 0x59: "Y",
 0x5A: "Z",
 0x20: ""
-
 }
 player_text = {
     0:"solo!",
