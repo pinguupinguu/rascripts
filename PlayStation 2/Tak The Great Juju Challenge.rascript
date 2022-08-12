@@ -1,6 +1,5 @@
 // Tak: The Great Juju Challenge
 // #ID = 19483
-
 // $4D37EC: [8bit] Juju Potions - Blessing Gem 2 Card
 //          0x00=Unavailable
 //          0x01=Collected
@@ -141,8 +140,9 @@
 //          0x14=Proving Grounds Final
 //          0x21=Main Menu
 function level_ID() => dword(0x5473A4)
-CONST_DEFAULT_SCORE = 0xffffffff
+// $1F0D000: [32bit] Proving Grounds Score - Team Pupanunu
 // $54743C: [32bit] Silver Stone Coast - High Score
+CONST_DEFAULT_SCORE = 0xffffffff
 function silver_stone_high_score() => dword(0x54743C)
 function save_protection() => dword(0x5473A4) != 0x21
 achievement(
@@ -154,10 +154,32 @@ achievement(
         prev(level_ID()) == 0x00 &&
         level_ID() == 0x1
 )
+function pupanunu_grounds_score() => dword(0x1F0D000)
+// $1F0D004: [32bit] Proving Grounds Score - Team Blackmist
+function blackmist_grounds_score() => dword(0x1F0D004)
+// $1F0D008: [32bit] Proving Grounds Score - Team Jibba Jabba
+function jibba_grounds_score() => dword(0x1F0D008)
+// $1F0D00C: [32bit] Proving Grounds Score - Team Grammazon
+function grammazon_grounds_score() => dword(0x1F0D00C)
+// $1F0D020: [32bit] Team Currently in Elimination
+//           0x00=Pupanunu Tribe
+//           0x01=The Black Mist
+//           0x02=Jibba Jabba
+//           0x03=Grammazon
+function elimination_team() => dword(0x1F0D020)
+pupanunu = 0
+// $1F29350: [Float] Level Timer
+function timer() => float(0x1F29350)
+//Level Calls:
+function progression(high_score) => save_protection() && prev(high_score) == CONST_DEFAULT_SCORE && high_score != CONST_DEFAULT_SCORE
+function proving_grounds_clear(id) =>
+    level_ID() == id &&
+    elimination_team() != pupanunu &&
+    timer() < prev(timer()) &&
+    timer() == 0    
 // $54747C: [32bit] Silver Stone Coast - Current Score
 // $5474BC: [32bit] Juju Realm Leaderboard Score - Team Black Mist
 // $5474FC: [32bit] Juju Realm Leaderboard Score - Team Jibba Jabba
-function progression(high_score) => save_protection() && prev(high_score) == CONST_DEFAULT_SCORE && high_score != CONST_DEFAULT_SCORE
 achievement(
     "It's An Ambush!",
     "Clear Silver Stone Coast",
@@ -170,13 +192,12 @@ achievement(
 function temple_light_high_score() => dword(0x54757C)
 achievement(
     "Sand, Torches, and Magma",
-    "clear Temple of Light",
+    "Clear Temple of Light",
     points=10,
     trigger=
         progression(temple_light_high_score())
 )
 // $5475BC: [32bit] Temple of Light - Current Score
-
 // $5476BC: [32bit] Caster's Hill - High Score
 function casters_high_score() => dword(0x5476BC)
 achievement(
@@ -187,7 +208,13 @@ achievement(
         progression(casters_high_score())
 )
 // $5476FC: [32bit] Caster's Hill - Current Score
-
+achievement(
+    "Tak's First Driving Lesson",
+    "Clear Proving Grounds: One without being eliminated!",
+    points=10,
+    trigger=
+        proving_grounds_clear(0x5)
+)
 // $54793C: [32bit] Kiro Biro - High Score
 function kiro_biro_high_score() => dword(0x54793C)
 achievement(
@@ -198,7 +225,6 @@ achievement(
         progression(kiro_biro_high_score())
 )
 // $54797C: [32bit] Kiro Biro - Current Score
-
 // $547A7C: [32bit] Parchlands - High Score
 function parchlands_high_score() => dword(0x547A7C)
 achievement(
@@ -209,7 +235,6 @@ achievement(
         progression(parchlands_high_score())
 )
 // $547ABC: [32bit] Parchlands - Current Score
-
 // $547BBC: [32bit] Gates of Nocturne - High Score
 function nocturne_high_score() => dword(0x547BBC)
 achievement(
@@ -220,7 +245,13 @@ achievement(
         progression(nocturne_high_score())
 )
 // $547BFC: [32bit] Gates of Nocturne - Current Score
-
+achievement(
+    "Extreme Racing 101",
+    "Clear Proving Grounds: Two without being eliminated!",
+    points=10,
+    trigger=
+        proving_grounds_clear(0xa)
+)
 // $547E3C: [32bit] Fowler's Murk - High Score
 function fowler_high_score() => dword(0x547E3C)
 achievement(
@@ -231,7 +262,6 @@ achievement(
         progression(fowler_high_score())
 )
 // $547E7C: [32bit] Fowler's Murk - Current Score
-
 // $547F7C: [32bit] The Deepwood - High Score
 function deepwood_high_score() => dword(0x547F7C)
 achievement(
@@ -242,7 +272,6 @@ achievement(
         progression(deepwood_high_score())
 )
 // $547FBC: [32bit] The Deepwood - Current Score
-
 // $5480BC: [32bit] Ambush Grove - High Score
 function ambush_high_score() => dword(0x5480BC)
 achievement(
@@ -253,7 +282,13 @@ achievement(
         progression(ambush_high_score())
 )
 // $5480FC: [32bit] Ambush Grove - Current Score
-
+achievement(
+    "Drivin' and Crushin' Statues!",
+    "Clear Proving Grounds: Three without being eliminated!",
+    points=10,
+    trigger=
+        proving_grounds_clear(0xf)
+)
 // $54833C: [32bit] Ghastfall - High Score
 function ghastfall_high_score() => dword(0x54833C)
 achievement(
@@ -264,7 +299,6 @@ achievement(
         progression(ghastfall_high_score())
 )
 // $54837C: [32bit] Ghastfall - Current Score
-
 // $54847C: [32bit] Obocdobo Crypt - High Score
 function crypt_high_score() => dword(0x54847C)
 achievement(
@@ -273,6 +307,22 @@ achievement(
     points=10,
     trigger=
         progression(crypt_high_score())
+)
+// $1F29300: [32bit] Proving Grounds Final - Overtime Round
+//           0x00=Round 1
+//           0x01=Round 2
+//           0x02=Round 3 (Final!)
+function proving_grounds_overtime() => dword(0x1F29300)
+achievement(
+    "The Black Mist Tribe Has Been Eliminated!",
+    "Defeat Team Black Mist in Proving Grounds: Final and win The Great Juju Challenge!",
+    points=25,
+    trigger=
+        level_ID() == 0x14 &&
+        proving_grounds_overtime() == 2 &&
+        pupanunu_grounds_score() > blackmist_grounds_score() &&
+        timer() < prev(timer()) &&
+        timer() == 0
 )
 achievement(
     "Tak: The True Power of Juju",
@@ -303,36 +353,6 @@ no = 3
 // $548D3C: [32bit] Juju Realm Leaderboard Score - Team Grammazon
 // $54A17C: [32bit] Number of Blessing Gems
 function blessingems_count() => dword(0x54A17C)
-
-// $54C858: [32bit] Door FLag?
-
-// $55DE6C: [Float] Number of Bugs
-function bugs() => float(0x55DE6C)
-
-// $55DE78: [Float] Number of Gemstones
-function gemstones() => float(0x55DE78)
-
-// $55DE84: [Float] Number of Fruits
-function fruits() => float(0x55DE84)
-
-// $55DEA8: [Float] Tak - Juju Speed
-// $55DEB0: [Float] Tak - Juju Speed (Max Amt)
-// $55E1D8: [Float] Lock - Juju Speed
-// $55E1E0: [Float] Lock - Juju Speed (Max Amt)
-
-// $612594: [32bit] Active Character
-//          0x00=Tak
-//          0x01=Lok
-function active_char() => dword(0x612594)
-
-// $1AD7750: [Float] Lok Health (Max = 1.0)
-// $1AE8E00: [Float] Tak Health 1.0 = Max
-// $1D4FA80: [32bit] Selected Proving Grounds Car
-// $1F0D000: [32bit] Proving Grounds - Tak & Lok Score
-
-
-
-// $1F29350: [Float] Level Timer
 function timer_lb() => dword(0x1F29350) //Read in DWord for usage with leaderboards. Float will be used for RP.
 // $1F29354: [Float] Maximum Timer
 function max_time() => float(0x1F29354)
@@ -340,7 +360,6 @@ function max_time() => float(0x1F29354)
 //           0x00=No
 //           0x01=Yes
 function timer_running() => dword(0x1F29360)
-
 // $1F29368: [32bit] Level Timer Shown
 //           0x00=No
 //           0x01=Yes
@@ -358,10 +377,6 @@ leaderboard(
     true,
     41163
 )
-
-
-
-
 function speedrun_board(level_name, level_num, default_time, id){
         leaderboard(
         level_name + " - Speedrun",
@@ -386,7 +401,24 @@ speedrun_board("The Deepwood", 0xd, 0x43c7e666, 41171)
 speedrun_board("Ambush Grove", 0xe, 0x4395f333, 41172)
 speedrun_board("Ghastfall", 0x11, 0x4415f99a, 41173)
 speedrun_board("Obocodobo Crypt", 0x12, 0x4395f333, 41174)
-
-
-
-
+// $54C858: [32bit] Door FLag?
+// $55DE6C: [Float] Number of Bugs
+function bugs() => float(0x55DE6C)
+// $55DE78: [Float] Number of Gemstones
+function gemstones() => float(0x55DE78)
+// $55DE84: [Float] Number of Fruits
+function fruits() => float(0x55DE84)
+// $55DEA8: [Float] Tak - Juju Speed
+// $55DEB0: [Float] Tak - Juju Speed (Max Amt)
+// $55E1D8: [Float] Lock - Juju Speed
+// $55E1E0: [Float] Lock - Juju Speed (Max Amt)
+// $612594: [32bit] Active Character
+//          0x00=Tak
+//          0x01=Lok
+function active_char() => dword(0x612594)
+// $1AD7750: [Float] Lok Health (Max = 1.0)
+// $1AE8E00: [Float] Tak Health 1.0 = Max
+// $1D4FA80: [32bit] Selected Proving Grounds Car
+// $1F0D000: [32bit] Proving Grounds - Tak & Lok Score
+// $1F29350: [Float] Level Timer
+// $1D4FA80: [32bit] Selected Proving Grounds Car
