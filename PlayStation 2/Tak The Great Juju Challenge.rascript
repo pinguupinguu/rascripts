@@ -176,7 +176,11 @@ function proving_grounds_clear(id) =>
     level_ID() == id &&
     elimination_team() != pupanunu &&
     timer() < prev(timer()) &&
-    timer() == 0    
+    timer() == 0
+function proving_grounds_first() => 
+    pupanunu_grounds_score() > blackmist_grounds_score() &&
+    pupanunu_grounds_score() > jibba_grounds_score()  &&
+    pupanunu_grounds_score() > grammazon_grounds_score()
 // $54747C: [32bit] Silver Stone Coast - Current Score
 // $5474BC: [32bit] Juju Realm Leaderboard Score - Team Black Mist
 // $5474FC: [32bit] Juju Realm Leaderboard Score - Team Jibba Jabba
@@ -215,6 +219,14 @@ achievement(
     trigger=
         proving_grounds_clear(0x5)
 )
+achievement(
+    "[m] Tak Gets an A!",
+    "Win first place in Proving Grounds: One!",
+    points=5,
+    trigger=
+        proving_grounds_clear(0x5) &&
+        proving_grounds_first()
+)
 // $54793C: [32bit] Kiro Biro - High Score
 function kiro_biro_high_score() => dword(0x54793C)
 achievement(
@@ -252,6 +264,14 @@ achievement(
     trigger=
         proving_grounds_clear(0xa)
 )
+achievement(
+    "[m] Pedal to the Metal",
+    "Win first place in Proving Grounds: Two!",
+    points=5,
+    trigger=
+        proving_grounds_clear(0xa) &&
+        proving_grounds_first()
+)
 // $547E3C: [32bit] Fowler's Murk - High Score
 function fowler_high_score() => dword(0x547E3C)
 achievement(
@@ -288,6 +308,14 @@ achievement(
     points=10,
     trigger=
         proving_grounds_clear(0xf)
+)
+achievement(
+    "[m] Break All Karts!",
+    "Win first place in Proving Grounds: Three!",
+    points=5,
+    trigger=
+        proving_grounds_clear(0xf) &&
+        proving_grounds_first()
 )
 // $54833C: [32bit] Ghastfall - High Score
 function ghastfall_high_score() => dword(0x54833C)
