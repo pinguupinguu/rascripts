@@ -139,6 +139,23 @@
 //          0x12=Obocodobo Crypt
 //          0x14=Proving Grounds Final
 //          0x21=Main Menu
+levels = {
+    2:"Silver Stone Coast",
+    3:"Temple of Light",
+    4:"Caster's Hill",
+    5:"Proving Grounds: One",
+    7:"Kiro Biro",
+    8:"Parchlands",
+    9:"Gates of Nocturne",
+    0xa:"Proving Grounds: Two",
+    0xc:"Fowler's Murk",
+    0xd:"The Deepwood",
+    0xe:"Ambush Grove",
+    0xf:"Proving Grounds: Three",
+    0x11:"Ghastfall",
+    0x12:"Obocodobo Crypt",
+    0x14:"Proving Grounds: Final"
+}
 function level_ID() => dword(0x5473A4)
 // $1F0D000: [32bit] Proving Grounds Score - Team Pupanunu
 // $54743C: [32bit] Silver Stone Coast - High Score
@@ -393,7 +410,13 @@ function timer_running() => dword(0x1F29360)
 //           0x01=Yes
 function timer_shown() => dword(0x1F29368)
 CONST_NEGATIVE = 0xbf800000 //-1 in float
-function tutorial_complete() => dword(0x5473fc)
+rich_presence_conditional_display(level_ID() == 0, "In Feathercrag: Tutorial")
+rich_presence_conditional_display(level_ID() == 1, "In Juju Realm")
+rich_presence_conditional_display(level_ID() != 0x21, "Competing in the Juju Challenge - {0}",
+    rich_presence_lookup("Levels", level_ID(), levels)
+)
+rich_presence_display("In Menu")
+
 leaderboard(
     "Feathercrag - Speedrun",
     "Fastest time!",
