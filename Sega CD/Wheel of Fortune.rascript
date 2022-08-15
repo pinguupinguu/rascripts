@@ -1,14 +1,19 @@
 // Wheel of Fortune
 // #ID = 15994
+
+
 //CONSTANTS
 HUMAN = 0
 COMP = 1
+
 // $0E00: Number of Players
 //        0x00=Solo
 //        0x01=2 Players
 //        0x02=3 Players
 function players() => byte(0x0e00)
 function load_protect() => byte(0xe00) <= 2
+// $0E02: [8bit] Player Turn
+function player_turn() => byte(0x0e02)
 // $0E14: Player 1 Name (Stored in 16bit)
 // $0E36: [8bit] Player 1 - State
 //        0x00=Human
@@ -22,6 +27,16 @@ function p_three() => byte(0x0e38)
 //        0x00=Human
 //        0x01=Computer
 function p_two() => byte(0x0e39)
+human = 0
+computer = 1
+//Function below checks all possible combinations of one player being an active player rather than the CPU.
+function player_alts() => 
+    always_false() || 
+        player_turn() == 0 && p_one() == human && p_two() == computer && p_three() == computer ||
+        player_turn() == 1 && p_two() == human && p_one() == computer && p_three() == computer ||
+        player_turn() == 2 && p_three() == human && p_one() == computer && p_two() == computer
+
+// 
 // $0E46: 16bit Space Landed On
 // $0E4A: [16bit] Player 1 - Money
 function p_one_money() => word(0x0e4a)
@@ -36,7 +51,7 @@ function p_three_money() => word(0x0e52)
 //        03 to 04 > Round 4
 //        04 > 0xff > Round 5
 function round() => byte(0xe66)
-function player_turn() => byte(0x0e02)
+
 function versus_one_cpu() => players() == 1 && p_one() == HUMAN && p_two() == COMP
 versus_one_names = {
     0:"Beginning Rivalry",
@@ -52,9 +67,11 @@ my_id = 223625
 for i in range(0, 4){
 if (i == 0) my_points = 3
 else my_points = 5
+
+
     achievement(
         versus_one_names[i],
-        "Win Round " + i + 1 + " against CPU Player 2",
+        "Win Round " + i + 1 + " against one CPU player!",
         points= my_points,
         id = my_id,
         trigger=
@@ -73,10 +90,12 @@ versus_two_names = {
     3:"Boasting Dollars",
     4:"Player Two AND Three Defeated!"
 }
+
+
 for i in range(0, 4){
     achievement(
         versus_two_names[i],
-        "Win Round " + i + 1 + " against CPU Player 2 and Player 3",
+        "Win Round " + i + 1 + " against two CPU players!",
         points=5,
         id = my_id,
         trigger=
@@ -103,10 +122,12 @@ function bonus_flag() => byte(0xedc)
 //        0x00=No
 //        0x01=Yes
 function cursor() => byte(0x13d6)
+
 // $13E8: [8bit] Timer Active
 //        0x01=Yes
 //        0x02=No
 function timer_active() => byte(0x13e8)
+
 function bonus_round_win() => bonus_flag() == 0 && prev(cursor()) == 1 && cursor() == 0 && prev(timer_active()) == 1 && timer_active() == 2
 // $0E68: [8bit] Chosen Prize Index
 //        0x00=A Trip to the Caribbean
@@ -124,6 +145,7 @@ prizes = {
 }
 function prize_addr() => word(0x000ed0)
 prize_ids = [8, 7, 9, 0xa, 0x6]
+
 // $0ED0: [16bit] Selected Prize
 //        0x1bc = About to Give
 //        0x06=A Diamond Ring!
@@ -135,19 +157,21 @@ my_id = 223635
 for i in range(0, 4){
     achievement(
         "Prize No. " + i + 1 + "!",
-        "Win " + prizes[i] + " from the Bonus Round!",
+        "Win " + prizes[i] + " from the Bonus Round against two CPU players!",
         points=5,
         id=my_id,
         trigger=
             load_protect() && 
-            round() == 0xff &&
-            player_turn() == 0 &&
+            round() == 0xff && 
             bonus_flag() == 0 &&
             prev(prize_addr()) == 0x1bb &&
-            prize_addr() == prize_ids[i]            
+            prize_addr() == prize_ids[i] &&
+            player_alts()
     )
    my_id = my_id + 1
 }
+
+
 achievement(
     "Free Spin for Free Points!",
     "Obtain and use a free spin!",
@@ -214,6 +238,7 @@ ascii_list = {
 0x59: "Y",
 0x5A: "Z",
 0x20: ""
+
 }
 player_text = {
     0:"solo!",
