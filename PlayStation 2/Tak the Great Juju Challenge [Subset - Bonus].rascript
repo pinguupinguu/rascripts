@@ -139,6 +139,7 @@
 //          0x12=Obocodobo Crypt
 //          0x14=Proving Grounds Final
 //          0x21=Main Menu
+function level_ID() => dword(0x5473A4)
 // $5473FC: [32bit] Tutorial Completion: 0x50 > 0x51 = Hit Gate.
 // $54743C: [32bit] Silver Stone Coast - High Score
 // $54747C: [32bit] Silver Stone Coast - Current Score
@@ -246,3 +247,56 @@
 // $1F29374: [32bit] Level Timer Active
 //           0x00=No
 //           0x01=Yes
+// $56690C: [32bit] Game Pause
+//          0x00=yes
+//          0x03=no
+function game_pause() => dword(0x56690C)
+paused = 0
+unpaused = 3
+function timer_lb() => dword(0x1F29350) //Read in DWord for usage with leaderboards. Float will be used for RP.
+// $1F29354: [Float] Maximum Timer
+function max_time() => float(0x1F29354)
+// $1F29360: [32bit] Level Timer Running
+//           0x00=No
+//           0x01=Yes
+function timer_running() => dword(0x1F29360)
+// $1F29368: [32bit] Level Timer Shown
+//           0x00=No
+//           0x01=Yes
+function timer_shown() => dword(0x1F29368)
+CONST_NEGATIVE = 0xbf800000 //-1 in float
+leaderboard(
+    "Feathercrag",
+    "Fastest time!",
+    level_ID() == 0 && prev(timer_lb()) == CONST_NEGATIVE && timer_lb() == 0x43960000, //43960000 = 300.00 in float.
+    level_ID() == 0x21, //Menu
+    prev(level_ID()) == 0 && level_ID() == 1,
+    unless(game_pause() == paused) && always_true(),
+    "FRAMES",
+    true,
+    41163
+)
+function speedrun_board(level_name, level_num, default_time, id){
+        leaderboard(
+        level_name,
+        "Fastest time!",
+        level_ID() == level_num && prev(timer_lb()) == default_time && timer_lb() < prev(timer_lb()), //299.9999 - Default Time
+        level_ID() == 1,
+        level_ID() == level_num && timer_running() < prev(timer_running()) && timer_running() == 0,
+        unless(game_pause() == paused) && always_true(),
+        "FRAMES",
+        true,
+        id
+    )
+}
+speedrun_board("Silver Stone Coast", 0x2, 0x4395f333, 41164) 
+speedrun_board("Temple of Light", 0x3, 0x4395e666, 41165)
+speedrun_board("Caster's Hill", 0x4, 0x4395f333, 41166)
+speedrun_board("Kiro Biro", 0x7, 0x44160000, 41167)
+speedrun_board("Parchlands", 0x8, 0x4395e666, 41168)
+speedrun_board("Gates of Noctune", 0x9, 0x4395f333, 41169)
+speedrun_board("Fowler's Murk", 0xc, 0x4395f333, 41170)
+speedrun_board("The Deepwood", 0xd, 0x43c7e666, 41171)
+speedrun_board("Ambush Grove", 0xe, 0x4395f333, 41172)
+speedrun_board("Ghastfall", 0x11, 0x4415f99a, 41173)
+speedrun_board("Obocodobo Crypt", 0x12, 0x4395f333, 41174)
