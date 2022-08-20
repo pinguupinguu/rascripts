@@ -139,6 +139,23 @@
 //          0x12=Obocodobo Crypt
 //          0x14=Proving Grounds Final
 //          0x21=Main Menu
+levels = {
+    2:"Silver Stone Coast",
+    3:"Temple of Light",
+    4:"Caster's Hill",
+    5:"Proving Grounds: One",
+    7:"Kiro Biro",
+    8:"Parchlands",
+    9:"Gates of Nocturne",
+    0xa:"Proving Grounds: Two",
+    0xc:"Fowler's Murk",
+    0xd:"The Deepwood",
+    0xe:"Ambush Grove",
+    0xf:"Proving Grounds: Three",
+    0x11:"Ghastfall",
+    0x12:"Obocodobo Crypt",
+    0x14:"Proving Grounds: Final"
+}
 function level_ID() => dword(0x5473A4)
 // $5473FC: [32bit] Tutorial Completion: 0x50 > 0x51 = Hit Gate.
 // $54743C: [32bit] Silver Stone Coast - High Score
@@ -237,6 +254,7 @@ function level_ID() => dword(0x5473A4)
 //           0x01=Round 2
 //           0x02=Round 3 (Final!)
 // $1F29350: [Float] Level Timer
+function timer() => float(0x1F29350)
 // $1F29354: [Float] Maximum Time
 // $1F29360: [32bit] Level Timer Running
 //           0x00=No
@@ -265,13 +283,36 @@ function timer_running() => dword(0x1F29360)
 //           0x01=Yes
 function timer_shown() => dword(0x1F29368)
 CONST_NEGATIVE = 0xbf800000 //-1 in float
+
+function level_run(id, default_time, time_frames) =>
+    unless(repeated(time_frames, prev(timer_lb()) == default_time && once(timer_lb() < prev(timer_lb()) && always_true()))) &&//Initialize level hit.
+    trigger_when(timer_running() < prev(timer_running()) && timer_running() == 0) &&
+    always_false() || never(level_ID() != id)
+achievement(
+    "Stone Testing",
+    "yes",
+    0,
+    trigger=
+        level_run(2, 0x4395f333, 36000)
+)
+achievement(
+    "Feathercrag Testing",
+    "yes",
+    0,
+    trigger=
+        unless(repeated(36000, prev(timer_lb()) == CONST_NEGATIVE && once(timer_lb() == 0x43960000) && always_true())) &&
+        
+        once(prev(timer_lb()) == CONST_NEGATIVE && once(timer_lb() == 0x43960000 && level_ID() == 0)) &&
+        trigger_when(level_ID() == 1) &&
+        (always_false() || never(prev(level_ID()) != 0x0))
+)
 leaderboard(
     "Feathercrag",
     "Fastest time!",
     level_ID() == 0 && prev(timer_lb()) == CONST_NEGATIVE && timer_lb() == 0x43960000, //43960000 = 300.00 in float.
     level_ID() == 0x21, //Menu
     prev(level_ID()) == 0 && level_ID() == 1,
-    unless(game_pause() == paused) && always_true(),
+    always_true(),
     "FRAMES",
     true,
     41163
@@ -283,7 +324,7 @@ function speedrun_board(level_name, level_num, default_time, id){
         level_ID() == level_num && prev(timer_lb()) == default_time && timer_lb() < prev(timer_lb()), //299.9999 - Default Time
         level_ID() == 1,
         level_ID() == level_num && timer_running() < prev(timer_running()) && timer_running() == 0,
-        unless(game_pause() == paused) && always_true(),
+        always_true(),
         "FRAMES",
         true,
         id
@@ -300,3 +341,32 @@ speedrun_board("The Deepwood", 0xd, 0x43c7e666, 41171)
 speedrun_board("Ambush Grove", 0xe, 0x4395f333, 41172)
 speedrun_board("Ghastfall", 0x11, 0x4415f99a, 41173)
 speedrun_board("Obocodobo Crypt", 0x12, 0x4395f333, 41174)
+function active_char() => dword(0x612594)
+character = {
+    0:"Tak",
+    1:"Lok"
+}
+// $55DE6C: [Float] Number of Bugs
+function bugs() => float(0x55DE6C)
+// $55DE78: [Float] Number of Gemstones
+function gemstones() => float(0x55DE78)
+// $55DE84: [Float] Number of Fruits
+function fruits() => float(0x55DE84)
+// $548CFC: [32bit] Juju Realm Leaderboard Score - Team Pupanunu
+function pupanunu_score_lb() => dword(0x548CFC)
+character_lookup = rich_presence_lookup("Character", active_char(), character)
+rich_presence_conditional_display(level_ID() == 0, "Playing as {0} in Feathercrag: Tutorial",
+    character_lookup
+)
+rich_presence_conditional_display(level_ID() == 1, "In The Juju Realm 🏆 {0} 🐛 {1} 💎 {2} 🍐 {3}",
+    rich_presence_macro("Number", pupanunu_score_lb()),
+    rich_presence_macro("Number", bugs()),
+    rich_presence_macro("Number", gemstones()),
+    rich_presence_macro("Number", fruits())
+)
+rich_presence_conditional_display(level_ID() != 0x21, "Playing as {0} in {1} ⏳ {2}",
+    character_lookup,
+    rich_presence_lookup("Levels", level_ID(), levels),
+    rich_presence_macro("Number", timer())
+)
+rich_presence_display("In Menu")
