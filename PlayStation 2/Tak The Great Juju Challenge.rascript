@@ -409,7 +409,7 @@ achievement(
 //          Bit7=Bonus Sound Effects 2
 // $55DEA0: [NBit] Recipe Flags
 //          Bit2=Time Bonus Active
- extracards = [
+extracards = [
     bit3(0x55DE96),
     bit4(0x55DE96),
     bit5(0x55DE96),

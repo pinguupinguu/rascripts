@@ -284,28 +284,59 @@ function timer_running() => dword(0x1F29360)
 function timer_shown() => dword(0x1F29368)
 CONST_NEGATIVE = 0xbf800000 //-1 in float
 
-function level_run(id, default_time, time_frames) =>
-    unless(repeated(time_frames, prev(timer_lb()) == default_time && once(timer_lb() < prev(timer_lb()) && always_true()))) &&//Initialize level hit.
-    trigger_when(timer_running() < prev(timer_running()) && timer_running() == 0) &&
-    always_false() || never(level_ID() != id)
+function level_run(id, default_time, time_frames, name, desc, points) {
+    achievement(
+        name,
+        desc,
+        points,
+        trigger=
+            unless(repeated(time_frames, prev(timer_lb()) == default_time && once(timer_lb() < prev(timer_lb()) && always_true()))) &&//Initialize level hit.
+            trigger_when(timer_running() < prev(timer_running()) && timer_running() == 0) &&
+            (always_false() || never(level_ID() != id))
+    )
+}    
+//Reworked speedrun achievement for different conditions.
 achievement(
-    "Stone Testing",
-    "yes",
-    0,
+    "Feathercrag Speedrun",
+    "Clear Feathercrag in 2 minutes and 10 seconds or less",
+    10,
     trigger=
-        level_run(2, 0x4395f333, 36000)
-)
-achievement(
-    "Feathercrag Testing",
-    "yes",
-    0,
-    trigger=
-        unless(repeated(36000, prev(timer_lb()) == CONST_NEGATIVE && once(timer_lb() == 0x43960000) && always_true())) &&
-        
+        unless(repeated(7800, prev(timer_lb()) == CONST_NEGATIVE && once(timer_lb() == 0x43960000) && always_true())) &&  //Frames 7800 = 2 minutes 10 sec.      
         once(prev(timer_lb()) == CONST_NEGATIVE && once(timer_lb() == 0x43960000 && level_ID() == 0)) &&
         trigger_when(level_ID() == 1) &&
         (always_false() || never(prev(level_ID()) != 0x0))
 )
+level_run(2, 0x4395f333, 10800, "Silver Stone Coast Speedrun", "Clear Silver Stone Coast in 3 minutes or less", 10)
+level_run(3, 0x4395e666, 15000, "Temple of Light Speedrun", "Clear Temple of Light in 4 minutes and 10 seconds or less", 25)
+level_run(4, 0x4395f333, 21300, "Caster's Hill Speedrun", "Clear Caster's Hill in 5 minutes and 55 seconds or less", 25)
+level_run(7, 0x44160000, 12300, "Kiro Biro Speedrun", "Clear Kiro Biro in 3 minutes and 25 seconds or less", 25)
+level_run(8, 0x4395e666, 9000, "Parchlands Speedrun", "Clear Parchlands in 2 minutes and 30 seconds or less", 25)
+level_run(9, 0x4395f333, 18300, "Gates of Nocturne Speedrun", "Clear Gates of Nocturne in 5 minutes and 5 seconds or less", 25)
+level_run(0xc, 0x4395f333, 15900, "Fowler's Murk Speedrun", "Clear Fowler's Murk in 4 minutes and 25 seconds or less", 25)
+level_run(0xd, 0x43c7e666, 7200, "The Deepwood Speedrun", "Clear The Deepwood in 2 minutes and 35 seconds or less", 25)
+level_run(0xe, 0x4395f333, 6300, "Ambush Grove Speedrun", "Clear Ambush Grove in 1 minute and 45 seconds or less", 25)
+level_run(0x11, 0x4415f99a, 15000, "Ghastfall Speedrun", "Clear Ghastfal in 4 minutes and 10 seconds or less", 25)
+level_run(0x12, 0x4395f333, 18000, "Obocodobo Crypt Speedrun", "Clear Obocodobo Crypt in 5 minutes or less", 25)
+// $1F29300: [32bit] Proving Grounds Final - Overtime Round
+//           0x00=Round 1
+//           0x01=Round 2
+//           0x02=Round 3 (Final!)
+function proving_grounds_overtime() => dword(0x1F29300)
+// $1F0D000: [32bit] Proving Grounds Score - Team Pupanunu
+function pupanunu_grounds_score() => dword(0x1F0D000)
+// $1F0D004: [32bit] Proving Grounds Score - Team Blackmist
+function blackmist_grounds_score() => dword(0x1F0D004)
+achievement(
+    "Game Speedrun - Any%",
+    "Starting from a New Game, beat Tak: The Great Juju Challenge in 1 hour and 10 minutes or less!",
+    points=100,
+    trigger=        
+        unless(repeated(216000, prev(level_ID()) == 0x21 && once(level_ID() == 0)  && always_true())) &&
+        once(prev(level_ID()) == 0x21 && level_ID() == 0) &&        
+        trigger_when(level_ID() == 0x14 && proving_grounds_overtime() == 2 && pupanunu_grounds_score() > blackmist_grounds_score() && timer() < prev(timer()) && timer() == 0) &&        
+        (always_false() ||   never(prev(level_ID()) != 0x21 && level_ID() == 0x21))
+        
+)         
 leaderboard(
     "Feathercrag",
     "Fastest time!",
@@ -335,12 +366,23 @@ speedrun_board("Temple of Light", 0x3, 0x4395e666, 41165)
 speedrun_board("Caster's Hill", 0x4, 0x4395f333, 41166)
 speedrun_board("Kiro Biro", 0x7, 0x44160000, 41167)
 speedrun_board("Parchlands", 0x8, 0x4395e666, 41168)
-speedrun_board("Gates of Noctune", 0x9, 0x4395f333, 41169)
+speedrun_board("Gates of Nocturne", 0x9, 0x4395f333, 41169)
 speedrun_board("Fowler's Murk", 0xc, 0x4395f333, 41170)
 speedrun_board("The Deepwood", 0xd, 0x43c7e666, 41171)
 speedrun_board("Ambush Grove", 0xe, 0x4395f333, 41172)
 speedrun_board("Ghastfall", 0x11, 0x4415f99a, 41173)
 speedrun_board("Obocodobo Crypt", 0x12, 0x4395f333, 41174)
+leaderboard(
+    "Game Speedrun - Any%",
+    "Fastest time to beat entire game from a New File!",
+    prev(level_ID()) == 0x21 && level_ID() == 0,
+    prev(level_ID()) != 0x21 && level_ID() == 0x21,
+    level_ID() == 0x14 && proving_grounds_overtime() == 2 && pupanunu_grounds_score() > blackmist_grounds_score() && timer() < prev(timer()) && timer() == 0,
+    always_true(),
+    "FRAMES",
+    true,
+    0
+)
 function active_char() => dword(0x612594)
 character = {
     0:"Tak",
