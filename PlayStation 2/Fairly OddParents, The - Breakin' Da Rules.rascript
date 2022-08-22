@@ -232,7 +232,7 @@ function badge_far_rank() => dword(badge_far_dance_pointer() + 0x790)
 function badge_far_notes() => dword(badge_far_dance_pointer() + 0x798)
 achievement(
     "Dance Expertise",
-    "In A Badge Too Far, clear the song with an Excellent rating while dancing with secret moves!",
+    "In A Badge Too Far, clear the song with an Excellent rating!",
     points=5,
     trigger=
         current_level() == badge_far &&
