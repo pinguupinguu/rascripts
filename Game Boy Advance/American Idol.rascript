@@ -209,7 +209,7 @@ function costume_tracker(count, itemArray){
 achievement(
     "Endurance Costume Collector",
     "Unlock all costumes from Endurance mode. (No Passwords)",
-    id=155767,
+    id=155783,
     badge="175702",
     points=5,
     
@@ -255,35 +255,36 @@ achievement(
 //        0x13=I'm A Believer, Note Count=77
 function songID_rehearsal() => byte(0x002B98)
 rehearsal_song_bank = {
-    0x0:{"Name":"I Will Survive", "Points":5, "ID":155785, "Badge":"175704"},
-    0x1:{"Name":"I Wanna Dance With Somebody", "Points":5, "ID":155786, "Badge":"175705"},
-    0x2:{"Name":"Twist And Shout", "Points":5, "ID":155787, "Badge":"175706" },
-    0x3:{"Name":"Escape", "Notes":37, "Points":10, "ID":155788, "Badge":"175707"},
-    0x4:{"Name":"Evergreen", "Notes":59, "Points":10, "ID":155789, "Badge":"175708"},
-    0x5:{"Name":"A Moment Like This", "Points":10, "ID":155790, "Badge":"175709"},
-    0x6:{"Name":"Thank You", "Points":10, "ID":155791, "Badge":"175710"},
-    0x7:{"Name":"Genie In A Bottle", "Points":10, "ID":155792, "Badge":"175711"},
-    0x8:{"Name":"Livin' La Vida Loca", "Points":25, "ID":155793, "Badge":"175712"},
-    0x9:{"Name":"Bye Bye Bye", "Points":10, "ID":155794, "Badge":"175713"},
-    0xa:{"Name":"Baby One More Time", "Points":10, "ID":155795, "Badge":"175714"},
-    0xb:{"Name":"I Want It That Way", "Points":10, "ID":155796, "Badge":"175715"},
-    0xc:{"Name":"Ooops...! I Did It Again", "Points":10, "ID":155797, "Badge":"175716"},
-    0xd:{"Name":"Fast Love", "Points":10, "ID":155798, "Badge":"175717"},
-    0xe:{"Name":"Like a Virgin", "Points":10, "ID":155799, "Badge":"175718"},
-    0xf:{"Name":"Let Me Entertain You", "Points":10, "ID":155800, "Badge":"175719"},
-    0x10:{"Name":"Spinning Around", "Points":25, "ID":155801, "Badge":"175720"},
-    0x11:{"Name":"Waiting for Tonight", "Points":10, "ID":155802, "Badge":"175721"},
-    0x12:{"Name":"Suspicious Minds", "Points":10, "ID":155803, "Badge":"175722"},
-    0x13:{"Name":"I'm A Believer", "Points":10, "ID":155804, "Badge":"175723"}    
+    0x0:{"Name":"I Will Survive", "Points":5, "ExceptionNotes":3, "ID":155785, "Badge":"175704"},
+    0x1:{"Name":"I Wanna Dance With Somebody", "ExceptionNotes":3, "Points":5, "ID":155786, "Badge":"175705"},
+    0x2:{"Name":"Twist And Shout", "Points":5, "ExceptionNotes":3, "ID":155787, "Badge":"175706" },
+    0x3:{"Name":"Escape", "Notes":37, "ExceptionNotes":3, "Points":10, "ID":155788, "Badge":"175707"},
+    0x4:{"Name":"Evergreen", "Notes":59, "ExceptionNotes":3, "Points":10, "ID":155789, "Badge":"175708"},
+    0x5:{"Name":"A Moment Like This", "ExceptionNotes":3, "Points":10, "ID":155790, "Badge":"175709"},
+    0x6:{"Name":"Thank You", "ExceptionNotes":3, "Points":10, "ID":155791, "Badge":"175710"},
+    0x7:{"Name":"Genie In A Bottle", "ExceptionNotes":3, "Points":25, "ID":155792, "Badge":"175711"},
+    0x8:{"Name":"Livin' La Vida Loca", "ExceptionNotes":5, "Points":25, "ID":155793, "Badge":"175712"},
+    0x9:{"Name":"Bye Bye Bye", "ExceptionNotes":3, "Points":25, "ID":155794, "Badge":"175713"},
+    0xa:{"Name":"Baby One More Time", "ExceptionNotes":3, "Points":25, "ID":155795, "Badge":"175714"},
+    0xb:{"Name":"I Want It That Way", "ExceptionNotes":5, "Points":10, "ID":155796, "Badge":"175715"},
+    0xc:{"Name":"Ooops...! I Did It Again", "ExceptionNotes":5, "Points":25, "ID":155797, "Badge":"175716"},
+    0xd:{"Name":"Fast Love", "ExceptionNotes":5, "Points":25, "ID":155798, "Badge":"175717"},
+    0xe:{"Name":"Like a Virgin", "ExceptionNotes":5, "Points":25, "ID":155799, "Badge":"175718"},
+    0xf:{"Name":"Let Me Entertain You", "ExceptionNotes":5, "Points":25, "ID":155800, "Badge":"175719"},
+    0x10:{"Name":"Spinning Around", "ExceptionNotes":5, "Points":25, "ID":155801, "Badge":"175720"},
+    0x11:{"Name":"Waiting for Tonight", "ExceptionNotes":5, "Points":25, "ID":155802, "Badge":"175721"},
+    0x12:{"Name":"Suspicious Minds", "ExceptionNotes":5, "Points":25, "ID":155803, "Badge":"175722"},
+    0x13:{"Name":"I'm A Believer", "ExceptionNotes":5, "Points":25, "ID":155804, "Badge":"175723"}    
 }
 for song in rehearsal_song_bank{
-    name = rehearsal_song_bank[song]["Name"]
+    name = rehearsal_song_bank[song]["Name"]    
     my_points = rehearsal_song_bank[song]["Points"]
     my_id = rehearsal_song_bank[song]["ID"]
     my_badge = rehearsal_song_bank[song]["Badge"]
+    allowed_notes = rehearsal_song_bank[song]["ExceptionNotes"] 
     achievement(
         name + " 100% Combo",
-        "Get a 100% combo on " + name + " in Rehearsal Mode. (All Great Notes, but 3 or less Good Notes allowed.)",
+        "Get a 100% combo on " + name + " in Rehearsal Mode. (All Great Notes, but " + allowed_notes + " or less Good Notes allowed.)",
         id=my_id,
         badge=my_badge,
         points=my_points,        
@@ -293,7 +294,7 @@ for song in rehearsal_song_bank{
             trigger_when(screenID() != prev(screenID())) &&
             trigger_when(screenID() == results_screen) &&
             notes_great() != 0 &&
-            notes_good() <= 3 &&
+            notes_good() <= allowed_notes &&
             notes_okay() == 0 &&
             notes_poor() == 0 &&
             notes_bad() == 0
