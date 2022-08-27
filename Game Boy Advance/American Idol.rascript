@@ -274,7 +274,7 @@ rehearsal_song_bank = {
     0x10:{"Name":"Spinning Around", "ExceptionNotes":5, "Points":25, "ID":155801, "Badge":"175720"},
     0x11:{"Name":"Waiting for Tonight", "ExceptionNotes":5, "Points":25, "ID":155802, "Badge":"175721"},
     0x12:{"Name":"Suspicious Minds", "ExceptionNotes":5, "Points":25, "ID":155803, "Badge":"175722"},
-    0x13:{"Name":"I'm A Believer", "ExceptionNotes":5, "Points":25, "ID":155804, "Badge":"175723"}    
+    0x13:{"Name":"I'm A Believer", "ExceptionNotes":15, "Points":25, "ID":155804, "Badge":"175723"}    
 }
 for song in rehearsal_song_bank{
     name = rehearsal_song_bank[song]["Name"]    
