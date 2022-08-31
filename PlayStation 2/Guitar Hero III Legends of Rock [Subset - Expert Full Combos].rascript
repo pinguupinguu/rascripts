@@ -8,32 +8,29 @@ function difficulty_career() => dword(0x36DD74)
 //          0x00=No
 //          0x01=In Game
 function game_state() => dword(0x371EF0)
-<<<<<<< Updated upstream
 
-=======
 menu = 0
 in_game = 1
->>>>>>> Stashed changes
+
 // $373128: [32-bit] Notes Passed in Current Song
 function notes() => dword(0x373128)
 
 // $373168: [32-bit] Current Score
 function current_score() => dword(0x373168)
 
-<<<<<<< Updated upstream
+
 // $373180: [32-bit] Current Combo
-=======
->>>>>>> Stashed changes
+
 function combo() => dword(0x373180)
 
 // $373188: [32-bit] Current Multiplier
 function multiplier() => dword(0x373188)
 
-<<<<<<< Updated upstream
+
 // $67E384: [32-bit] Difficulty - Quick Play
 function difficulty_quickplay() => dword(0x67E384)
 
-=======
+
 // $548628: [32-bit] Pointer
 //          +0x20 - Difficulty
 easy = 0
@@ -41,7 +38,6 @@ normal = 1
 hard = 2
 expert = 3
 function difficulty() => dword(dword(0x548628) + 0x20)
->>>>>>> Stashed changes
 // $1B3F32B: [32-bit BE] [ASCII] Song Title Letters 1-4 of loaded song
 //           Slow Ride - 0x736c6f77
 //           Talk Dirty To me - 0x74616c6b
@@ -121,10 +117,6 @@ function difficulty() => dword(dword(0x548628) + 0x20)
 //           The Way It Ends - 0x74686577
 //           Through The Fire and Flames - 0x74687275
 function firstsongID() => dword_be(0x1B3F32B)
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 // $1B3F32F: [32-bit BE] [ASCII] Song Title Letters 5-8 of loaded song
 //           Slow Ride -  0x72696465
 //           Talk Dirty To Me - 0x64697274
@@ -204,8 +196,6 @@ function firstsongID() => dword_be(0x1B3F32B)
 //           The Way It Ends - 0x61796974
 //           Through The Fire and Flames - 0x66697265
 function secondsongID() => dword_be(0x1B3F32F)
-<<<<<<< Updated upstream
-=======
 song_table = {
     "Slow Ride":{"id_one":0x736c6f77, "id_two":0x72696465, "max_notes":551, "points":25},
     "Talk Dirty To me":{"id_one":0x74616c6b, "id_two":0x64697274, "max_notes":772, "points":25},
@@ -303,4 +293,3 @@ for song_entry in song_table{
             never(game_state() == menu)            
     )       
 }
->>>>>>> Stashed changes
