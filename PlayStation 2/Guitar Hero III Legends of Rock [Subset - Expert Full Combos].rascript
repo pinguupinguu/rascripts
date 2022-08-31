@@ -8,22 +8,40 @@ function difficulty_career() => dword(0x36DD74)
 //          0x00=No
 //          0x01=In Game
 function game_state() => dword(0x371EF0)
+<<<<<<< Updated upstream
 
+=======
+menu = 0
+in_game = 1
+>>>>>>> Stashed changes
 // $373128: [32-bit] Notes Passed in Current Song
 function notes() => dword(0x373128)
 
 // $373168: [32-bit] Current Score
 function current_score() => dword(0x373168)
 
+<<<<<<< Updated upstream
 // $373180: [32-bit] Current Combo
+=======
+>>>>>>> Stashed changes
 function combo() => dword(0x373180)
 
 // $373188: [32-bit] Current Multiplier
 function multiplier() => dword(0x373188)
 
+<<<<<<< Updated upstream
 // $67E384: [32-bit] Difficulty - Quick Play
 function difficulty_quickplay() => dword(0x67E384)
 
+=======
+// $548628: [32-bit] Pointer
+//          +0x20 - Difficulty
+easy = 0
+normal = 1
+hard = 2
+expert = 3
+function difficulty() => dword(dword(0x548628) + 0x20)
+>>>>>>> Stashed changes
 // $1B3F32B: [32-bit BE] [ASCII] Song Title Letters 1-4 of loaded song
 //           Slow Ride - 0x736c6f77
 //           Talk Dirty To me - 0x74616c6b
@@ -103,7 +121,10 @@ function difficulty_quickplay() => dword(0x67E384)
 //           The Way It Ends - 0x74686577
 //           Through The Fire and Flames - 0x74687275
 function firstsongID() => dword_be(0x1B3F32B)
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 // $1B3F32F: [32-bit BE] [ASCII] Song Title Letters 5-8 of loaded song
 //           Slow Ride -  0x72696465
 //           Talk Dirty To Me - 0x64697274
@@ -183,3 +204,103 @@ function firstsongID() => dword_be(0x1B3F32B)
 //           The Way It Ends - 0x61796974
 //           Through The Fire and Flames - 0x66697265
 function secondsongID() => dword_be(0x1B3F32F)
+<<<<<<< Updated upstream
+=======
+song_table = {
+    "Slow Ride":{"id_one":0x736c6f77, "id_two":0x72696465, "max_notes":551, "points":25},
+    "Talk Dirty To me":{"id_one":0x74616c6b, "id_two":0x64697274, "max_notes":772, "points":25},
+    "Hit Me With Your Best Shot":{"id_one":0x6869746d, "id_two":0x65776974, "max_notes":491, "points":25},
+    "Story Of My Life":{"id_one":0x73746f72, "id_two":0x796f666d, "max_notes":935, "points":25},
+    "Rock and Roll All Nite":{"id_one":0x726f636b, "id_two":0x6e726f6c, "max_notes":515, "points":25},
+    "Sabotage":{"id_one":0x7361626f, "id_two":0x74616765, "max_notes":651, "points":25},
+    "Mississippi Queen":{"id_one":0x6d697373, "id_two":0x69737369, "max_notes":376, "points":25},
+    "School's Out":{"id_one":0x7363686f, "id_two":0x6f6c736f, "max_notes":441, "points":25},
+    "Sunshine of Your Love":{"id_one":0x73756e73, "id_two":0x68696e65, "max_notes":701, "points":25},
+    "Barracuda":{"id_one":0x62617272, "id_two":0x61637564, "max_notes":858, "points":25},
+    "Bulls on Parade":{"id_one":0x62756c6c, "id_two":0x736f6e70, "max_notes":743, "points":25},
+    "Reptilia":{"id_one":0x72657074, "id_two":0x696c6961, "max_notes":829, "points":25},
+    "When You Were Young":{"id_one":0x7768656e, "id_two":0x796f7577, "max_notes":564, "points":25},
+    "Miss Murder":{"id_one":0x6d697373, "id_two":0x6d757264, "max_notes":739, "points":25},
+    "The Seeker":{"id_one":0x74686573, "id_two":0x65656b65, "max_notes":760, "points":25},
+    "Lay Down":{"id_one":0x6c617964, "id_two":0x6f776e2e, "max_notes":767, "points":25},
+    "Paint It Black":{"id_one":0x7061696e, "id_two":0x74697462, "max_notes":942, "points":25},
+    "Suck My Kiss":{"id_one":0x7375636b, "id_two":0x6d796b69, "max_notes":562, "points":25},
+    "Paranoid":{"id_one":0x70617261, "id_two":0x6e6f6964, "max_notes":685, "points":25},
+    "Anarchy in the U.K.":{"id_one":0x616e6172, "id_two":0x63687969, "max_notes":792, "points":25},
+    "Kool Thing":{"id_one":0x6b6f6f6c, "id_two":0x7468696e, "max_notes":1032, "points":25},
+    "My Name Is Jonas":{"id_one":0x6d796e61, "id_two":0x6d656973, "max_notes":843, "points":25},
+    "Even Flow":{"id_one":0x6576656e, "id_two":0x666c6f77, "max_notes":1047, "points":25},
+    "Cities On Flame with Rock & Roll":{"id_one":0x63697469, "id_two":0x65736f6e, "max_notes":910, "points":25},
+    "Holiday In Cambodia":{"id_one":0x686f6c69, "id_two":0x64617969, "max_notes":1361, "points":25},
+    "Rock You Like a Hurricane":{"id_one":0x726f636b, "id_two":0x756c696b, "max_notes":843, "points":25},
+    "Same Old Song and Dance":{"id_one":0x73616d65, "id_two":0x6f6c6473, "max_notes":626, "points":25},
+    "La Grange":{"id_one":0x6c616772, "id_two":0x616e6765, "max_notes":815, "points":25},
+    "Welcome To The Jungle":{"id_one":0x77656c63, "id_two":0x6f6d6574, "max_notes":937, "points":25},
+    "Helicopter":{"id_one":0x68656c69, "id_two":0x636f7074, "max_notes":871, "points":50},
+    "Black Magic Woman":{"id_one":0x626c6163, "id_two":0x6b6d6167, "max_notes":728, "points":25},
+    "Cherub Rock":{"id_one":0x63686572, "id_two":0x7562726f, "max_notes":1163, "points":25},
+    "Black Sunshine":{"id_one":0x626c6163, "id_two":0x6b73756e, "max_notes":994, "points":25},
+    "The Metal":{"id_one":0x7468656d, "id_two":0x6574616c, "max_notes":882, "points":50},
+    "Pride and Joy":{"id_one":0x70726964, "id_two":0x656e6a6f, "max_notes":982, "points":25},
+    "Monsters":{"id_one":0x6d6f6e73, "id_two":0x74657273, "max_notes":1091, "points":25},
+    "Before I Forget":{"id_one":0x6265666f, "id_two":0x72656966, "max_notes":1091, "points":100},
+    "Stricken":{"id_one":0x73747269, "id_two":0x636b656e, "max_notes":1080, "points":50},
+    "3's & 7's":{"id_one":0x74687265, "id_two":0x6573616e, "max_notes":961, "points":50},
+    "Knights of Cydonia":{"id_one":0x6b6e6967, "id_two":0x6874736f, "max_notes":1917, "points":50},
+    "Cult of Personality":{"id_one":0x63756c74, "id_two":0x6f667065, "max_notes":1278, "points":25},
+    "Raining Blood":{"id_one":0x7261696e, "id_two":0x696e6762, "max_notes":1247, "points":100},
+    "Cliffs of Dover":{"id_one":0x636c6966, "id_two":0x66736f66, "max_notes":1240, "points":50},
+    "The Number of the Beast":{"id_one":0x6e756d62, "id_two":0x65726f66, "max_notes":1515, "points":50},
+    "One":{"id_one":0x6f6e652e, "id_two":0x6d69642e, "max_notes":2207, "points":100},
+    "Avalancha":{"id_one":0x6176616c, "id_two":0x616e6368, "max_notes":969, "points":25},
+    "In The Belly Of A Shark":{"id_one":0x62656c6c, "id_two":0x796f6661, "max_notes":738, "points":50},
+    "Can't Be Saved":{"id_one":0x63616e74, "id_two":0x62657361, "max_notes":723, "points":25},
+    "Closer":{"id_one":0x636c6f73, "id_two":0x65722e6d, "max_notes":467, "points":25},
+    "Don't Hold Back":{"id_one":0x646f6e74, "id_two":0x686f6c64, "max_notes":945, "points":25},
+    "Down 'N Dirty":{"id_one":0x646f776e, "id_two":0x6e646972, "max_notes":1278, "points":25},
+    "F.C.P.R.E.M.I.X.":{"id_one":0x66637072, "id_two":0x656d6978, "max_notes":1362, "points":25},
+    "Generation Rock":{"id_one":0x67656e65, "id_two":0x72617469, "max_notes":734, "points":25},
+    "Go That Far":{"id_one":0x676f7468, "id_two":0x61746661, "max_notes":835, "points":25},
+    "Hier Kommt Alex":{"id_one":0x68696572, "id_two":0x6b6f6d6d, "max_notes":982, "points":25},
+    "I'm In The Band":{"id_one":0x696d696e, "id_two":0x74686562, "max_notes":717, "points":25},
+    "Impulse":{"id_one":0x696d7075, "id_two":0x6c73652e, "max_notes":1054, "points":25},
+    "In Love":{"id_one":0x696e6c6f, "id_two":0x76652e6d, "max_notes":910, "points":25},
+    "Mauvais Garcon":{"id_one":0x6d617576, "id_two":0x61697367, "max_notes":780, "points":25},
+    "Metal Heavy Lady":{"id_one":0x6d657461, "id_two":0x6c686561, "max_notes":601, "points":25},
+    "Minus Celsius":{"id_one":0x6d696e75, "id_two":0x7363656c, "max_notes":613, "points":25},
+    "My Curse":{"id_one":0x6d796375, "id_two":0x7273652e, "max_notes":1399, "points":25},
+    "Nothing For Me Here":{"id_one":0x6e6f7468, "id_two":0x696e6766, "max_notes":947, "points":25},
+    "Prayer Of The Refugee":{"id_one":0x70726179, "id_two":0x65726f66, "max_notes":745, "points":25},
+    "Radio Song":{"id_one":0x72616469, "id_two":0x6f736f6e, "max_notes":519, "points":25},
+    "Ruby":{"id_one":0x72756279, "id_two":0x2e6d6964, "max_notes":463, "points":25},
+    "She Bangs The Drums":{"id_one":0x73686562, "id_two":0x616e6773, "max_notes":684, "points":25},
+    "Take This Life":{"id_one":0x74616b65, "id_two":0x74686973, "max_notes":1608, "points":25},
+    "The Way It Ends":{"id_one":0x74686577, "id_two":0x61796974, "max_notes":1883, "points":100},
+    "Through The Fire and Flames":{"id_one":0x74687275, "id_two":0x66697265, "max_notes":3722, "points":100}
+}
+//CHEATS:
+// $0547960: [32bit] Pointer - Easy Expert Cheat
+//           +0xc = Cheat Activated
+//           0x01=On, 0x02=Off
+on = 1
+off = 2
+function cheat_easy_expert() => dword(dword(0x547960) + 0xc)
+function debug_block() => dword(0x2616dc) != 0x224
+for song_entry in song_table{
+    achievement(
+        song_entry,
+        "Get an Expert full combo on " + song_entry + " (No Overstrum)",
+        points=song_table[song_entry]["points"],
+        trigger=
+            difficulty() == expert &&
+            cheat_easy_expert() != on &&
+            debug_block() &&
+            once(prev(combo()) == 0 && combo() == 1 && notes() < 2) &&
+            firstsongID() == song_table[song_entry]["id_one"] &&
+            secondsongID() == song_table[song_entry]["id_two"] &&
+            trigger_when(combo() == song_table[song_entry]["max_notes"]) &&
+            never(combo() < prev(combo())) &&
+            never(game_state() == menu)            
+    )       
+}
+>>>>>>> Stashed changes
