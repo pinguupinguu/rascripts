@@ -112,7 +112,7 @@ for i in range(70, 970, 20){
     achievement(
         "" + nombres_conquistas[i],
         "Complete lessons " + i-19 + "-" + i,
-        points=5,
+        points=10,
         trigger=
             lesson_cheevo(i)
     )          
