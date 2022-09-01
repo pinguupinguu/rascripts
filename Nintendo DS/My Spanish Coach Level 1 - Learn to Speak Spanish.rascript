@@ -28,6 +28,9 @@ function current_lesson() => word(0x146FC8)
 //          0x02 = Save File 3
 // $148018: [76-bits] Profile Name ASCII
 // $148029: [8-bit] Current Question?
+//0x147081 [N-bit] Cheat Flag
+//         Bit 0 = 1 if On, 0 if Off
+function cheat_off() => bit0(0x147081) == 0
 nombres_conquistas = {
     70: "El Viaje Ha Comenzado!",
     90: "Noventa Manzanas",
@@ -76,7 +79,7 @@ nombres_conquistas = {
     950: "Novecientos Cincuenta Años",
     970: "Novecientos Setenta Saludos"
 }
-function lesson_cheevo(target) => prev(current_lesson()) == target && current_lesson() == target + 1
+function lesson_cheevo(target) => prev(current_lesson()) == target && current_lesson() == target + 1 && cheat_off()
 achievement(//pinguu
     "Spanish Exam Master!",
     "Get a perfect entrance exam score!",
@@ -112,7 +115,7 @@ for i in range(70, 970, 20){
     achievement(
         "" + nombres_conquistas[i],
         "Complete lessons " + i-19 + "-" + i,
-        points=10,
+        points=5,
         trigger=
             lesson_cheevo(i)
     )          
