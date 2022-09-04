@@ -3,40 +3,31 @@
 
 // $36DD74: [32-bit] Difficulty - Career
 function difficulty_career() => dword(0x36DD74)
-
 // $371EF0: [32bit] Game State
 //          0x00=No
 //          0x01=In Game
 function game_state() => dword(0x371EF0)
-
 menu = 0
 in_game = 1
-
 // $373128: [32-bit] Notes Passed in Current Song
 function notes() => dword(0x373128)
 
 // $373168: [32-bit] Current Score
 function current_score() => dword(0x373168)
-
-
 // $373180: [32-bit] Current Combo
-
 function combo() => dword(0x373180)
-
 // $373188: [32-bit] Current Multiplier
 function multiplier() => dword(0x373188)
-
-
 // $67E384: [32-bit] Difficulty - Quick Play
 function difficulty_quickplay() => dword(0x67E384)
-
-
 // $548628: [32-bit] Pointer
 //          +0x20 - Difficulty
-easy = 0
-normal = 1
-hard = 2
-expert = 3
+difficulty = {
+    0:"Easy",
+    1:"Medium",
+    2:"Hard",
+    3:"Expert"
+}
 function difficulty() => dword(dword(0x548628) + 0x20)
 // $1B3F32B: [32-bit BE] [ASCII] Song Title Letters 1-4 of loaded song
 //           Slow Ride - 0x736c6f77
@@ -282,7 +273,7 @@ for song_entry in song_table{
         "Get an Expert full combo on " + song_entry + " (No Overstrum)",
         points=song_table[song_entry]["points"],
         trigger=
-            difficulty() == expert &&
+            difficulty() == 3 && //Expert
             cheat_easy_expert() != on &&
             debug_block() &&
             once(prev(combo()) == 0 && combo() == 1 && notes() < 2) &&
@@ -293,3 +284,104 @@ for song_entry in song_table{
             never(game_state() == menu)            
     )       
 }
+//Rich Presence
+function guitar_battle_check() => firstsongID() == 0x626f7373
+guitar_bosses = {
+    0x746f6d2e:"Tom Morello",
+    0x736c6173:"Slash",
+    0x64657669:"Lou"
+}
+//We generate the following function because the first ID ascii list has conflicting issues. Hopefully we get argumentative RP return values someday, but for now this is a workaround.
+function song_exception_check(id_one, id_two) => firstsongID() == id_one && secondsongID() == id_two
+song_rp_list = { //First ID. 
+    0x736c6f77:"Slow Ride",
+    0x74616c6b:"Talk Dirty To Me",
+    0x6869746d:"Hit Me With Your Best Shot",
+    0x73746f72:"Story Of My Life",
+    0x7361626f:"Sabotage",
+    0x7363686f:"School's Out",
+    0x73756e73:"Sunshine of Your Love",
+    0x62617272:"Barracuda",
+    0x62756c6c:"Bulls on Parade",
+    0x72657074:"Reptilia",
+    0x7768656e:"When You Were Young",
+    0x6d697373:"Miss Murder",
+    0x74686573:"The Seeker",
+    0x6c617964:"Lay Down",
+    0x7061696e:"Paint It Black",
+    0x7375636b:"Suck My Kiss",
+    0x70617261:"Paranoid",
+    0x616e6172:"Anarchy in the U.K.",
+    0x6b6f6f6c:"Kool Thing",
+    0x6d796e61:"My Name Is Jonas",
+    0x6576656e:"Even Flow",
+    0x63697469:"Cities On Flame with Rock & Roll",
+    0x686f6c69:"Holiday In Cambodia",
+    0x726f636b:"Rock You Like a Hurricane",
+    0x73616d65:"Same Old Song and Dance",
+    0x6c616772:"La Grange",
+    0x77656c63:"Welcome To The Jungle",
+    0x68656c69:"Helicopter",
+    0x63686572:"Cherub Rock",
+    0x626c6163:"Black Sunshine",
+    0x7468656d:"The Metal",
+    0x70726964:"Pride and Joy",
+    0x6d6f6e73:"Monsters",
+    0x6265666f:"Before I Forget",
+    0x73747269:"Stricken",
+    0x74687265:"3's & 7's",
+    0x6b6e6967:"Knights of Cydonia",
+    0x63756c74:"Cult of Personality",
+    0x7261696e:"Raining Blood",
+    0x636c6966:"Cliffs of Dover",
+    0x6e756d62:"The Number of the Beast",
+    0x6f6e652e:"One",
+    0x6176616c:"Avalancha",
+    0x62656c6c:"In The Belly Of A Shark",
+    0x63616e74:"Can't Be Saved",
+    0x636c6f73:"Closer",
+    0x646f6e74:"Don't Hold Back",
+    0x646f776e:"Down 'N Dirty",
+    0x66637072:"F.C.P.R.E.M.I.X.",
+    0x67656e65:"Generation Rock",
+    0x676f7468:"Go That Far",
+    0x68696572:"Hier Kommt Alex",
+    0x696d696e:"I'm In The Band",
+    0x696d7075:"Impulse",
+    0x696e6c6f:"In Love",
+    0x6d617576:"Mauvais Garcon",
+    0x6d657461:"Metal Heavy Lady",
+    0x6d696e75:"Minus Celsius",
+    0x6d796375:"My Curse",
+    0x6e6f7468:"Nothing For Me Here",
+    0x70726179:"Prayer Of The Refugee",
+    0x72616469:"Radio Song",
+    0x72756279:"Ruby",
+    0x73686562:"She Bangs The Drums",
+    0x74616b65:"Take This Life",
+    0x74686577:"The Way It Ends",
+    0x74687275:"Through The Fire and Flames"
+}
+function difficulty_read() => rich_presence_lookup("Difficulty", difficulty(), difficulty)
+rich_presence_conditional_display(guitar_battle_check() && game_state() == in_game, "Battling {0} on {1}",
+    rich_presence_lookup("Boss", secondsongID(), guitar_bosses),
+    difficulty_read()   
+)
+rich_presence_conditional_display(song_exception_check(0x626c6163, 0x6b6d6167) && game_state() == in_game, "Rockin' out to Black Magic Woman on {0}. Score: {1}", //Black Magic Woman
+    difficulty_read(),
+    rich_presence_macro("Number", current_score())
+)
+rich_presence_conditional_display(song_exception_check(0x6d697373, 0x69737369) && game_state() == in_game, "Rockin' out to Mississippi Queen on {0}. Score: {1}", //Mississippi Queen
+    difficulty_read(),
+    rich_presence_macro("Number", current_score())
+)
+rich_presence_conditional_display(song_exception_check(0x726f636b, 0x6e726f6c) && game_state() == in_game, "Rockin' out to Rock and Roll All Nite on {0}. Score: {1}",
+    difficulty_read(),
+    rich_presence_macro("Number", current_score())
+)
+rich_presence_conditional_display(game_state() == in_game, "Rockin' out to {0} on {1}. Score: {2}",
+    rich_presence_lookup("Song", firstsongID(), song_rp_list),
+    difficulty_read(),
+    rich_presence_macro("Number", current_score())
+)
+rich_presence_display("In Menu")
