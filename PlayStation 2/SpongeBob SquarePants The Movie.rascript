@@ -826,8 +826,9 @@ achievement(
 //          
 //          bit6=Unlock max upgrades
 //          bit7=Unlock all tasks
-function blazes_favorite_cheat_block() => never(once(bit0(0x636fa5) > prev(bit0(0x636fa5)) || bit1(0x636fa6) > prev(bit1(0x636fa6)) || bit6(0x636fa6) > prev(bit6(0x636fa6))))
-function upgrade_cheevo(upgrade, max) => prev(dword(upgrade)) == max - 1 && dword(upgrade) == max && blazes_favorite_cheat_block()
+function load_protection() => prev(dword(dword(game_pointer() + token_pointer) + 0x14)) == 3 //+0x14 = no cheese.
+function blazes_favorite_cheat_block() => unless(once(bit0(0x636fa5) > prev(bit0(0x636fa5)) || bit1(0x636fa6) > prev(bit1(0x636fa6)) || bit6(0x636fa6) > prev(bit6(0x636fa6))))
+function upgrade_cheevo(upgrade, max) => prev(dword(upgrade)) == max - 1 && dword(upgrade) == max && blazes_favorite_cheat_block() && load_protection()
 // $7ABC01: [8bit] Upgrade (Spongebob) - Health (Max = 3)
 achievement(
     "The Secret Formula",
@@ -838,7 +839,7 @@ achievement(
 )
 // $7ABBF9: [8bit] Upgrade (Spongebob) - Karate Spin (Max = 2)
 achievement(
-    "I Love Kara-te",
+    "I Love Kah-Ra-Tay",
     "Upgrade Spongebob's Karate Spin move to Macho",
     points=2,
     trigger=
