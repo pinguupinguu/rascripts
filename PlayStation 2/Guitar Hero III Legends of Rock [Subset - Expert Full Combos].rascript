@@ -189,7 +189,7 @@ function firstsongID() => dword_be(0x1B3F32B)
 function secondsongID() => dword_be(0x1B3F32F)
 song_table = {
     "Slow Ride":{"id_one":0x736c6f77, "id_two":0x72696465, "max_notes":551, "points":25},
-    "Talk Dirty To me":{"id_one":0x74616c6b, "id_two":0x64697274, "max_notes":772, "points":25},
+    "Talk Dirty To Me":{"id_one":0x74616c6b, "id_two":0x64697274, "max_notes":772, "points":25},
     "Hit Me With Your Best Shot":{"id_one":0x6869746d, "id_two":0x65776974, "max_notes":491, "points":25},
     "Story Of My Life":{"id_one":0x73746f72, "id_two":0x796f666d, "max_notes":935, "points":25},
     "Rock and Roll All Nite":{"id_one":0x726f636b, "id_two":0x6e726f6c, "max_notes":515, "points":25},
