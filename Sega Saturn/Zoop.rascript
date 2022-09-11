@@ -49,11 +49,21 @@ function score() => word(0x1E1C6E)
 // $1E3E4E: [16bit] Stage
 function stage() => word(0x1E3E4E)
 // $1E3E5E: [16bit] Shapes Left
+function shapes() => word(0x1E3E5E)
 // $1E3E6E: [16bit] Pieces Frozen
 //          0x00=No
 //          0x01=Yes
 //          
 //          Death Occurs When Address = 1 while Shapes != 0
+achievement(
+    "Shape Journey Has Started",
+    "Clear your first round of Zoop!",
+    points=4,
+    trigger=
+        demo_mode() == 0 &&
+        prev(shapes()) != 0 &&
+        shapes() == 0
+)
 achievement(
     "Advanced Columnist",
     "Get 5,000 points for clearing a full vertical column!",
@@ -83,3 +93,4 @@ rich_presence_display("Zoopin' in Game {0} on Stage {1}. Points: {2}",
     rich_presence_macro("Number", score_scale() + score())
 
 )
+
