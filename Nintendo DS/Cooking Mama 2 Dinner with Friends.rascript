@@ -1000,6 +1000,7 @@ achievement(
 // $17B0EB: Bit0=Merry Christmas Sign
 //          Bit1=Snowman
 //          ===END STICKERS===
+function outfit_save_protection() => prev(bit2(0x17B0EB)) == 1 
 function sticker_sum() =>
     //FRAMES
     bit2(0x17B0D6) +
@@ -1057,12 +1058,14 @@ function sticker_sum() =>
     bitcount(0x17B0EA) +
     bit0(0x17B0EB) +
     bit1(0x17B0EB)
+      
 achievement(
     "Sticker Collector",
     "Unlock 81 stickers in addition to the ones you already own!",
     points=10,
     trigger=
-        prev(sticker_sum()) == 80 &&
+        outfit_save_protection() &&
+        prev(sticker_sum()) < 81 &&
         measured(sticker_sum() == 81)
 )
 achievement(
@@ -1070,9 +1073,11 @@ achievement(
     "Unlock all 162 missing stickers to complete your collection!",
     points=25,
     trigger=
-        prev(sticker_sum()) == 161 &&
+        outfit_save_protection() &&
+        prev(sticker_sum()) < 162 &&
         measured(sticker_sum() == 162)
-)   
+)
+function outfit_save_protection() => prev(bit2(0x17B0EB)) == 1   
 // $17B0EB: [NBit] Collectibles - Outfits
 //          Bit2=Brown Apron (Default)
 //          Bit3=Pink Apron (Default)
@@ -1148,9 +1153,10 @@ achievement(
     "Dress for Success",
     "Unlock all additional outfits!",
     points=10,
-    trigger=
-       prev(outfit_sum()) == 44 &&
-       measured(outfit_sum() == 45)
+    trigger=        
+        outfit_save_protection() && 
+        prev(outfit_sum()) < 45 &&
+        measured(outfit_sum() == 45)
 )
 // $17B0F1: ===ACCESSORIES===
 //          Bit4=Glasses (Red Frames)
@@ -1209,7 +1215,8 @@ achievement(
     "Unlock all additional accessories!",
     points=10,
     trigger=
-        prev(accessory_sum()) == 20 &&
+        outfit_save_protection() &&
+        prev(accessory_sum()) < 21 &&
         measured(accessory_sum() == 21) 
 )
 // $17CF74: [32bit] Let's Cook Current Page (Indice)
