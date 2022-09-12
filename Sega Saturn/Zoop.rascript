@@ -89,66 +89,66 @@ function clear_stage(game_mode, stage) =>
     shapes() == 0
 achievement(
     "Zoop Da Loop",
-    "Clear Stage 5 (Game A, Level Start = 0, Difficulty = Any)",
+    "Clear Stage 5 (Game A, Level Start = 1, Difficulty = Any)",
     points=10,
     trigger=
         clear_stage(game_a, 5)
 )
 achievement(
     "Continuous Grid!",
-    "Clear Stage 10 (Game A, Level Start = 0, Difficulty = Any)",
+    "Clear Stage 10 (Game A, Level Start = 1, Difficulty = Any)",
     points=25, 
     trigger=
         clear_stage(game_a, 10)
 )
 achievement(
     "Shape EXP",
-    "Clear Stage 5 (Game B, Level Start = 0, Difficulty = Any)",
+    "Clear Stage 5 (Game B, Level Start = 1, Difficulty = Any)",
     points=10,
     trigger=
         clear_stage(game_b, 5)
 )
 achievement(
     "Level Grinding Is Boring...",
-    "Clear Stage 10 (Game B, Level Start = 0, Difficulty = Any)",
+    "Clear Stage 10 (Game B, Level Start = 1, Difficulty = Any)",
     points=25,
     trigger=
         clear_stage(game_b, 10)
 )
-function stage_hit() => once(stage() == 1 && state() > prev(state()) && never(shapes() != 0 &&   pieces_froze() > prev(pieces_froze())))
-function challenge_stage(game_mode, target, game_diff, stage_start) => //Difficulty is DEFAULTED to four.
-         unless(active_game() != game_mode) &&
-         unless(game_diff != 4) &&
-         unless(stage_start != 0) &&
-         stage_hit() &&
-         trigger_when(stage() == target && shapes() < prev(shapes()) && shapes() == 0)
 achievement(
     "Advanced Shape Shooter",
-    "Clear Stage 5 without taking Game Over. (Game A, Level Start = 0, Difficulty = 4)",
+    "Clear Stage 5 (Game A, Level Start = 1, Difficutly = 4)",
     points=25,
     trigger=
-        challenge_stage(game_a, 5, game_a_difficulty(), game_a_start())
+        clear_stage(game_a, 5) &&
+        game_a_difficulty() == 4
 )
 achievement(
     "Maniacal Shape Shooter",
-    "Clear Stage 10 without taking Game Over. (Game A, Level Start = 0, DIfficulty = 4)",
+    "Clear Stage 10 (Game A, Level Start = 1, Difficulty = 4)",
     points=100,
     trigger=
-        challenge_stage(game_a, 10, game_a_difficulty(), game_a_start())
+        clear_stage(game_a, 10) &&
+        game_a_difficulty() ==  4 &&
+        game_a_start() == 0
 )
 achievement(
     "Game A Is Harder",
-    "Clear Stage 5 without taking Game Over. (Game B, Level Start = 0, Difficulty = 4)",
+    "Clear Stage 5 (Game B, Level Start = 1, Difficulty = 4)",
     points=25,
     trigger=
-        challenge_stage(game_b, 5, game_b_difficulty(), game_b_start())
+        clear_stage(game_b, 5) &&
+        game_b_difficulty() == 4 &&
+        game_b_start() == 0
 )
 achievement(
     "Game B Master",
-    "Clear Stage 10 without taking Game Over. (Game B, Level Start = 0, DIfficulty = 4)",
+    "Clear Stage 10 (Game B, Level Start = 1, Difficulty = 4)",
     points=50,
     trigger=
-        challenge_stage(game_b, 10, game_b_difficulty(), game_b_start())
+        clear_stage(game_b, 10) &&
+        game_b_difficulty() == 4 &&
+        game_b_start() == 0
 )
 function score_cheevo(target) => 
         game_check() &&
