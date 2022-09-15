@@ -11,7 +11,6 @@ menu = 0
 in_game = 1
 // $373128: [32-bit] Notes Passed in Current Song
 function notes() => dword(0x373128)
-
 // $373168: [32-bit] Current Score
 function current_score() => dword(0x373168)
 // $373180: [32-bit] Current Combo
@@ -363,6 +362,7 @@ song_rp_list = { //First ID.
     0x74687275:"Through The Fire and Flames"
 }
 function difficulty_read() => rich_presence_lookup("Difficulty", difficulty(), difficulty)
+rich_presence_conditional_display(dword(0x2616dc) == 0x224, "Playing Guitar Hero with the Debug Menu. Booo!!!!")
 rich_presence_conditional_display(guitar_battle_check() && game_state() == in_game, "Battling {0} on {1}",
     rich_presence_lookup("Boss", secondsongID(), guitar_bosses),
     difficulty_read()   

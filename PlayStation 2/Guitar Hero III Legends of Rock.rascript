@@ -282,6 +282,14 @@ function difficulty() => dword(dword(0x548628) + 0x20)
 function game_state() => dword(0x371EF0)
 menu = 0
 in_game = 1
+// $0547960: [32bit] Pointer - Easy Expert Cheat
+//           +0xc = Cheat Activated
+//           0x01=On, 0x02=Off
+on = 1
+off = 2
+function cheat_easy_expert() => dword(dword(0x547960) + 0xc)
+function cheat_no_fail() => dword(dword(0x5555d4) + 0xc)
+function cheat_check() => (always_false() || (cheat_easy_expert() == off || cheat_easy_expert() == 0xffffffff) && (cheat_no_fail() == off || cheat_no_fail() == 0xffffffff )  )
 function debug_block() => dword(0x2616dc) != 0x224
 function guitar_battle_check() => firstsongID() == 0x626f7373
 guitar_bosses = {
@@ -302,7 +310,8 @@ function guitar_battle(foe, my_difficulty) =>
     difficulty() == my_difficulty &&
     player_rock_meter() > 0.0 &&
     foe_rock_meter() < prev(foe_rock_meter()) && //- Making a Github issue for Jamiras to add in support for the following line
-    foe_rock_meter() < 0.0
+    foe_rock_meter() < 0.0 &&
+    cheat_check()
 achievement(
     "Morello is Easy",
     "Defeat Tom Morello in a Guitar battle on Easy!",
@@ -318,7 +327,7 @@ achievement(
         guitar_battle("Slash", 0)
 )
 achievement(
-    "The Devil Went Down on Easy",
+    "The Devil Went Down On Easy",
     "Defeat Lou in a Guitar battle on Easy!",
     points=10,
     trigger=
@@ -381,8 +390,8 @@ achievement(
         guitar_battle("Slash", 3)
 )
 achievement(
-    "Sned Lou Back to Damnation!",
-    "Defeat Lou in a guitar battle on expert!",
+    "Send Lou Back to Damnation!",
+    "Defeat Lou in a guitar battle on Expert!",
     points=50,
     trigger=
         guitar_battle("Lou", 3)
@@ -466,7 +475,102 @@ song_rp_list = { //First ID.
     0x74686577:"The Way It Ends",
     0x74687275:"Through The Fire and Flames"
 }
+song_table = {
+    "Can't Be Saved":{"id_one":0x63616e74, "id_two":0x62657361, "max_notes":723, "points":5},
+    "Closer":{"id_one":0x636c6f73, "id_two":0x65722e6d, "max_notes":467, "points":5},
+    "Don't Hold Back":{"id_one":0x646f6e74, "id_two":0x686f6c64, "max_notes":945, "points":5},
+    "Down 'N Dirty":{"id_one":0x646f776e, "id_two":0x6e646972, "max_notes":1278, "points":5},
+    "F.C.P.R.E.M.I.X.":{"id_one":0x66637072, "id_two":0x656d6978, "max_notes":1362, "points":5},
+    "Generation Rock":{"id_one":0x67656e65, "id_two":0x72617469, "max_notes":734, "points":5},
+    "Go That Far":{"id_one":0x676f7468, "id_two":0x61746661, "max_notes":835, "points":5},
+    "Hier Kommt Alex":{"id_one":0x68696572, "id_two":0x6b6f6d6d, "max_notes":982, "points":5},
+    "I'm In The Band":{"id_one":0x696d696e, "id_two":0x74686562, "max_notes":717, "points":5},
+    "Impulse":{"id_one":0x696d7075, "id_two":0x6c73652e, "max_notes":1054, "points":5},
+    "In Love":{"id_one":0x696e6c6f, "id_two":0x76652e6d, "max_notes":910, "points":5},
+    "In The Belly Of A Shark":{"id_one":0x62656c6c, "id_two":0x796f6661, "max_notes":738, "points":10},
+    "Mauvais Garcon":{"id_one":0x6d617576, "id_two":0x61697367, "max_notes":780, "points":5},
+    "Metal Heavy Lady":{"id_one":0x6d657461, "id_two":0x6c686561, "max_notes":601, "points":5},
+    "Minus Celsius":{"id_one":0x6d696e75, "id_two":0x7363656c, "max_notes":613, "points":5},
+    "My Curse":{"id_one":0x6d796375, "id_two":0x7273652e, "max_notes":1399, "points":5},
+    "Nothing For Me Here":{"id_one":0x6e6f7468, "id_two":0x696e6766, "max_notes":947, "points":5},
+    "Prayer Of The Refugee":{"id_one":0x70726179, "id_two":0x65726f66, "max_notes":745, "points":5},
+    "Radio Song":{"id_one":0x72616469, "id_two":0x6f736f6e, "max_notes":519, "points":5},
+    "Ruby":{"id_one":0x72756279, "id_two":0x2e6d6964, "max_notes":463, "points":5},
+    "She Bangs The Drums":{"id_one":0x73686562, "id_two":0x616e6773, "max_notes":684, "points":5},
+    "Take This Life":{"id_one":0x74616b65, "id_two":0x74686973, "max_notes":1608, "points":5},
+    "The Way It Ends":{"id_one":0x74686577, "id_two":0x61796974, "max_notes":1883, "points":10},
+    "Through The Fire and Flames":{"id_one":0x74687275, "id_two":0x66697265, "max_notes":3722, "points":10}
+}    
+// $373128: [32-bit] Notes Passed in Current Song
+function notes() => dword(0x373128)    
+//SnowPin Achievements:
+for song_entry in song_table{
+    achievement(
+        "Easy " + song_entry,
+        "Clear " + song_entry + " on Easy Difficulty",
+        points= 2,
+        trigger=
+            difficulty() == 0 && //Easy
+            (cheat_check()) &&
+            debug_block() &&
+            firstsongID() == song_table[song_entry]["id_one"] &&
+            secondsongID() == song_table[song_entry]["id_two"] &&
+            notes() == song_table[song_entry]["max_notes"] &&
+            never(game_state() == menu)            
+    )       
+}
+
+for song_entry in song_table{
+    achievement(
+        "Medium " + song_entry,
+        "Clear " + song_entry + " on Medium Difficulty",
+        points= 3,
+        trigger=
+            difficulty() == 1 && //Medium
+            (cheat_check()) &&
+            debug_block() &&
+            firstsongID() == song_table[song_entry]["id_one"] &&
+            secondsongID() == song_table[song_entry]["id_two"] &&
+            notes() == song_table[song_entry]["max_notes"] &&
+            never(game_state() == menu)            
+    )       
+}
+
+for song_entry in song_table{
+    achievement(
+        "Hard " + song_entry,
+        "Clear " + song_entry + " on Hard difficulty",
+        points= 4,
+        trigger=
+            difficulty() == 2 && //Hard
+            debug_block() &&
+            (cheat_check()) && 
+            firstsongID() == song_table[song_entry]["id_one"] &&
+            secondsongID() == song_table[song_entry]["id_two"] &&
+            notes() == song_table[song_entry]["max_notes"] &&
+            never(game_state() == menu)            
+    )       
+}
+
+for song_entry in song_table{
+    achievement(
+        "Expert "+ song_entry,
+        "Clear " + song_entry + " on Expert Difficulty",
+        points= 5,
+        trigger=
+            difficulty() == 3 && //Expert
+            cheat_easy_expert() != on &&
+            debug_block() &&
+            (cheat_check()) && 
+            firstsongID() == song_table[song_entry]["id_one"] &&
+            secondsongID() == song_table[song_entry]["id_two"] &&
+            notes() == song_table[song_entry]["max_notes"] &&
+            never(game_state() == menu)            
+    )       
+}
 function difficulty_read() => rich_presence_lookup("Difficulty", difficulty(), difficulty)
+rich_presence_conditional_display(dword(0x2616dc) == 0x224, "Playing Guitar Hero with the Debug Menu. Booo!!!!")
+
 rich_presence_conditional_display(guitar_battle_check() && game_state() == in_game, "Battling {0} on {1}",
     rich_presence_lookup("Boss", secondsongID(), guitar_bosses_rp),
     difficulty_read()   
@@ -490,8 +594,7 @@ rich_presence_conditional_display(game_state() == in_game, "Rockin' out to {0} o
 )
 rich_presence_display("In Menu")
 //Leaderboards
-
-song_table = {
+song_table_lb = {
     "Slow Ride":{"id_one":0x736c6f77, "id_two":0x72696465, "max_notes":551, "points":25},
     "Talk Dirty To Me":{"id_one":0x74616c6b, "id_two":0x64697274, "max_notes":772, "points":25},
     "Hit Me With Your Best Shot":{"id_one":0x6869746d, "id_two":0x65776974, "max_notes":491, "points":25},
@@ -563,31 +666,21 @@ song_table = {
     "The Way It Ends":{"id_one":0x74686577, "id_two":0x61796974, "max_notes":1883, "points":100},
     "Through The Fire and Flames":{"id_one":0x74687275, "id_two":0x66697265, "max_notes":3722, "points":100}
 }
-// $373128: [32-bit] Notes Passed in Current Song
-function notes() => dword(0x373128)
 function track_timer() => float(0x3bef48)
 function track_running() => dword(0x369a64) != 1
-// $0547960: [32bit] Pointer - Easy Expert Cheat
-//           +0xc = Cheat Activated
-//           0x01=On, 0x02=Off
-on = 1
-off = 2
-function cheat_easy_expert() => dword(dword(0x547960) + 0xc)
-for song in song_table {
+for song in song_table_lb {
     leaderboard(
         song + " [Expert]",
         "Highest Score!",
-        debug_block() && 
-             
+        debug_block() &&              
             difficulty() == 3 &&
             game_state() == in_game &&
-            firstsongID() == song_table[song]["id_one"] &&
-            secondsongID() == song_table[song]["id_two"] &&
+            firstsongID() == song_table_lb[song]["id_one"] &&
+            secondsongID() == song_table_lb[song]["id_two"] &&
             prev(notes()) == 0 && notes() == 1 && 
-            (always_false() || cheat_easy_expert() == off || cheat_easy_expert() == 0xffffffff)
-            ,
+            cheat_check(),
         game_state() == menu,
-        track_running() && notes() == song_table[song]["max_notes"] && track_timer() == prev(track_timer()),
+        track_running() && notes() == song_table_lb[song]["max_notes"] && track_timer() == prev(track_timer()),
         current_score()
     )    
 }
