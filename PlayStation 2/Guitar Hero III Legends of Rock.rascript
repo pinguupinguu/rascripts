@@ -187,7 +187,9 @@
 //           Take This Life - 0x74616b65
 //           The Way It Ends - 0x74686577
 //           Through The Fire and Flames - 0x74687275
-function firstsongID() => dword_be(0x1B3F32B)
+//function firstsongID() => dword_be(0x1B3F32B)
+ascii_one_offset = 0xffff1CD3
+function firstsongID() => dword_be(dword(0x371F98) + ascii_one_offset)
 // $1B3F32F: [32-bit BE] [ASCII] Song Title Letters 5-8 of loaded song
 //           Slow Ride -  0x72696465
 //           Talk Dirty To Me - 0x64697274
@@ -266,7 +268,9 @@ function firstsongID() => dword_be(0x1B3F32B)
 //           Take This Life - 0x74686973
 //           The Way It Ends - 0x61796974
 //           Through The Fire and Flames - 0x66697265
-function secondsongID() => dword_be(0x1B3F32F)
+//function secondsongID() => dword_be(0x1B3F32F)
+ascii_two_offset = 0xffff1CD3
+function secondsongID() => dword_be(dword(0x371F98) + ascii_two_offset)
 // $548628: [32-bit] Pointer
 //          +0x20 - Difficulty
 difficulty = {
@@ -476,31 +480,32 @@ song_rp_list = { //First ID.
     0x74687275:"Through The Fire and Flames"
 }
 song_table = {
-    "Can't Be Saved":{"id_one":0x63616e74, "id_two":0x62657361, "max_notes":723, "points":5},
-    "Closer":{"id_one":0x636c6f73, "id_two":0x65722e6d, "max_notes":467, "points":5},
-    "Don't Hold Back":{"id_one":0x646f6e74, "id_two":0x686f6c64, "max_notes":945, "points":5},
-    "Down 'N Dirty":{"id_one":0x646f776e, "id_two":0x6e646972, "max_notes":1278, "points":5},
-    "F.C.P.R.E.M.I.X.":{"id_one":0x66637072, "id_two":0x656d6978, "max_notes":1362, "points":5},
-    "Generation Rock":{"id_one":0x67656e65, "id_two":0x72617469, "max_notes":734, "points":5},
-    "Go That Far":{"id_one":0x676f7468, "id_two":0x61746661, "max_notes":835, "points":5},
-    "Hier Kommt Alex":{"id_one":0x68696572, "id_two":0x6b6f6d6d, "max_notes":982, "points":5},
-    "I'm In The Band":{"id_one":0x696d696e, "id_two":0x74686562, "max_notes":717, "points":5},
-    "Impulse":{"id_one":0x696d7075, "id_two":0x6c73652e, "max_notes":1054, "points":5},
-    "In Love":{"id_one":0x696e6c6f, "id_two":0x76652e6d, "max_notes":910, "points":5},
-    "In The Belly Of A Shark":{"id_one":0x62656c6c, "id_two":0x796f6661, "max_notes":738, "points":10},
-    "Mauvais Garcon":{"id_one":0x6d617576, "id_two":0x61697367, "max_notes":780, "points":5},
-    "Metal Heavy Lady":{"id_one":0x6d657461, "id_two":0x6c686561, "max_notes":601, "points":5},
-    "Minus Celsius":{"id_one":0x6d696e75, "id_two":0x7363656c, "max_notes":613, "points":5},
-    "My Curse":{"id_one":0x6d796375, "id_two":0x7273652e, "max_notes":1399, "points":5},
-    "Nothing For Me Here":{"id_one":0x6e6f7468, "id_two":0x696e6766, "max_notes":947, "points":5},
-    "Prayer Of The Refugee":{"id_one":0x70726179, "id_two":0x65726f66, "max_notes":745, "points":5},
-    "Radio Song":{"id_one":0x72616469, "id_two":0x6f736f6e, "max_notes":519, "points":5},
-    "Ruby":{"id_one":0x72756279, "id_two":0x2e6d6964, "max_notes":463, "points":5},
-    "She Bangs The Drums":{"id_one":0x73686562, "id_two":0x616e6773, "max_notes":684, "points":5},
-    "Take This Life":{"id_one":0x74616b65, "id_two":0x74686973, "max_notes":1608, "points":5},
-    "The Way It Ends":{"id_one":0x74686577, "id_two":0x61796974, "max_notes":1883, "points":10},
-    "Through The Fire and Flames":{"id_one":0x74687275, "id_two":0x66697265, "max_notes":3722, "points":10}
-}    
+    "Avalancha":{"id_one":0x6176616c, "id_two":0x616e6368,                   "easy_notes":561, "med_notes":671, "hard_notes":881,"expertnotes":969},
+    "Can't Be Saved":{"id_one":0x63616e74, "id_two":0x62657361,              "easy_notes":303, "med_notes":461, "hard_notes":706,"expertnotes":723},
+    "Closer":{"id_one":0x636c6f73, "id_two":0x65722e6d,                      "easy_notes":285, "med_notes":423, "hard_notes":467,"expertnotes":467},
+    "Don't Hold Back":{"id_one":0x646f6e74, "id_two":0x686f6c64,             "easy_notes":514, "med_notes":710, "hard_notes":851,"expertnotes":945},
+    "Down 'N Dirty":{"id_one":0x646f776e, "id_two":0x6e646972,               "easy_notes":520, "med_notes":766, "hard_notes":1103,"expertnotes":1278},
+    "F.C.P.R.E.M.I.X.":{"id_one":0x66637072, "id_two":0x656d6978,            "easy_notes":485, "med_notes":903, "hard_notes":1198,"expertnotes":1362},
+    "Generation Rock":{"id_one":0x67656e65, "id_two":0x72617469,             "easy_notes":270, "med_notes":479, "hard_notes":658,"expertnotes":734},
+    "Go That Far":{"id_one":0x676f7468, "id_two":0x61746661,                 "easy_notes":284, "med_notes":504, "hard_notes":751,"expertnotes":835},
+    "Hier Kommt Alex":{"id_one":0x68696572, "id_two":0x6b6f6d6d,             "easy_notes":468, "med_notes":829, "hard_notes":836,"expertnotes":982},
+    "I'm In The Band":{"id_one":0x696d696e, "id_two":0x74686562,             "easy_notes":320, "med_notes":389, "hard_notes":593,"expertnotes":717},
+    "Impulse":{"id_one":0x696d7075, "id_two":0x6c73652e,                     "easy_notes":365, "med_notes":551, "hard_notes":825,"expertnotes":1054},
+    "In Love":{"id_one":0x696e6c6f, "id_two":0x76652e6d,                     "easy_notes":292, "med_notes":529, "hard_notes":770,"expertnotes":910},
+    "In The Belly Of A Shark":{"id_one":0x62656c6c, "id_two":0x796f6661,     "easy_notes":251, "med_notes":420, "hard_notes":583,"expertnotes":738},
+    "Mauvais Garcon":{"id_one":0x6d617576, "id_two":0x61697367,              "easy_notes":279, "med_notes":453, "hard_notes":545,"expertnotes":780},
+    "Metal Heavy Lady":{"id_one":0x6d657461, "id_two":0x6c686561,            "easy_notes":291, "med_notes":384, "hard_notes":489,"expertnotes":601},
+    "Minus Celsius":{"id_one":0x6d696e75, "id_two":0x7363656c,               "easy_notes":287, "med_notes":416, "hard_notes":605,"expertnotes":613},
+    "My Curse":{"id_one":0x6d796375, "id_two":0x7273652e,                    "easy_notes":460, "med_notes":766, "hard_notes":908,"expertnotes":1399},
+    "Nothing For Me Here":{"id_one":0x6e6f7468, "id_two":0x696e6766,         "easy_notes":308, "med_notes":555, "hard_notes":681,"expertnotes":947},
+    "Prayer Of The Refugee":{"id_one":0x70726179, "id_two":0x65726f66,       "easy_notes":327, "med_notes":520, "hard_notes":692,"expertnotes":745},
+    "Radio Song":{"id_one":0x72616469, "id_two":0x6f736f6e,                  "easy_notes":319, "med_notes":365, "hard_notes":495,"expertnotes":519},
+    "Ruby":{"id_one":0x72756279, "id_two":0x2e6d6964,                        "easy_notes":257, "med_notes":330, "hard_notes":433,"expertnotes":463},
+    "She Bangs The Drums":{"id_one":0x73686562, "id_two":0x616e6773,         "easy_notes":327, "med_notes":406, "hard_notes":628,"expertnotes":684},
+    "Take This Life":{"id_one":0x74616b65, "id_two":0x74686973,              "easy_notes":450, "med_notes":800, "hard_notes":1368,"expertnotes":1608},
+    "The Way It Ends":{"id_one":0x74686577, "id_two":0x61796974,             "easy_notes":523, "med_notes":614, "hard_notes":1250,"expertnotes":1883},
+    "Through The Fire and Flames":{"id_one":0x74687275, "id_two":0x66697265, "easy_notes":1102, "med_notes":1823, "hard_notes":2723,"expertnotes":3284}
+}   
 // $373128: [32-bit] Notes Passed in Current Song
 function notes() => dword(0x373128)    
 //SnowPin Achievements:
@@ -515,7 +520,7 @@ for song_entry in song_table{
             debug_block() &&
             firstsongID() == song_table[song_entry]["id_one"] &&
             secondsongID() == song_table[song_entry]["id_two"] &&
-            notes() == song_table[song_entry]["max_notes"] &&
+            notes() == song_table[song_entry]["easy_notes"] &&
             never(game_state() == menu)            
     )       
 }
@@ -531,7 +536,7 @@ for song_entry in song_table{
             debug_block() &&
             firstsongID() == song_table[song_entry]["id_one"] &&
             secondsongID() == song_table[song_entry]["id_two"] &&
-            notes() == song_table[song_entry]["max_notes"] &&
+            notes() == song_table[song_entry]["med_notes"] &&
             never(game_state() == menu)            
     )       
 }
@@ -547,7 +552,7 @@ for song_entry in song_table{
             (cheat_check()) && 
             firstsongID() == song_table[song_entry]["id_one"] &&
             secondsongID() == song_table[song_entry]["id_two"] &&
-            notes() == song_table[song_entry]["max_notes"] &&
+            notes() == song_table[song_entry]["hard_notes"] &&
             never(game_state() == menu)            
     )       
 }
@@ -564,7 +569,7 @@ for song_entry in song_table{
             (cheat_check()) && 
             firstsongID() == song_table[song_entry]["id_one"] &&
             secondsongID() == song_table[song_entry]["id_two"] &&
-            notes() == song_table[song_entry]["max_notes"] &&
+            notes() == song_table[song_entry]["expertnotes"] &&
             never(game_state() == menu)            
     )       
 }
