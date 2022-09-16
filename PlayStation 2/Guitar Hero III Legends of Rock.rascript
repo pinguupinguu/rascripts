@@ -267,10 +267,10 @@ function firstsongID() => dword_be(dword(0x371F98) + ascii_one_offset)
 //           She Bangs The Drums - 0x616e6773
 //           Take This Life - 0x74686973
 //           The Way It Ends - 0x61796974
-//           Through The Fire and Flames - 0x66697265
-//function secondsongID() => dword_be(0x1B3F32F)
+//           Through T                he Fire and Flames - 0x66697265
+//                  
 ascii_two_offset = 0xffff1CD3
-function secondsongID() => dword_be(dword(0x371F98) + ascii_two_offset)
+function secondsongID() => dword_be(dword(0x371F98) + ascii_two_offset)          
 // $548628: [32-bit] Pointer
 //          +0x20 - Difficulty
 difficulty = {
