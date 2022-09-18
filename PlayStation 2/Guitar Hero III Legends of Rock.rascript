@@ -109,7 +109,7 @@
 
 // $127FD40: [ASCII 64 bytes] Current Guitar Model File Path
 // $127FD52: [ASCII * bytes] Current Guitar Model
-// $1B3F32B: [32-bit BE] [ASCII] Song Title Letters 1-4 of loaded song
+// [32-bit BE] [ASCII] Song Title Letters 1-4 of loaded song
 //           Slow Ride - 0x736c6f77
 //           Talk Dirty To me - 0x74616c6b
 //           Hit Me With Your Best Shot - 0x6869746d
@@ -187,10 +187,8 @@
 //           Take This Life - 0x74616b65
 //           The Way It Ends - 0x74686577
 //           Through The Fire and Flames - 0x74687275
-//function firstsongID() => dword_be(0x1B3F32B)
-ascii_one_offset = 0xffff1CD3
-function firstsongID() => dword_be(dword(0x371F98) + ascii_one_offset)
-// $1B3F32F: [32-bit BE] [ASCII] Song Title Letters 5-8 of loaded song
+function firstsongID() => dword_be(dword(0x798CF0) + 0x3b)
+// [32-bit BE] [ASCII] Song Title Letters 5-8 of loaded song
 //           Slow Ride -  0x72696465
 //           Talk Dirty To Me - 0x64697274
 //           Hit Me With Your Best Shot - 0x65776974
@@ -267,10 +265,8 @@ function firstsongID() => dword_be(dword(0x371F98) + ascii_one_offset)
 //           She Bangs The Drums - 0x616e6773
 //           Take This Life - 0x74686973
 //           The Way It Ends - 0x61796974
-//           Through T                he Fire and Flames - 0x66697265
-//                  
-ascii_two_offset = 0xffff1CD3
-function secondsongID() => dword_be(dword(0x371F98) + ascii_two_offset)          
+//           Through The Fire and Flames - 0x66697265
+function secondsongID() => dword_be(dword(0x798CF0) + 0x3f)
 // $548628: [32-bit] Pointer
 //          +0x20 - Difficulty
 difficulty = {
@@ -410,6 +406,99 @@ guitar_bosses_rp = {
 function current_score() => dword(0x373168)
 //We generate the following function because the first ID ascii list has conflicting issues. Hopefully we get argumentative RP return values someday, but for now this is a workaround.
 function song_exception_check(id_one, id_two) => firstsongID() == id_one && secondsongID() == id_two
+song_table = {
+    "Avalancha":{"id_one":0x6176616c, "id_two":0x616e6368,                   "easy_notes":561, "med_notes":671, "hard_notes":881,"expertnotes":969},
+    "Can't Be Saved":{"id_one":0x63616e74, "id_two":0x62657361,              "easy_notes":303, "med_notes":461, "hard_notes":706,"expertnotes":723},
+    "Closer":{"id_one":0x636c6f73, "id_two":0x65722e6d,                      "easy_notes":285, "med_notes":423, "hard_notes":467,"expertnotes":467},
+    "Don't Hold Back":{"id_one":0x646f6e74, "id_two":0x686f6c64,             "easy_notes":514, "med_notes":710, "hard_notes":851,"expertnotes":945},
+    "Down 'N Dirty":{"id_one":0x646f776e, "id_two":0x6e646972,               "easy_notes":520, "med_notes":766, "hard_notes":1103,"expertnotes":1278},
+    "F.C.P.R.E.M.I.X.":{"id_one":0x66637072, "id_two":0x656d6978,            "easy_notes":485, "med_notes":903, "hard_notes":1198,"expertnotes":1362},
+    "Generation Rock":{"id_one":0x67656e65, "id_two":0x72617469,             "easy_notes":270, "med_notes":479, "hard_notes":658,"expertnotes":734},
+    "Go That Far":{"id_one":0x676f7468, "id_two":0x61746661,                 "easy_notes":284, "med_notes":504, "hard_notes":751,"expertnotes":835},
+    "Hier Kommt Alex":{"id_one":0x68696572, "id_two":0x6b6f6d6d,             "easy_notes":468, "med_notes":829, "hard_notes":836,"expertnotes":982},
+    "I'm In The Band":{"id_one":0x696d696e, "id_two":0x74686562,             "easy_notes":320, "med_notes":389, "hard_notes":593,"expertnotes":717},
+    "Impulse":{"id_one":0x696d7075, "id_two":0x6c73652e,                     "easy_notes":365, "med_notes":551, "hard_notes":825,"expertnotes":1054},
+    "In Love":{"id_one":0x696e6c6f, "id_two":0x76652e6d,                     "easy_notes":292, "med_notes":529, "hard_notes":770,"expertnotes":910},
+    "In The Belly Of A Shark":{"id_one":0x62656c6c, "id_two":0x796f6661,     "easy_notes":251, "med_notes":420, "hard_notes":583,"expertnotes":738},
+    "Mauvais Garcon":{"id_one":0x6d617576, "id_two":0x61697367,              "easy_notes":279, "med_notes":453, "hard_notes":545,"expertnotes":780},
+    "Metal Heavy Lady":{"id_one":0x6d657461, "id_two":0x6c686561,            "easy_notes":291, "med_notes":384, "hard_notes":489,"expertnotes":601},
+    "Minus Celsius":{"id_one":0x6d696e75, "id_two":0x7363656c,               "easy_notes":287, "med_notes":416, "hard_notes":605,"expertnotes":613},
+    "My Curse":{"id_one":0x6d796375, "id_two":0x7273652e,                    "easy_notes":460, "med_notes":766, "hard_notes":908,"expertnotes":1399},
+    "Nothing For Me Here":{"id_one":0x6e6f7468, "id_two":0x696e6766,         "easy_notes":308, "med_notes":555, "hard_notes":681,"expertnotes":947},
+    "Prayer Of The Refugee":{"id_one":0x70726179, "id_two":0x65726f66,       "easy_notes":327, "med_notes":520, "hard_notes":692,"expertnotes":745},
+    "Radio Song":{"id_one":0x72616469, "id_two":0x6f736f6e,                  "easy_notes":319, "med_notes":365, "hard_notes":495,"expertnotes":519},
+    "Ruby":{"id_one":0x72756279, "id_two":0x2e6d6964,                        "easy_notes":257, "med_notes":330, "hard_notes":433,"expertnotes":463},
+    "She Bangs The Drums":{"id_one":0x73686562, "id_two":0x616e6773,         "easy_notes":327, "med_notes":406, "hard_notes":628,"expertnotes":684},
+    "Take This Life":{"id_one":0x74616b65, "id_two":0x74686973,              "easy_notes":450, "med_notes":800, "hard_notes":1368,"expertnotes":1608},
+    "The Way It Ends":{"id_one":0x74686577, "id_two":0x61796974,             "easy_notes":523, "med_notes":614, "hard_notes":1250,"expertnotes":1883},
+    "Through The Fire and Flames":{"id_one":0x74687275, "id_two":0x66697265, "easy_notes":1102, "med_notes":1823, "hard_notes":2723,"expertnotes":3284}
+}   
+// $373128: [32-bit] Notes Passed in Current Song
+function notes() => dword(0x373128)    
+//SnowPin Achievements:
+for song_entry in song_table{
+    achievement(
+        "Easy " + song_entry,
+        "Clear " + song_entry + " on Easy Difficulty",
+        points= 2,
+        trigger=
+            difficulty() == 0 && //Easy
+            (cheat_check()) &&
+            debug_block() &&
+            firstsongID() == song_table[song_entry]["id_one"] &&
+            secondsongID() == song_table[song_entry]["id_two"] &&
+            notes() == song_table[song_entry]["easy_notes"] &&
+            never(game_state() == menu)            
+    )       
+}
+for song_entry in song_table{
+    achievement(
+        "Medium " + song_entry,
+        "Clear " + song_entry + " on Medium Difficulty",
+        points= 3,
+        trigger=
+            difficulty() == 1 && //Medium
+            (cheat_check()) &&
+            debug_block() &&
+            firstsongID() == song_table[song_entry]["id_one"] &&
+            secondsongID() == song_table[song_entry]["id_two"] &&
+            notes() == song_table[song_entry]["med_notes"] &&
+            never(game_state() == menu)            
+    )       
+}
+
+for song_entry in song_table{
+    achievement(
+        "Hard " + song_entry,
+        "Clear " + song_entry + " on Hard difficulty",
+        points= 4,
+        trigger=
+            difficulty() == 2 && //Hard
+            debug_block() &&
+            (cheat_check()) && 
+            firstsongID() == song_table[song_entry]["id_one"] &&
+            secondsongID() == song_table[song_entry]["id_two"] &&
+            notes() == song_table[song_entry]["hard_notes"] &&
+            never(game_state() == menu)            
+    )       
+}
+
+for song_entry in song_table{
+    achievement(
+        "Expert "+ song_entry,
+        "Clear " + song_entry + " on Expert Difficulty",
+        points= 5,
+        trigger=
+            difficulty() == 3 && //Expert
+            cheat_easy_expert() != on &&
+            debug_block() &&
+            (cheat_check()) && 
+            firstsongID() == song_table[song_entry]["id_one"] &&
+            secondsongID() == song_table[song_entry]["id_two"] &&
+            notes() == song_table[song_entry]["expertnotes"] &&
+            never(game_state() == menu)            
+    )       
+}
 song_rp_list = { //First ID. 
     0x736c6f77:"Slow Ride",
     0x74616c6b:"Talk Dirty To Me",
@@ -478,100 +567,6 @@ song_rp_list = { //First ID.
     0x74616b65:"Take This Life",
     0x74686577:"The Way It Ends",
     0x74687275:"Through The Fire and Flames"
-}
-song_table = {
-    "Avalancha":{"id_one":0x6176616c, "id_two":0x616e6368,                   "easy_notes":561, "med_notes":671, "hard_notes":881,"expertnotes":969},
-    "Can't Be Saved":{"id_one":0x63616e74, "id_two":0x62657361,              "easy_notes":303, "med_notes":461, "hard_notes":706,"expertnotes":723},
-    "Closer":{"id_one":0x636c6f73, "id_two":0x65722e6d,                      "easy_notes":285, "med_notes":423, "hard_notes":467,"expertnotes":467},
-    "Don't Hold Back":{"id_one":0x646f6e74, "id_two":0x686f6c64,             "easy_notes":514, "med_notes":710, "hard_notes":851,"expertnotes":945},
-    "Down 'N Dirty":{"id_one":0x646f776e, "id_two":0x6e646972,               "easy_notes":520, "med_notes":766, "hard_notes":1103,"expertnotes":1278},
-    "F.C.P.R.E.M.I.X.":{"id_one":0x66637072, "id_two":0x656d6978,            "easy_notes":485, "med_notes":903, "hard_notes":1198,"expertnotes":1362},
-    "Generation Rock":{"id_one":0x67656e65, "id_two":0x72617469,             "easy_notes":270, "med_notes":479, "hard_notes":658,"expertnotes":734},
-    "Go That Far":{"id_one":0x676f7468, "id_two":0x61746661,                 "easy_notes":284, "med_notes":504, "hard_notes":751,"expertnotes":835},
-    "Hier Kommt Alex":{"id_one":0x68696572, "id_two":0x6b6f6d6d,             "easy_notes":468, "med_notes":829, "hard_notes":836,"expertnotes":982},
-    "I'm In The Band":{"id_one":0x696d696e, "id_two":0x74686562,             "easy_notes":320, "med_notes":389, "hard_notes":593,"expertnotes":717},
-    "Impulse":{"id_one":0x696d7075, "id_two":0x6c73652e,                     "easy_notes":365, "med_notes":551, "hard_notes":825,"expertnotes":1054},
-    "In Love":{"id_one":0x696e6c6f, "id_two":0x76652e6d,                     "easy_notes":292, "med_notes":529, "hard_notes":770,"expertnotes":910},
-    "In The Belly Of A Shark":{"id_one":0x62656c6c, "id_two":0x796f6661,     "easy_notes":251, "med_notes":420, "hard_notes":583,"expertnotes":738},
-    "Mauvais Garcon":{"id_one":0x6d617576, "id_two":0x61697367,              "easy_notes":279, "med_notes":453, "hard_notes":545,"expertnotes":780},
-    "Metal Heavy Lady":{"id_one":0x6d657461, "id_two":0x6c686561,            "easy_notes":291, "med_notes":384, "hard_notes":489,"expertnotes":601},
-    "Minus Celsius":{"id_one":0x6d696e75, "id_two":0x7363656c,               "easy_notes":287, "med_notes":416, "hard_notes":605,"expertnotes":613},
-    "My Curse":{"id_one":0x6d796375, "id_two":0x7273652e,                    "easy_notes":460, "med_notes":766, "hard_notes":908,"expertnotes":1399},
-    "Nothing For Me Here":{"id_one":0x6e6f7468, "id_two":0x696e6766,         "easy_notes":308, "med_notes":555, "hard_notes":681,"expertnotes":947},
-    "Prayer Of The Refugee":{"id_one":0x70726179, "id_two":0x65726f66,       "easy_notes":327, "med_notes":520, "hard_notes":692,"expertnotes":745},
-    "Radio Song":{"id_one":0x72616469, "id_two":0x6f736f6e,                  "easy_notes":319, "med_notes":365, "hard_notes":495,"expertnotes":519},
-    "Ruby":{"id_one":0x72756279, "id_two":0x2e6d6964,                        "easy_notes":257, "med_notes":330, "hard_notes":433,"expertnotes":463},
-    "She Bangs The Drums":{"id_one":0x73686562, "id_two":0x616e6773,         "easy_notes":327, "med_notes":406, "hard_notes":628,"expertnotes":684},
-    "Take This Life":{"id_one":0x74616b65, "id_two":0x74686973,              "easy_notes":450, "med_notes":800, "hard_notes":1368,"expertnotes":1608},
-    "The Way It Ends":{"id_one":0x74686577, "id_two":0x61796974,             "easy_notes":523, "med_notes":614, "hard_notes":1250,"expertnotes":1883},
-    "Through The Fire and Flames":{"id_one":0x74687275, "id_two":0x66697265, "easy_notes":1102, "med_notes":1823, "hard_notes":2723,"expertnotes":3284}
-}   
-// $373128: [32-bit] Notes Passed in Current Song
-function notes() => dword(0x373128)    
-//SnowPin Achievements:
-for song_entry in song_table{
-    achievement(
-        "Easy " + song_entry,
-        "Clear " + song_entry + " on Easy Difficulty",
-        points= 2,
-        trigger=
-            difficulty() == 0 && //Easy
-            (cheat_check()) &&
-            debug_block() &&
-            firstsongID() == song_table[song_entry]["id_one"] &&
-            secondsongID() == song_table[song_entry]["id_two"] &&
-            notes() == song_table[song_entry]["easy_notes"] &&
-            never(game_state() == menu)            
-    )       
-}
-
-for song_entry in song_table{
-    achievement(
-        "Medium " + song_entry,
-        "Clear " + song_entry + " on Medium Difficulty",
-        points= 3,
-        trigger=
-            difficulty() == 1 && //Medium
-            (cheat_check()) &&
-            debug_block() &&
-            firstsongID() == song_table[song_entry]["id_one"] &&
-            secondsongID() == song_table[song_entry]["id_two"] &&
-            notes() == song_table[song_entry]["med_notes"] &&
-            never(game_state() == menu)            
-    )       
-}
-
-for song_entry in song_table{
-    achievement(
-        "Hard " + song_entry,
-        "Clear " + song_entry + " on Hard difficulty",
-        points= 4,
-        trigger=
-            difficulty() == 2 && //Hard
-            debug_block() &&
-            (cheat_check()) && 
-            firstsongID() == song_table[song_entry]["id_one"] &&
-            secondsongID() == song_table[song_entry]["id_two"] &&
-            notes() == song_table[song_entry]["hard_notes"] &&
-            never(game_state() == menu)            
-    )       
-}
-
-for song_entry in song_table{
-    achievement(
-        "Expert "+ song_entry,
-        "Clear " + song_entry + " on Expert Difficulty",
-        points= 5,
-        trigger=
-            difficulty() == 3 && //Expert
-            cheat_easy_expert() != on &&
-            debug_block() &&
-            (cheat_check()) && 
-            firstsongID() == song_table[song_entry]["id_one"] &&
-            secondsongID() == song_table[song_entry]["id_two"] &&
-            notes() == song_table[song_entry]["expertnotes"] &&
-            never(game_state() == menu)            
-    )       
 }
 function difficulty_read() => rich_presence_lookup("Difficulty", difficulty(), difficulty)
 rich_presence_conditional_display(dword(0x2616dc) == 0x224, "Playing Guitar Hero with the Debug Menu. Booo!!!!")

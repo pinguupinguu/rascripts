@@ -106,10 +106,7 @@ function difficulty() => dword(dword(0x548628) + 0x20)
 //           Take This Life - 0x74616b65
 //           The Way It Ends - 0x74686577
 //           Through The Fire and Flames - 0x74687275
-
-//function firstsongID() => dword_be(0x1B3F32B)
-ascii_one_offset = 0xffff1CD3
-function firstsongID() => dword_be(dword(0x371F98) + ascii_one_offset)
+function firstsongID() => dword_be(dword(0x798CF0) + 0x3b)
 // $1B3F32F: [32-bit BE] [ASCII] Song Title Letters 5-8 of loaded song
 //           Slow Ride -  0x72696465
 //           Talk Dirty To Me - 0x64697274
@@ -188,9 +185,7 @@ function firstsongID() => dword_be(dword(0x371F98) + ascii_one_offset)
 //           Take This Life - 0x74686973
 //           The Way It Ends - 0x61796974
 //           Through The Fire and Flames - 0x66697265
-//function secondsongID() => dword_be(0x1B3F32F)
-ascii_two_offset = 0xffff1CD3
-function secondsongID() => dword_be(dword(0x371F98) + ascii_two_offset)
+function secondsongID() => dword_be(dword(0x798CF0) + 0x3f)
 song_table = {
     "Slow Ride":{"id_one":0x736c6f77, "id_two":0x72696465, "max_notes":551, "points":25},
     "Talk Dirty To Me":{"id_one":0x74616c6b, "id_two":0x64697274, "max_notes":772, "points":25},
