@@ -573,7 +573,7 @@ achievement(
     default_token_description,
     points=5,
     trigger=
-        token_cheevo(level_strings["Now That We're Men"], 0x47c)
+        token_cheevo(level_strings["Now That We're Men"], 0x4ac)
 )
 //          ++ 0x9ec = Combat Arena Challenge
 achievement(
