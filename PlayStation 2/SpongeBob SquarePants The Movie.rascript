@@ -959,7 +959,7 @@ spongebob_health_max = 0x7ac084
 // $7AC4F4: [32bit] Patrick - Max Krabby Pattie Amount
 achievement(
     "Minions and... Bungees?",
-    "Complete the Welcome to Planktopolis... Minions Bungee Challenge without being zapped!",
+    "Complete the Welcome to Planktopolis... Minions Bungee Challenge without being zapped! (Reset Level from Menu)",
     points=25,
     trigger=
         damageless_hit(0x50543031) && // "PT01" (0x50543031) - Welcome to Planktopolis... Minions
