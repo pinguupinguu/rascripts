@@ -631,7 +631,7 @@ achievement(
     default_token_description, 
     points=5,
     trigger=
-        token_cheevo(level_strings["Shell City Ball"], 0x524)
+        token_cheevo(level_strings["Shell City Ball"], 0xa04)
 )
 //          ================================
 //          Name's Dennis
