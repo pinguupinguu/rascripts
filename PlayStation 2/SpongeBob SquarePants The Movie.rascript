@@ -16,6 +16,7 @@
 //          0x01=Yes
 function player_active() => dword(0x636fc4)
 function menu_address() => dword(0x636fb0)
+in_game = 0xc
 menu_rp = {
     0x00:"Booting...",
     0x01:"Viewing Intro Screens...",
@@ -218,8 +219,9 @@ function cheat_block() => byte(0x7abbfc) == 0
 // $7ABBFF: [8bit] Upgrade (Patrick) - Head Smash (Max = 2)
 // $7ABC00: [8bit] Upgrade (Patrick) - Throw (Max = 2)
 function token_cheevo(ascii_id, token_offset) =>
+    menu_address() == in_game &&
     game_pointer() == prev(game_pointer()) &&
-    level_string() == ascii_id &&
+    //level_string() == ascii_id &&
     prev(dword(dword(game_pointer() + token_pointer) + token_offset)) == 2 &&
     dword(dword(game_pointer() + token_pointer) + token_offset) == 3          
 //          Goofy Goober Tokens
@@ -573,7 +575,7 @@ achievement(
     default_token_description,
     points=5,
     trigger=
-        token_cheevo(level_strings["Now That We're Men"], 0x47c)
+        token_cheevo(level_strings["Now That We're Men"], 0x4ac)
 )
 //          ++ 0x9ec = Combat Arena Challenge
 achievement(
@@ -631,7 +633,7 @@ achievement(
     default_token_description, 
     points=5,
     trigger=
-        token_cheevo(level_strings["Shell City Ball"], 0x524)
+        token_cheevo(level_strings["Shell City Ball"], 0xa04)
 )
 //          ================================
 //          Name's Dennis
@@ -928,8 +930,8 @@ achievement(
 )
 function floating_block_challenge(level_id, time_goal) =>
         level_string() == level_id &&
-        floating_block_timer() + 1.0 < 90 &&
-        trigger_when(prev(floating_block_timer_active()) == 1 && floating_block_timer_active() == 0)
+        floating_block_timer() + 1.0 < time_goal &&
+        trigger_when(prev(floating_block_timer_active()) == 5 && floating_block_timer_active() == 0)
 achievement(
     "Air is Not Good...Patrick!",
     "Beat the Floating Block Challenge in Three... Thousand Miles to Shell City in under 1 minute and 30 seconds",
