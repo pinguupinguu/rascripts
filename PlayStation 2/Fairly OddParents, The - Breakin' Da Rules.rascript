@@ -229,27 +229,29 @@ achievement(
 excellent = 9
 function badge_far_dance_pointer() => dword(0x4950c8)
 function badge_far_rank() => dword(badge_far_dance_pointer() + 0x790)
+function badge_far_combo() => dword(badge_far_dance_pointer() + 0x794)
 function badge_far_notes() => dword(badge_far_dance_pointer() + 0x798)
-achievement(
-    "Dance Expertise",
-    "In A Badge Too Far, clear the song with an Excellent rating!",
-    points=5,
-    trigger=
-        current_level() == badge_far &&
-        badge_far_rank() == excellent &&
-        prev(badge_far_notes()) == 40 &&
-        badge_far_notes() == 41 &&
-        badge_far_dance_pointer() != 0
-)
+//achievement( //NULLIFIED - Replaced by achievement below.
+   // "Dance Expertise",
+   // "In A Badge Too Far, clear the song with an Excellent rating!",
+  //  points=5,
+  //  trigger=
+  //      current_level() == badge_far &&
+  //      badge_far_rank() == excellent &&
+  //      prev(badge_far_notes()) == 40 &&
+  //      badge_far_notes() == 41 &&
+  //      badge_far_dance_pointer() != 0
+//)
 achievement(
     "Too Good for the Creampuffs",
-    "In A Badge Too Far, clear the dance song without ever letting your rank drop!",
-    points=5,
+    "In A Badge Too Far, clear the dance song with a full combo!",
+    points=10,
     trigger=
-        current_level() == badge_far &&
-        trigger_when(prev(badge_far_notes()) == 40 && badge_far_notes() == 41) &&
-        disable_when(badge_far_rank() < prev(badge_far_rank())) &&
-        (always_false() || never(badge_far_dance_pointer() == 0))
+        unless(current_level() != badge_far) &&
+        
+        once((prev(badge_far_notes()) == 0xffffffff && badge_far_notes() == 0) && never(badge_far_combo() < prev(badge_far_combo())) ) &&
+        trigger_when(prev(badge_far_notes()) == 40 && badge_far_notes() == 41) 
+        
 )
 // $4918b4: [32bit] Boss Pointer          
 //          Chinless Blunder - Country Boy Apprehension
