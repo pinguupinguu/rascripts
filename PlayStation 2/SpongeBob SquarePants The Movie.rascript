@@ -16,6 +16,7 @@
 //          0x01=Yes
 function player_active() => dword(0x636fc4)
 function menu_address() => dword(0x636fb0)
+in_game = 0xc
 menu_rp = {
     0x00:"Booting...",
     0x01:"Viewing Intro Screens...",
@@ -218,8 +219,9 @@ function cheat_block() => byte(0x7abbfc) == 0
 // $7ABBFF: [8bit] Upgrade (Patrick) - Head Smash (Max = 2)
 // $7ABC00: [8bit] Upgrade (Patrick) - Throw (Max = 2)
 function token_cheevo(ascii_id, token_offset) =>
+    menu_address() == in_game &&
     game_pointer() == prev(game_pointer()) &&
-    level_string() == ascii_id &&
+    //level_string() == ascii_id &&
     prev(dword(dword(game_pointer() + token_pointer) + token_offset)) == 2 &&
     dword(dword(game_pointer() + token_pointer) + token_offset) == 3          
 //          Goofy Goober Tokens
