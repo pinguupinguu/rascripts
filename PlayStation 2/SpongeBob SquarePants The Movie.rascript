@@ -929,9 +929,11 @@ achievement(
         treasure_chests() == 42
 )
 function floating_block_challenge(level_id, time_goal) =>
-        level_string() == level_id &&
+        prev(level_string()) == level_id &&
         floating_block_timer() + 1.0 < time_goal &&
-        trigger_when(prev(floating_block_timer_active()) == 5 && floating_block_timer_active() == 0)
+        trigger_when(prev(floating_block_timer_active()) != 0 && floating_block_timer_active() == 0) &&
+        game_pointer() == prev(game_pointer()) &&
+        floating_block_timer() > 0.5
 achievement(
     "Air is Not Good...Patrick!",
     "Beat the Floating Block Challenge in Three... Thousand Miles to Shell City in under 1 minute and 30 seconds",
