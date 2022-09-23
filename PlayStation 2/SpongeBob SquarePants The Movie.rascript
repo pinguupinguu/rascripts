@@ -969,7 +969,7 @@ achievement(
         never(dword(spongebob_health) < prev(dword(spongebob_health)))
 )
 achievement(
-    "Don't Pet this Pet!",
+    "[m] Don't Pet this Pet!",
     "Defeat Mr. Whiskers without taking damage and earn the Goofy Goober token!",
     points=5,
     trigger=
@@ -978,7 +978,7 @@ achievement(
         never(dword(patrick_health) < prev(dword(patrick_health)))        
 )
 achievement(
-    "Dennis Can't Kill",
+    "[m] Dennis Can't Kill",
     "Defeat Dennis for the first time without taking damage and earn the Goofy Goober token!",
     points=10,
     trigger=
@@ -987,7 +987,7 @@ achievement(
         never(dword(patrick_health) < prev(dword(patrick_health))) 
 )
 achievement(
-    "Dennis Strikes Back for Damageless!",
+    "[m] Dennis Strikes Back for Damageless!",
     "Defeat Dennis for a second time without taking damage and earn the Goofy Goober token!",
     points=10,
     trigger=
@@ -998,7 +998,7 @@ achievement(
 // $7A84EB: [32bit BE] ASCII Patrick Model [2]
 // $7A85FF: [32bit BE] ASCII Spongebob Model [2]
 achievement(
-    "Damaged Bucket Head",
+    "[m] Damaged Bucket Head",
     "Defeat King Neptune without taking damage and earn the Goofy Goober token!",
     points=25,
     trigger=
@@ -1007,7 +1007,7 @@ achievement(
         never(dword(spongebob_health) < prev(dword(spongebob_health))) 
 )
 achievement(
-    "King of Crowns",
+    "[m] King of Crowns",
     "Defeat King Neptune without taking damage and Macho-Upgraded moves",
     points=50,
     trigger=
