@@ -929,9 +929,11 @@ achievement(
         treasure_chests() == 42
 )
 function floating_block_challenge(level_id, time_goal) =>
-        level_string() == level_id &&
+        prev(level_string()) == level_id &&
         floating_block_timer() + 1.0 < time_goal &&
-        trigger_when(prev(floating_block_timer_active()) == 5 && floating_block_timer_active() == 0)
+        trigger_when(prev(floating_block_timer_active()) != 0 && floating_block_timer_active() == 0) &&
+        game_pointer() == prev(game_pointer()) &&
+        floating_block_timer() > 0.5
 achievement(
     "Air is Not Good...Patrick!",
     "Beat the Floating Block Challenge in Three... Thousand Miles to Shell City in under 1 minute and 30 seconds",
@@ -967,7 +969,7 @@ achievement(
         never(dword(spongebob_health) < prev(dword(spongebob_health)))
 )
 achievement(
-    "Don't Pet this Pet!",
+    "[m] Don't Pet this Pet!",
     "Defeat Mr. Whiskers without taking damage and earn the Goofy Goober token!",
     points=5,
     trigger=
@@ -976,7 +978,7 @@ achievement(
         never(dword(patrick_health) < prev(dword(patrick_health)))        
 )
 achievement(
-    "Dennis Can't Kill",
+    "[m] Dennis Can't Kill",
     "Defeat Dennis for the first time without taking damage and earn the Goofy Goober token!",
     points=10,
     trigger=
@@ -985,7 +987,7 @@ achievement(
         never(dword(patrick_health) < prev(dword(patrick_health))) 
 )
 achievement(
-    "Dennis Strikes Back for Damageless!",
+    "[m] Dennis Strikes Back for Damageless!",
     "Defeat Dennis for a second time without taking damage and earn the Goofy Goober token!",
     points=10,
     trigger=
@@ -996,7 +998,7 @@ achievement(
 // $7A84EB: [32bit BE] ASCII Patrick Model [2]
 // $7A85FF: [32bit BE] ASCII Spongebob Model [2]
 achievement(
-    "Damaged Bucket Head",
+    "[m] Damaged Bucket Head",
     "Defeat King Neptune without taking damage and earn the Goofy Goober token!",
     points=25,
     trigger=
@@ -1005,7 +1007,7 @@ achievement(
         never(dword(spongebob_health) < prev(dword(spongebob_health))) 
 )
 achievement(
-    "King of Crowns",
+    "[m] King of Crowns",
     "Defeat King Neptune without taking damage and Macho-Upgraded moves",
     points=50,
     trigger=
