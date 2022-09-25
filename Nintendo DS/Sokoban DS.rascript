@@ -6,6 +6,7 @@
 //          [32bit] NameOfCourse - <Max number of moves allowed for five stars)
 // $0C3C34: [24bit] Pointer
 //          +0x874=Boxes on Targets Count
+function game_pointer() => tbyte(0x0C3C34)
 // $0D9604: [32bit] Number of Steps (Current Level)
 // $0DCDEE: [20 bytes] Training Puzzle Flags
 //          
@@ -14,9 +15,27 @@
 // $0DCDF6: [32bit] T03 Moves Record - 26
 // $0DCDFA: [32bit] T04 Moves Record - 21
 // $0DCDFE: [32bit] T05 Moves Record - 30
+function training_puzzles() => range(0x0dcdee, 0x0dcdee + 16, 4)
+achievement(
+    "Introductory Box Pushing",
+    "Complete all of the puzzles in the Training category!",
+    points=5,
+    trigger=
+        prev(sum_of(training_puzzles(), b => dword(b) / dword(b))) == 4 &&
+        measured(sum_of(training_puzzles(), b => dword(b) / dword(b)) == 5)
+)
 // $0DCE02: [80 bytes] Green Puzzle Flags
 //          
 //          Green-001 Moves Record - 28
+function green_puzzles() => range(0x0dce02, 0x0dce02 + 76, 4)
+achievement(
+    "Mean Green Machine",
+    "Complete all of the puzzles in the Green category!",
+    points=25,
+    trigger=
+        prev(sum_of(green_puzzles(), b => dword(b) / dword(b))) == 19 &&
+        measured(sum_of(green_puzzles(), b => dword(b) / dword(b)) == 20)
+)
 // $0DCE06: [32bit] Green-002 Moves Record - 57
 // $0DCE0A: [32bit] Green-003 Moves Record - 56
 // $0DCE0E: [32bit] Green-004 Moves Record - 38
@@ -39,6 +58,15 @@
 // $0DCE52: [80 bytes] Egypt Puzzle Flags
 //          
 //          Egypt-021 Moves Record - 115
+function egypt_puzzles() => range(0x0dce52, 0x0dce52 + 76, 4)
+achievement(
+    "Traveling To The Pyramids",
+    "Complete all of the puzzles in the Egypt category",
+    points=25,
+    trigger=
+        prev(sum_of(egypt_puzzles(), b => dword(b) / dword(b))) == 19 &&
+        measured(sum_of(egypt_puzzles(), b => dword(b) / dword(b)) == 20)
+)
 // $0DCE56: [32bit] Egypt-022 Moves Record - 51
 // $0DCE5A: [32bit] Egypt-023 Moves Record - 38
 // $0DCE5E: [32bit] Egypt-024 Moves Record - 285
@@ -61,6 +89,15 @@
 // $0DCEA2: [80 bytes] Kitchen Puzzle Flags
 //          
 //          Kitchen-041 Moves Record - 128
+function kitchen_puzzles() => range(0x0dcea2, 0x0dcea2 + 76, 4)
+achievement(
+    "Pushing Out Gordon Ramsay",
+    "Complete all of the puzzles in the Kitchen category",
+    points=25,
+    trigger=
+        prev(sum_of(kitchen_puzzles(), b => dword(b) / dword(b))) == 19 &&
+        measured(sum_of(kitchen_puzzles(), b => dword(b) / dword(b)) == 20)
+)
 // $0DCEA6: [32bit] Kitchen-042 Moves Record - 95
 // $0DCEAA: [32bit] Kitchen-043 Moves Record - 121
 // $0DCEAE: [32bit] Kitchen-044 Moves Record - 62
@@ -83,6 +120,15 @@
 // $0DCEF2: [80 bytes] Maya Puzzle Flags
 //          
 //          Maya-061 Moves Record - 96
+function maya_puzzles() => range(0x0dcef2, 0x0dcef2 + 76, 4)
+achievement(
+    "Another Day In Yucatán",
+    "Complete all of the puzzles in the Maya category",
+    points=25,
+    trigger=
+        prev(sum_of(maya_puzzles(), b => dword(b) / dword(b))) == 19 &&
+        measured(sum_of(maya_puzzles(), b => dword(b) / dword(b)) == 20)
+)
 // $0DCEF6: [32bit] Maya-062 Moves Record - 88
 // $0DCEFA: [32bit] Maya-063 Moves Record - 455
 // $0DCEFE: [32bit] Maya-064 Moves Record - 66
@@ -103,9 +149,74 @@
 // $0DCF3A: [32bit] Maya-079 Moves Record - 400
 // $0DCF3E: [32bit] Maya-080 Moves Record - 415
 // $0DCF42: [80 bytes] Brick Puzzle Flags
+function brick_puzzles() => range(0x0dcf42, 0x0dcf42 + 76, 4)
+achievement(
+    "Digging for Clay",
+    "Complete all of the puzzles in the Brick category",
+    points=25,
+    trigger=
+        prev(sum_of(brick_puzzles(), b => dword(b) / dword(b))) == 19 &&
+        measured(sum_of(brick_puzzles(), b => dword(b) / dword(b)) == 20)
+)
 // $0DCF92: [100 bytes] Beach Puzzle Flags
+function beach_puzzles() => range(0x0dcf92, 0x0dcf92 + 96, 4)
+achievement(
+    "Hittin' The Shore",
+    "Complete all of the puzzles in the Beach category",
+    points=25,
+    trigger=
+        prev(sum_of(beach_puzzles(), b => dword(b) / dword(b))) == 24 &&
+        measured(sum_of(beach_puzzles(), b => dword(b) / dword(b)) == 25)
+)
 // $0DCFF6: [100 bytes] Field Puzzle Flags
+function field_puzzles() => range(0x0dcff6, 0x0dcff6 + 96, 4)
+achievement(
+    "Sports Gamer",
+    "Complete all of the puzzles in the Field category",
+    points=25,
+    trigger=
+        prev(sum_of(field_puzzles(), b => dword(b) / dword(b))) == 24 &&
+        measured(sum_of(field_puzzles(), b => dword(b) / dword(b)) == 25)
+)
 // $0DD05A: [100 bytes] Wood Puzzle Flags
+function wood_puzzles() => range(0x0dd05a, 0x0dd05a + 96, 4)
+achievement(
+    "Punch Wood",
+    "Complete all of the puzzles in the Wood category",
+    points=25,
+    trigger=
+        prev(sum_of(wood_puzzles(), b => dword(b) / dword(b))) == 24 &&
+        measured(sum_of(wood_puzzles(), b => dword(b) / dword(b)) == 25)
+)
 // $0DD0BE: [100 bytes] Snow Puzzle Flags
+function snow_puzzles() => range(0x0dd0be, 0x0dd0be + 96, 4)
+achievement(
+    "Do You Wanna Build A Snowman?",
+    "Complete all of the puzzles in the Snow category",
+    points=25,
+    trigger=
+        prev(sum_of(snow_puzzles(), b => dword(b) / dword(b))) == 24 &&
+        measured(sum_of(snow_puzzles(), b => dword(b) / dword(b)) == 25)
+)
 // $0DD122: [100 bytes] Metal Puzzle Flags
-// $0DD186: [100 bytes] Laval Puzzle Flags
+function metal_puzzles() => range(0x0dd122, 0x0dd122 + 96, 4)
+achievement(
+    "Metal Bending Toph!",
+    "Complete all of the puzzles in the Metal category",
+    points=25,
+    trigger=
+        prev(sum_of(metal_puzzles(), b => dword(b) / dword(b))) == 24 &&
+        measured(sum_of(metal_puzzles(), b => dword(b) / dword(b)) == 25)
+)
+// $0DD186: [100 bytes] Lava Puzzle Flags
+function lava_puzzles() => range(0x0dd186, 0x0dd186 + 96, 4)
+achievement(
+    "deng Likes Gravel",
+    "Complete all of the puzzles in the Lava category",
+    points=50,
+    trigger=
+        prev(sum_of(lava_puzzles(), b => dword(b) / dword(b))) == 24 &&
+        measured(sum_of(lava_puzzles(), b => dword(b) / dword(b)) == 25)
+)
+rich_presence_conditional_display(game_pointer() != 0, "Solving a puzzle!")
+rich_presence_display("In Menu")
