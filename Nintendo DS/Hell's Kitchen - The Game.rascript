@@ -1,6 +1,5 @@
 // Hell's Kitchen - The Game
 // #ID = 17860
-
 // $0FDDB0: [8bit] Selected Week
 //          0x00=Week One
 //          0x01=Week Two
@@ -31,8 +30,7 @@ achievement(
     "Obtain 100% level clears on all days of Week One",
     points=10,
     trigger=
-        week_cheevo(range(0x10ea5c, 0x10ea5c + 6))
-        
+        week_cheevo(range(0x10ea5c, 0x10ea5c + 6))        
 )
 // $10EA63: [7 bytes] Active Save Slot Week 2 Percentage Clears
 //          100% = 0x64
