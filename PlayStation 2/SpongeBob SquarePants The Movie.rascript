@@ -928,25 +928,27 @@ achievement(
         prev(treasure_chests()) == 41 &&
         treasure_chests() == 42
 )
-function floating_block_challenge(level_id, time_goal) =>
+function floating_block_challenge(level_id, time_goal, token_offset) =>
         prev(level_string()) == level_id &&
         floating_block_timer() + 1.0 < time_goal &&
-        trigger_when(prev(floating_block_timer_active()) != 0 && floating_block_timer_active() == 0) &&
+        trigger_when(prev(dword(dword(game_pointer() + token_pointer) + token_offset)) == 2 && dword(dword(game_pointer() + token_pointer) + token_offset) == 3) &&     
         game_pointer() == prev(game_pointer()) &&
         floating_block_timer() > 0.5
 achievement(
-    "Air is Not Good...Patrick!",
-    "Beat the Floating Block Challenge in Three... Thousand Miles to Shell City in under 1 minute and 30 seconds",
+    "[m] Air is Not Good...Patrick!",
+    "Collect the Floating Block Challenge token in Three... Thousand Miles to Shell City in under 1 minute and 30 seconds",
     points=10,
+    id=225415,
     trigger=
-        floating_block_challenge(0x46423031, 90)
+        floating_block_challenge(0x46423031, 90, 0x1c4)
 )
 achievement(
-    "Can I Have Everyone's Attention?",
-    "Beat the Floating Block Challenge in Shell City Dead Ahead in under 1 minute and 45 seconds",
+    "[m] Can I Have Everyone's Attention?",
+    "Collect the Floating Block Challenge token in Shell City Dead Ahead in under 1 minute and 45 seconds",
     points=10,
+    id=225416,
     trigger=
-        floating_block_challenge(0x46423033, 105)
+        floating_block_challenge(0x46423033, 105, 0x524)
 )
 function damageless_hit(target_ASCII) => once(prev(level_string()) != target_ASCII && level_string() == target_ASCII)
 //Line 174: function bungee_target_count() => word(dword(game_pointer() + token_pointer) + 0xe24)
