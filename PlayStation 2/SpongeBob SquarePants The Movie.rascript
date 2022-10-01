@@ -1027,7 +1027,7 @@ function dev_trigger(level, token_offset, goal, timer, timer_active) =>
 achievement(
     "Developer Antics: Sandwich Driving 101",
     "After the Macho Time Trial, beat Heavy Iron's developer time of 2:37!",
-    points=50,
+    points=25,
     trigger=
         dev_trigger(0x42423031 , 0x14c, 157, floating_block_timer(), floating_block_timer_active())                
 )
