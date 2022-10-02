@@ -966,9 +966,10 @@ achievement(
     "Complete the Welcome to Planktopolis... Minions Bungee Challenge without being zapped! (Reset Level from Menu)",
     points=25,
     trigger=
-        damageless_hit(0x50543031) && // "PT01" (0x50543031) - Welcome to Planktopolis... Minions
+        once(prev(level_string()) == 0x4d4e5549 && level_string() == 0x50543031) && // "PT01" (0x50543031) - Welcome to Planktopolis... Minions
         trigger_when(pnk_bungee_target_count() == 0 && pnk_bungee_challenge_clear() > prev(pnk_bungee_challenge_clear())) &&         
-        never(dword(spongebob_health) < prev(dword(spongebob_health)))
+        never(dword(spongebob_health) < prev(dword(spongebob_health))) &&
+        never(level_string() != 0x4d4e5549 && level_string() != 0x50543031 && always_true())
 )
 achievement(
     "[m] Don't Pet this Pet!",
