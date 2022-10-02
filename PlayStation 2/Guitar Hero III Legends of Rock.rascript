@@ -446,7 +446,7 @@ for song_entry in song_table{
             difficulty() == 0 && //Easy
             (cheat_check()) &&
             debug_block() &&
-            song_checksum() == song_table[song_entry]["id"] &&            
+            repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) &&           
             notes() == song_table[song_entry]["easy_notes"] &&
             never(game_state() == menu)            
     )       
@@ -460,7 +460,7 @@ for song_entry in song_table{
             difficulty() == 1 && //Medium
             (cheat_check()) &&
             debug_block() &&
-            song_checksum() == song_table[song_entry]["id"] &&            
+            repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) &&            
             notes() == song_table[song_entry]["med_notes"] &&
             never(game_state() == menu)            
     )       
@@ -475,7 +475,7 @@ for song_entry in song_table{
             difficulty() == 2 && //Hard
             debug_block() &&
             (cheat_check()) && 
-            song_checksum() == song_table[song_entry]["id"] &&
+            repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) &&
             notes() == song_table[song_entry]["hard_notes"] &&
             never(game_state() == menu)            
     )       
@@ -491,7 +491,7 @@ for song_entry in song_table{
             cheat_easy_expert() != on &&
             debug_block() &&
             (cheat_check()) && 
-            //song_checksum() == song_table[song_entry]["id"] &&
+            repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) &&
             notes() == song_table[song_entry]["expertnotes"] &&
             never(game_state() == menu)            
     )       
