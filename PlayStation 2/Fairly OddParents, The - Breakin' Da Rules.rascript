@@ -146,58 +146,59 @@ function timewarped_cards() => dword(0x5379f4)
 // $537A08: [32bit] Number of Chin Cards - A Dog's Life
 function dogslife_cards() => dword(0x537a08)
 function chin_cards(check_flag) => save_protection() && prev(check_flag) < 4 && check_flag == 4 //Each level has 4 chin cards!
+append_description = " (Triggers after saving or beating a level)"
 achievement(
     "Viral Infection and Card Collection!",
-    "Collect all 4 Chin cards from The Vicky Virus",
+    "Collect all 4 Chin cards from The Vicky Virus" + append_description,
     points=5,
     trigger=
         chin_cards(virus_cards())        
 )
 achievement(
     "Badges, Cards... Get them All!",
-    "Collect all 4 Chin cards from A Badge Too Far",
+    "Collect all 4 Chin cards from A Badge Too Far" + append_description,
     points=5,
     trigger=
         chin_cards(boyscouts_cards())
 )
 achievement(
     "Chinless Cards",
-    "Collect all 4 Chin cards from Chinless Blunder",
+    "Collect all 4 Chin cards from Chinless Blunder" + append_description,
     points=5,
     trigger=
         chin_cards(blunder_cards())
 )
 achievement(
     "Mini Collection",
-    "Collect all 4 Chin cards from Mini Timmy",
+    "Collect all 4 Chin cards from Mini Timmy" + append_description,
     points=5,
     trigger=
         chin_cards(minitimmy_cards())
 )
 achievement(
     "Crashin' Cards",
-    "Collect all 4 Chin cards from Crash Landing",
+    "Collect all 4 Chin cards from Crash Landing" + append_description,
     points=5,
     trigger=
         chin_cards(crash_cards())
 )
 achievement(
     "Collecting Across Ages",
-    "Collect all 4 Chin cards from Time Warped",
+    "Collect all 4 Chin cards from Time Warped" + append_description,
     points=5,
     trigger=
         chin_cards(timewarped_cards())
 )
 achievement(
     "No Bad Decks Here!",
-    "Collect all 4 Chin cards from Bad Luck 101",
+    "Collect all 4 Chin cards from Bad Luck 101" + append_description,
     points=5,
     trigger=
         chin_cards(badluck_cards())
 )
 achievement(
     "Cards are Not Treats!",
-    "Collect all 4 Chin cards from A Dog's Life",
+    "Collect all 4 Chin cards from A Dog's Life" + append_description,
     points=5,
     trigger=
         chin_cards(dogslife_cards())
