@@ -931,7 +931,8 @@ achievement(
 function floating_block_challenge(level_id, time_goal, token_offset) =>
         prev(level_string()) == level_id &&
         floating_block_timer() + 1.0 < time_goal &&
-        trigger_when(prev(dword(dword(game_pointer() + token_pointer) + token_offset)) == 2 && dword(dword(game_pointer() + token_pointer) + token_offset) == 3) &&     
+        prev(dword(dword(game_pointer() + token_pointer) + token_offset)) == 2 &&
+        trigger_when( dword(dword(game_pointer() + token_pointer) + token_offset) == 3) &&     
         game_pointer() == prev(game_pointer()) &&
         floating_block_timer() > 0.5
 achievement(
@@ -1023,6 +1024,7 @@ function dev_trigger(level, token_offset, goal, timer, timer_active) =>
         level_string() == level &&
         dword(dword(game_pointer() + token_pointer) + token_offset) == 3 &&
         timer < goal &&
+        prev(timer) != 0 &&
         trigger_when(timer_active < prev(timer_active) && timer_active == 0)
 
 achievement(
