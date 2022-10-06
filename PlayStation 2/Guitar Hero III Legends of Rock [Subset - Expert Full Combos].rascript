@@ -279,7 +279,7 @@ for song_entry in song_table{
             once(prev(combo()) == 0 && combo() == 1 && notes() < 2) &&
             song_checksum() == song_table[song_entry]["id"] &&            
             trigger_when(combo() == song_table[song_entry]["max_notes"]) &&
-            never(combo() < prev(combo())) &&
+            never( prev(combo()) < 4000 && combo() < prev(combo())) &&
             never(game_state() == menu)            
     )       
 }
