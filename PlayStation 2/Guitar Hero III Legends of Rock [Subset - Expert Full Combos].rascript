@@ -204,7 +204,7 @@ song_table = {
     "The Seeker":{"id":0x5CA68A94, "max_notes":760, "points":25},
     "Lay Down":{"id":0x24541776, "max_notes":767, "points":25},
     "Paint It Black":{"id":0x614910AE, "max_notes":942, "points":25},
-    "Suck My Kiss":{"id":0x4A7D84EB, "max_notes":562, "points":25},
+    "Suck My Kiss":{"id":0x4A7D84EB, "max_notes":703, "points":25},
     "Paranoid":{"id":0x9F667DE2, "max_notes":685, "points":25},
     "Anarchy in the U.K.":{"id":0xA86A21FF, "max_notes":792, "points":25},
     "Kool Thing":{"id":0x51AD6E8C, "max_notes":1032, "points":25},
@@ -279,7 +279,7 @@ for song_entry in song_table{
             once(prev(combo()) == 0 && combo() == 1 && notes() < 2) &&
             song_checksum() == song_table[song_entry]["id"] &&            
             trigger_when(combo() == song_table[song_entry]["max_notes"]) &&
-            never(combo() < prev(combo())) &&
+            never( prev(combo()) < 4000 && combo() < prev(combo())) &&
             never(game_state() == menu)            
     )       
 }
