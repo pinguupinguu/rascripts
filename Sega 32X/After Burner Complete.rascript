@@ -63,7 +63,7 @@ for i in range(0 , 21){
 achievement(
     "Excellent Pilot",
     "Beat the game on Hard Difficulty",
-    points=25,
+    points=50,
     trigger=
         ingame_check() &&
         difficulty() == 1 &&
@@ -73,7 +73,7 @@ achievement(
 achievement(
     "Hardcore Pilot",
     "Beat the game on Hardest difficulty without dying",
-    points=50,
+    points=100,
     trigger=
         once(stage() == 0 && prev(score()) == 0 && score() != 0) &&
         difficulty() == 2 &&        
