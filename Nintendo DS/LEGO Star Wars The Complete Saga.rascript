@@ -39,6 +39,8 @@ function debug() => bit0(0x00124A0F)
 //          0x00=Game 1
 //          0x01=Game 2
 function save_profile() => byte(0x132719)
+// $132752: [NBit] Level Flags
+//          Bit0=Phantom Menace - Negotiations Available
 function save_protection() => save_profile() == prev(save_profile())
 
 // $132724: Total Time (32bit)
@@ -1602,6 +1604,9 @@ achievement(
 //          Bit7=Loadsmoney   
 // $12544C: Total Studs (32bit)
 function studs() => dword(0x12544C)
+// $132752: [NBit] Level Flags
+//          Bit0=Phantom Menace - Negotiations Available
+function save_protection() => save_profile() == prev(save_profile()) && prev(bit0(0x132752)) == 1
 achievement(
     "Hell of a Stud",
     "Hold 20,000,000 studs at one time.",
