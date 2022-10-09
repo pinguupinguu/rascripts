@@ -974,7 +974,7 @@ achievement(
 )
 achievement(
     "[m] Don't Pet this Pet!",
-    "Defeat Mr. Whiskers without taking damage and earn the Goofy Goober token!",
+    "Defeat Mr. Whiskers without taking damage and earn the Goofy Goober token! (Reset Level from Menu)",
     points=5,
     trigger=
         damageless_hit(0x42313031) &&  // "B101" (0x42313031) - I'll Let You Pet Mr. Whiskers
@@ -983,7 +983,7 @@ achievement(
 )
 achievement(
     "[m] Dennis Can't Kill",
-    "Defeat Dennis for the first time without taking damage and earn the Goofy Goober token!",
+    "Defeat Dennis for the first time without taking damage and earn the Goofy Goober token! (Reset Level from Menu)",
     points=10,
     trigger=
         damageless_hit(0x42323031) &&
@@ -992,7 +992,7 @@ achievement(
 )
 achievement(
     "[m] Dennis Strikes Back for Damageless!",
-    "Defeat Dennis for a second time without taking damage and earn the Goofy Goober token!",
+    "Defeat Dennis for a second time without taking damage and earn the Goofy Goober token! (Reset Level from Menu)",
     points=10,
     trigger=
         damageless_hit(0x42333031) &&
@@ -1003,7 +1003,7 @@ achievement(
 // $7A85FF: [32bit BE] ASCII Spongebob Model [2]
 achievement(
     "[m] Damaged Bucket Head",
-    "Defeat King Neptune without taking damage and earn the Goofy Goober token!",
+    "Defeat King Neptune without taking damage and earn the Goofy Goober token! (Reset Level from Menu)",
     points=25,
     trigger=
         damageless_hit(0x42343031) &&
@@ -1012,7 +1012,7 @@ achievement(
 )
 achievement(
     "[m] King of Crowns",
-    "Defeat King Neptune without taking damage and Macho-Upgraded moves",
+    "Defeat King Neptune without taking damage and Macho-Upgraded moves (Reset Level from Menu)",
     points=50,
     trigger=
         damageless_hit(0x42343031) &&
