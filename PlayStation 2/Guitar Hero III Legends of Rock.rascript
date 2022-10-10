@@ -290,7 +290,7 @@ off = 2
 function cheat_easy_expert() => dword(dword(0x547960) + 0xc)
 function cheat_no_fail() => dword(dword(0x5555d4) + 0xc)
 function cheat_check() => (always_false() || (cheat_easy_expert() == off || cheat_easy_expert() == 0xffffffff) && (cheat_no_fail() == off || cheat_no_fail() == 0xffffffff )  )
-function debug_block() => dword(0x2616dc) != 0x224
+function debug_block() => dword(0x2616dc) != 0x224 
 function guitar_battle_check() => firstsongID() == 0x626f7373
 guitar_bosses = {
     "Tom Morello":0xC27EFFAE,
@@ -446,9 +446,11 @@ for song_entry in song_table{
             difficulty() == 0 && //Easy
             (cheat_check()) &&
             debug_block() &&
+            prev(game_state()) == 1 &&
             repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) &&           
-            notes() == song_table[song_entry]["easy_notes"] &&
-            never(game_state() == menu)            
+            prev(notes()) == song_table[song_entry]["easy_notes"] - 1 &&
+            notes() == song_table[song_entry]["easy_notes"]
+                        
     )       
 }
 for song_entry in song_table{
@@ -460,9 +462,11 @@ for song_entry in song_table{
             difficulty() == 1 && //Medium
             (cheat_check()) &&
             debug_block() &&
-            repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) &&            
-            notes() == song_table[song_entry]["med_notes"] &&
-            never(game_state() == menu)            
+            prev(game_state()) == 1 &&
+            repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) && 
+            prev(notes()) == song_table[song_entry]["med_notes"] - 1 &&
+            notes() == song_table[song_entry]["med_notes"] 
+                       
     )       
 }
 
@@ -474,10 +478,11 @@ for song_entry in song_table{
         trigger=
             difficulty() == 2 && //Hard
             debug_block() &&
+            prev(game_state()) == 1 &&
             (cheat_check()) && 
             repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) &&
-            notes() == song_table[song_entry]["hard_notes"] &&
-            never(game_state() == menu)            
+            prev(notes()) == song_table[song_entry]["hard_notes"] - 1 &&
+            notes() == song_table[song_entry]["hard_notes"]             
     )       
 }
 
@@ -490,10 +495,11 @@ for song_entry in song_table{
             difficulty() == 3 && //Expert
             cheat_easy_expert() != on &&
             debug_block() &&
+            prev(game_state()) == 1 &&
             (cheat_check()) && 
             repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) &&
-            notes() == song_table[song_entry]["expertnotes"] &&
-            never(game_state() == menu)            
+            prev(notes()) == song_table[song_entry]["expertnotes"] - 1 &&
+            notes() == song_table[song_entry]["expertnotes"]            
     )       
 }
 song_rp_list = { //First ID. 
