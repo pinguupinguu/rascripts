@@ -432,7 +432,7 @@ song_table = {
     "She Bangs The Drums":{"id":0x468C655D,         "easy_notes":327, "med_notes":406, "hard_notes":628,"expertnotes":684},
     "Take This Life":{"id":0x348C4908,              "easy_notes":450, "med_notes":800, "hard_notes":1368,"expertnotes":1608},
     "The Way It Ends":{"id":0x2A49D730,             "easy_notes":523, "med_notes":614, "hard_notes":1250,"expertnotes":1883},
-    "Through The Fire and Flames":{"id":0x40797ADD, "easy_notes":1102, "med_notes":1823, "hard_notes":2723,"expertnotes":3284}
+    "Through The Fire and Flames":{"id":0x40797ADD, "easy_notes":1102, "med_notes":1823, "hard_notes":2723,"expertnotes":3722}
 }     
 // $373128: [32-bit] Notes Passed in Current Song
 function notes() => dword(0x373128)    
