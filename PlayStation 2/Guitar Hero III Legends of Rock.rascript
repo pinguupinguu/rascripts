@@ -290,7 +290,7 @@ off = 2
 function cheat_easy_expert() => dword(dword(0x547960) + 0xc)
 function cheat_no_fail() => dword(dword(0x5555d4) + 0xc)
 function cheat_check() => (always_false() || (cheat_easy_expert() == off || cheat_easy_expert() == 0xffffffff) && (cheat_no_fail() == off || cheat_no_fail() == 0xffffffff )  )
-function debug_block() => dword(0x2616dc) != 0x224
+function debug_block() => dword(0x2616dc) != 0x224 
 function guitar_battle_check() => firstsongID() == 0x626f7373
 guitar_bosses = {
     "Tom Morello":0xC27EFFAE,
@@ -432,7 +432,7 @@ song_table = {
     "She Bangs The Drums":{"id":0x468C655D,         "easy_notes":327, "med_notes":406, "hard_notes":628,"expertnotes":684},
     "Take This Life":{"id":0x348C4908,              "easy_notes":450, "med_notes":800, "hard_notes":1368,"expertnotes":1608},
     "The Way It Ends":{"id":0x2A49D730,             "easy_notes":523, "med_notes":614, "hard_notes":1250,"expertnotes":1883},
-    "Through The Fire and Flames":{"id":0x40797ADD, "easy_notes":1102, "med_notes":1823, "hard_notes":2723,"expertnotes":3284}
+    "Through The Fire and Flames":{"id":0x40797ADD, "easy_notes":1102, "med_notes":1823, "hard_notes":2723,"expertnotes":3722}
 }     
 // $373128: [32-bit] Notes Passed in Current Song
 function notes() => dword(0x373128)    
@@ -446,9 +446,11 @@ for song_entry in song_table{
             difficulty() == 0 && //Easy
             (cheat_check()) &&
             debug_block() &&
+            prev(game_state()) == 1 &&
             repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) &&           
-            notes() == song_table[song_entry]["easy_notes"] &&
-            never(game_state() == menu)            
+            prev(notes()) == song_table[song_entry]["easy_notes"] - 1 &&
+            notes() == song_table[song_entry]["easy_notes"]
+                        
     )       
 }
 for song_entry in song_table{
@@ -460,9 +462,11 @@ for song_entry in song_table{
             difficulty() == 1 && //Medium
             (cheat_check()) &&
             debug_block() &&
-            repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) &&            
-            notes() == song_table[song_entry]["med_notes"] &&
-            never(game_state() == menu)            
+            prev(game_state()) == 1 &&
+            repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) && 
+            prev(notes()) == song_table[song_entry]["med_notes"] - 1 &&
+            notes() == song_table[song_entry]["med_notes"] 
+                       
     )       
 }
 
@@ -474,10 +478,11 @@ for song_entry in song_table{
         trigger=
             difficulty() == 2 && //Hard
             debug_block() &&
+            prev(game_state()) == 1 &&
             (cheat_check()) && 
             repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) &&
-            notes() == song_table[song_entry]["hard_notes"] &&
-            never(game_state() == menu)            
+            prev(notes()) == song_table[song_entry]["hard_notes"] - 1 &&
+            notes() == song_table[song_entry]["hard_notes"]             
     )       
 }
 
@@ -490,10 +495,11 @@ for song_entry in song_table{
             difficulty() == 3 && //Expert
             cheat_easy_expert() != on &&
             debug_block() &&
+            prev(game_state()) == 1 &&
             (cheat_check()) && 
             repeated(0, battle_checksum() == song_table[song_entry]["id"] || song_checksum() == song_table[song_entry]["id"]) &&
-            notes() == song_table[song_entry]["expertnotes"] &&
-            never(game_state() == menu)            
+            prev(notes()) == song_table[song_entry]["expertnotes"] - 1 &&
+            notes() == song_table[song_entry]["expertnotes"]            
     )       
 }
 song_rp_list = { //First ID. 
