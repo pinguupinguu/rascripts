@@ -16,8 +16,6 @@ function populate_profile_alt_clears(difficulty_table, start, end){
     }
     return logic
 }
-
-
 //Career Tables
 easy_clears = {
     0:0x00b8c5a4,
@@ -220,3 +218,128 @@ achievement(
     trigger=
         populate_profile_alt_clears(expert_clears, 25, 29)
 )
+function populate_profile_star_clears(difficulty_table, songs, start, end){
+    logic = always_false()
+    for i in range(0, 7)
+       {     
+            logic = logic ||
+            unless(profile_slot() != i) &&
+            tally_of(range(difficulty_table[i] + (0x20 * start), difficulty_table[i] + (0x20 * end), 0x20), songs - 1, b => once(prev(dword(b)) == 5)) &&
+            measured(tally_of(range(difficulty_table[i] + (0x20 * start), difficulty_table[i] + (0x20 * end), 0x20), songs, b => once(prev(dword(b)) == 5))) &&
+            never(tally_of(range(difficulty_table[i] + (0x20 * start), difficulty_table[i] + (0x20 * end), 0x20), songs, b => once(prev(dword(b)) == 5)))            
+       }          
+    return logic
+}
+easy_stars = {
+    0:0x00b8c5ac, 
+    1:0x00b8d47c,
+    2:0x00b9951c,
+    3:0x00b9b2bc,
+    4:0x00b9edfc,
+    5:0x00ba293c,
+    6:0x00ba647c,
+    7:0x00ba9fbc
+}
+achievement(
+    "Easy Stars, Easy Points",
+    "Obtain 5 star clears on all Career mode songs on Easy (One Profile)",
+    points=10,
+    trigger=
+        populate_profile_star_clears(easy_stars, 25, 0, 24)
+)
+medium_stars = {
+    0:0x00b93afc,
+    1:0x00b9777c,
+    2:0x00b9c18c,
+    3:0x00b9fccc,
+    4:0x00ba380c,
+    5:0x00ba734c,
+    6:0x00baae8c,
+    7:0x00bae9cc
+}
+achievement(
+    "Medium Career, But Still... Five Stars!",
+    "Obtain 5 star clears on all Career mode songs on Medium (One Profile)",
+    points=25,
+    trigger=
+        populate_profile_star_clears(medium_stars, 30, 0, 29)
+)
+hard_stars = {
+    0:0x00b949cc,
+    1:0x00b9864c,
+    2:0x00b9d05c,
+    3:0x00ba0b9c,
+    4:0x00ba46dc,
+    5:0x00ba821c,
+    6:0x00babd5c,
+    7:0x00baf89c
+}
+achievement(
+    "Hard Rhythm Rocker",
+    "Obtain 5 star clears on all Career mode songs on Hard (One Profile)",
+    points=50,
+    trigger=
+        populate_profile_star_clears(hard_stars, 30, 0, 29)
+)
+expert_main_list_names = {
+    0:{"Name": "I Love Rock & Roll", "Score": 10},
+    1:{"Name": "I Wanna Be Sedated", "Score": 10},
+    2:{"Name": "Thunder Kiss 65", "Score": 10},
+    3:{"Name": "Smoke On The Water", "Score": 10},
+    4:{"Name": "Infected", "Score": 10},
+    5:{"Name": "Iron Man", "Score": 10},
+    6:{"Name": "More Than A Feeling", "Score": 10},
+    7:{"Name": "You Got Another Thing Comin'", "Score": 10},
+    8:{"Name": "Take Me Out", "Score": 10},
+    9:{"Name": "Sharp Dressed Man", "Score": 10},
+    10:{"Name": "Killer Queen", "Score": 10},
+    11:{"Name": "Hey You", "Score": 10},
+    12:{"Name": "Stellar", "Score": 10},
+    13:{"Name": "Heart Full of Black", "Score": 10},
+    14:{"Name": "Symphony of Destruction", "Score": 10},
+    15:{"Name": "Ziggy Stardust", "Score": 10},
+    16:{"Name": "Fat Lip", "Score": 10},
+    17:{"Name": "Cochise", "Score": 10},
+    18:{"Name": "Take It Off", "Score": 10},
+    19:{"Name": "Unsung", "Score": 10},
+    20:{"Name": "Spanish Castle Magic", "Score": 10},
+    21:{"Name": "Higher Ground", "Score": 10},
+    22:{"Name": "No One Knows", "Score": 10},
+    23:{"Name": "Ace of Spades", "Score": 10},
+    24:{"Name": "Crossroads", "Score": 10},
+    25:{"Name": "Godzilla", "Score": 10},
+    26:{"Name": "Texas Flood", "Score": 10},
+    27:{"Name": "Frankenstein", "Score": 10},
+    28:{"Name": "Cowboys From Hell", "Score": 10},
+    29:{"Name": "Bark At The Moon", "Score": 10}
+}
+expert_stars = {
+    0:0x00b8a8bc,
+    1:0x00b92aec,
+    2:0x00b9a3ec,
+    3:0x00b9df2c,
+    4:0x00ba1a6c,
+    5:0x00ba55ac,
+    6:0x00ba90ec,
+    7:0x00bacc2c
+}
+function five_star_clear(indice){
+    logic=always_false()
+    for i in range(0, 7){
+        logic = logic || profile_slot() == i &&
+                prev(dword(expert_stars[i] + (0x20 * indice))) != 5 &&
+                dword(expert_stars[i] + (0x20 * indice)) == 5
+    }
+    return logic
+}
+function save_protection() => prev(byte(0x00b8a8bd)) != 0
+for i in range(0, length(expert_main_list_names) - 1){
+    achievement(
+        expert_main_list_names[i]["Name"] + " - Expert Five Stars",
+        "Get an Expert Five Star clear on " + expert_main_list_names[i]["Name"] + " in Career mode.",
+        points= expert_main_list_names[i]["Score"],
+        trigger=
+            save_protection() &&
+            five_star_clear(i)
+    )    
+}
