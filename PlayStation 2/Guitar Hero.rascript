@@ -343,3 +343,48 @@ for i in range(0, length(expert_main_list_names) - 1){
             five_star_clear(i)
     )    
 }
+bonus_list = {
+    0:{"ID":0x0044cc24, "NAME": "Fire It Up", "CUTOFF": 120777, "SCORE": 10},
+    1:{"ID":0x0044cabc, "NAME": "Cheat On The Church", "CUTOFF": 176865, "SCORE": 10},
+    2:{"ID":0x0044ca61, "NAME": "Caveman Rejoice", "CUTOFF": 142482, "SCORE": 10},
+    3:{"ID":0x0044cb63, "NAME": "Eureka, I've Found Love", "CUTOFF": 121245, "SCORE": 10},
+    4:{"ID":0x0044c93b, "NAME": "All Of This", "CUTOFF": 124704, "SCORE": 10},
+    5:{"ID":0x0044c97d, "NAME": "Behind The Mask", "CUTOFF": 84600, "SCORE": 10},
+    6:{"ID":0x0044c9d3, "NAME": "The Breaking Wheel", "CUTOFF": 252516, "SCORE": 10},
+    7:{"ID":0x0044ca29, "NAME": "Callout", "CUTOFF": 149853, "SCORE": 10},
+    8:{"ID":0x0044cb21, "NAME": "Decontrol", "CUTOFF": 185346, "SCORE": 25},
+    9:{"ID":0x0044cb96, "NAME": "Even Rats", "CUTOFF": 214314, "SCORE": 10},
+    10:{"ID":0x0044cbd3, "NAME": "Farewell Myth", "CUTOFF": 172083, "SCORE": 10},
+    11:{"ID":0x0044cc82, "NAME": "Fly On The Wall", "CUTOFF": 134109, "SCORE": 10},
+    12:{"ID":0x0044ccd3, "NAME": "Get Ready 2 Rokk", "CUTOFF": 172014, "SCORE": 25},
+    13:{"ID":0x0044cd29, "NAME": "Guitar Hero", "CUTOFF": 178146, "SCORE": 10},
+    14:{"ID":0x0044cd70, "NAME": "Hey", "CUTOFF": 84000, "SCORE": 10},
+    15:{"ID":0x0044cd94, "NAME": "Sail Your Ship By", "CUTOFF": 155376, "SCORE": 10},
+    16:{"ID":0x0044cdef, "NAME": "Story of My Love", "CUTOFF": 188118, "SCORE": 10}
+}
+function song_ID() => dword(0x00b96100)
+function screen_ID() => dword(0x00369334)
+//0x00b962e0=In Song
+//0x00bb17e0=Loading Into Results
+//0x00bb18d0=Results Screen
+load_results = 0x00bb17e0
+results_screen = 0x00bb18d0
+function score() => dword(dword(dword(0xb95ef4)  + 0x0) + 0x20)
+function difficulty() => dword(0x00b960f8)
+expert = 3
+my_id = 268085
+for i in range(0, 16){
+    achievement(
+        bonus_list[i]["NAME"] + " - Expert Five Stars",
+        "Get an Expert Five star clear on the Bonus song " + "\"" + bonus_list[i]["NAME"] + "\"",
+        points=bonus_list[i]["SCORE"],
+        id = my_id,
+        trigger=
+            song_ID() == bonus_list[i]["ID"] &&
+            difficulty() == expert &&
+            score() >= bonus_list[i]["CUTOFF"] &&
+            prev(screen_ID()) == load_results &&
+            screen_ID() == results_screen
+    )
+    my_id = my_id + 1
+}
