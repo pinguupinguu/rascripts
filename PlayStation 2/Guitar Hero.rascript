@@ -388,3 +388,320 @@ for i in range(0, 16){
     )
     my_id = my_id + 1
 }
+//Define the order in which all tables store profile number & difficulty for MeasuredIf conditions on shop achievements (Where applicable).
+difficulty_profiles = {
+    0:{"Profile":0, "Difficulty":3},
+    1:{"Profile":1, "Difficulty":3},
+    2:{"Profile":0, "Difficulty":1},
+    3:{"Profile":0, "Difficulty":2},
+    4:{"Profile":1, "Difficulty":1},
+    5:{"Profile":1, "Difficulty":2},
+    6:{"Profile":2, "Difficulty":3},
+    7:{"Profile":2, "Difficulty":1},
+    8:{"Profile":2, "Difficulty":2},
+    9:{"Profile":3, "Difficulty":3},
+    10:{"Profile":3, "Difficulty":1},
+    11:{"Profile":3, "Difficulty":2},
+    12:{"Profile":4, "Difficulty":3},
+    13:{"Profile":4, "Difficulty":1},
+    14:{"Profile":4, "Difficulty":2},
+    15:{"Profile":5, "Difficulty":3},
+    16:{"Profile":5, "Difficulty":1},
+    17:{"Profile":5, "Difficulty":2},
+    18:{"Profile":6, "Difficulty":3},
+    19:{"Profile":6, "Difficulty":1},
+    20:{"Profile":6, "Difficulty":2},
+    21:{"Profile":7, "Difficulty":3},
+    22:{"Profile":7, "Difficulty":1},
+    23:{"Profile":7, "Difficulty":2}
+}
+//Array starts for song shop flags: each difficulty (Medium-Expert) per save slot.
+shop_guitar_heads = {
+    0:0x00b8afec,
+    1:0x00b9321c,
+    2:0x00b9422c,
+    3:0x00b950fc,
+    4:0x00b97eac,
+    5:0x00b98d7c,
+    6:0x00b9ab1c,
+    7:0x00b9c8bc,
+    8:0x00b9d78c,
+    9:0x00b9e65c,
+    10:0x00ba03fc,
+    11:0x00ba12cc,
+    12:0x00ba219c,
+    13:0x00ba3f3c,
+    14:0x00ba4e0c,
+    15:0x00ba5cdc,
+    16:0x00ba7a7c,
+    17:0x00ba894c,
+    18:0x00ba981c,
+    19:0x00bab5bc,
+    20:0x00bac48c,
+    21:0x00bad35c,
+    22:0x00baf0fc,
+    23:0x00baffcc
+}
+function shop_cheevo_guitars(){ //7 Guitar flags total.    
+    logic = always_false() 
+    for i in range(0, 23){
+    measure_when = profile_slot() == difficulty_profiles[i]["Profile"] && difficulty() == difficulty_profiles[i]["Difficulty"]
+        logic = logic || 
+                        prev(sum_of(range(shop_guitar_heads[i], shop_guitar_heads[i] + 6 * 32, 32), b => dword(b))) == 6 &&
+                        measured(sum_of(range(shop_guitar_heads[i], shop_guitar_heads[i] + 6 * 32, 32), b => dword(b)) == 7, measure_when)                                                                                                                                         
+    }
+    return logic
+}
+achievement(
+    "Guitars to Rock On!",
+    "Buy all Guitars from the shop! (All on One Difficulty)",
+    points=5,
+    trigger=
+        shop_cheevo_guitars()
+)
+shop_skins_padding = { //In memory, skins have dummy values in between actual flags (probably placeholders). This array will be used to summate the actual flags and skip over dummy ones.
+    0:0,
+    1:32,
+    2:32,
+    3:64,
+    4:32,
+    5:32,
+    6:64,
+    7:32,
+    8:32,
+    9:64,
+    10:32,
+    11:32,
+    12:64,
+    13:32,
+    14:32,
+    15:64,
+    16:32,
+    17:32,
+    18:64,
+    19:32,
+    20:32,
+    21:64,
+    22:32,
+    23:32,
+    24:64,
+    25:32,
+    26:32,
+    27:64
+}
+shop_skins_heads = {
+    0:0x00b8b14c,
+    1:0x00b9337c,
+    2:0x00b9438c,
+    3:0x00b9525c,
+    4:0x00b9800c,
+    5:0x00b98edc,
+    6:0x00b9ac7c,
+    7:0x00b9ca1c,
+    8:0x00b9d8ec,
+    9:0x00b9e7bc,
+    10:0x00ba055c,
+    11:0x00ba142c,
+    12:0x00ba22fc,
+    13:0x00ba409c,
+    14:0x00ba4f6c,
+    15:0x00ba5e3c,
+    16:0x00ba7bdc,
+    17:0x00ba8aac,
+    18:0x00ba997c,
+    19:0x00bab71c,
+    20:0x00bac5ec,
+    21:0x00bad4bc,
+    22:0x00baf25c,
+    23:0x00bb012c
+
+}
+function skins_generate_sum_chain(base_address) {
+    my_list = 1
+    for i  in range(0, 27) {
+        base_address = base_address + shop_skins_padding[i]
+        my_list = my_list + dword(base_address)
+        
+    }
+    return my_list
+}
+function shop_cheevo_skins(){
+    logic = always_false()
+    for i in range(0, 23){
+        measure_when = profile_slot() == difficulty_profiles[i]["Profile"] && difficulty() == difficulty_profiles[i]["Difficulty"]
+        address_list = skins_generate_sum_chain(shop_skins_heads[i])
+        logic = logic || prev(address_list) == 27 && measured(address_list == 28, measure_when)
+    }
+    return logic
+}
+achievement(
+    "Customizer Freak",
+    "Buy all Skins from the shop! (All on One Difficulty)",
+    points=10,
+    trigger=
+        shop_cheevo_skins()
+)
+shop_bonus_array_heads = {
+    0:0x00b8ac6c,
+    1:0x00b92e9c,
+    2:0x00b93eac,
+    3:0x00b94d7c,
+    4:0x00b97b2c,
+    5:0x00b989fc,
+    6:0x00b9a79c,
+    7:0x00b9c53c,
+    8:0x00b9d40c,
+    9:0x00b9e2dc,
+    10:0x00ba007c,
+    11:0x00ba0f4c,
+    12:0x00ba1e1c,
+    13:0x00ba3bbc,
+    14:0x00ba4a8c,
+    15:0x00ba595c,
+    16:0x00ba76fc,
+    17:0x00ba85cc,
+    18:0x00ba949c,
+    19:0x00bab23c,
+    20:0x00bac10c,
+    21:0x00bacfdc,
+    22:0x00baed7c,
+    23:0x00bafc4c
+}
+function shop_cheevo_songs(){ //17 Bonus song flags total.    
+    logic = always_false() 
+    for i in range(0, 23){
+        measure_when = profile_slot() == difficulty_profiles[i]["Profile"] && difficulty() == difficulty_profiles[i]["Difficulty"]
+        logic = logic || 
+                        prev(sum_of(range(shop_bonus_array_heads[i], shop_bonus_array_heads[i] + 16 * 32, 32), b => dword(b))) == 16 &&
+                        measured(sum_of(range(shop_bonus_array_heads[i], shop_bonus_array_heads[i] + 16 * 32, 32), b => dword(b)) == 17, measure_when)                                                                                                                                         
+    }
+    return logic
+}
+achievement(
+        "Song Collector",
+        "Buy all extra songs from the shop! (All on One Difficulty)",
+        points=10,
+        trigger=
+            shop_cheevo_songs()
+)
+function shop_cheevo_char(head_array){
+    logic = always_false()
+    for i in range(0, 23){
+        shop_check = profile_slot() == difficulty_profiles[i]["Profile"] && difficulty() == difficulty_profiles[i]["Difficulty"]
+        logic = logic  || shop_check && prev(dword(head_array[i])) == 0 && dword(head_array[i]) == 1
+    }
+    return logic
+}
+shop_character_izzy_sparks_heads = {
+    0:0x00b8af2c,
+    1:0x00b9315c,
+    2:0x00b9416c,
+    3:0x00b9503c,
+    4:0x00b97dec,
+    5:0x00b98cbc,
+    6:0x00b9aa5c,
+    7:0x00b9c7fc,
+    8:0x00b9d6cc,
+    9:0x00b9e59c,
+    10:0x00ba033c,
+    11:0x00ba120c,
+    12:0x00ba20dc,
+    13:0x00ba3e7c,
+    14:0x00ba4d4c,
+    15:0x00ba5c1c,
+    16:0x00ba79bc,
+    17:0x00ba888c,
+    18:0x00ba975c,
+    19:0x00bab4fc,
+    20:0x00bac3cc,
+    21:0x00bad29c,
+    22:0x00baf03c,
+    23:0x00baff0c
+}
+achievement(
+    "Sparkin' It Up!",
+    "Purchase Izzy Sparks from the shop!",
+    points=10,
+    trigger=
+        save_protection() && 
+        shop_cheevo_char(shop_character_izzy_sparks_heads)
+)
+shop_character_grim_ripper_heads = {
+    0:0x00b8af6c,
+    1:0x00b9319c,
+    2:0x00b941ac,
+    3:0x00b9507c,
+    4:0x00b97e2c,
+    5:0x00b98cfc,
+    6:0x00b9aa9c,
+    7:0x00b9c83c,
+    8:0x00b9d70c,
+    9:0x00b9e5dc,
+    10:0x00ba037c,
+    11:0x00ba124c,
+    12:0x00ba211c,
+    13:0x00ba3ebc,
+    14:0x00ba4d8c,
+    15:0x00ba5c5c,
+    16:0x00ba79fc,
+    17:0x00ba88cc,
+    18:0x00ba979c,
+    19:0x00bab53c,
+    20:0x00bac40c,
+    21:0x00bad2dc,
+    22:0x00baf07c,
+    23:0x00baff4c
+}
+achievement(
+    "Death Speaks",
+    "Purchase Grim Ripper from the shop!",
+    points=10,
+    trigger=
+        save_protection() &&
+        shop_cheevo_char(shop_character_grim_ripper_heads)
+)
+shop_video_heads = {
+    0:0x00b8b64c,
+    1:0x00b9387c,
+    2:0x00b9488c,
+    3:0x00b9575c,
+    4:0x00b9850c,
+    5:0x00b993dc,
+    6:0x00b9b17c,
+    7:0x00b9cf1c,
+    8:0x00b9ddec,
+    9:0x00b9ecbc,
+    10:0x00ba0a5c,
+    11:0x00ba192c,
+    12:0x00ba27fc,
+    13:0x00ba459c,
+    14:0x00ba546c,
+    15:0x00ba633c,
+    16:0x00ba80dc,
+    17:0x00ba8fac,
+    18:0x00ba9e7c,
+    19:0x00babc1c,
+    20:0x00bacaec,
+    21:0x00bad9bc,
+    22:0x00baf75c,
+    23:0x00bb062c
+}
+function shop_cheevo_videos(){ //3 Video shop flags total.   
+    logic = always_false() 
+    for i in range(0, 23){
+    measure_when = profile_slot() == difficulty_profiles[i]["Profile"] && difficulty() == difficulty_profiles[i]["Difficulty"]
+        logic = logic || 
+                        prev(sum_of(range(shop_video_heads[i], shop_video_heads[i] + 2 * 32, 32), b => dword(b))) == 2 &&
+                        measured(sum_of(range(shop_video_heads[i], shop_video_heads[i] + 2 * 32, 32), b => dword(b)) == 3, measure_when)                                                                                                                                         
+    }
+    return logic
+}
+achievement(
+    "Lore Collector",
+    "Purchase all Videos from the shop! (All on One Difficulty)",
+    points=10,
+    trigger=
+        shop_cheevo_videos()
+)
+
+
