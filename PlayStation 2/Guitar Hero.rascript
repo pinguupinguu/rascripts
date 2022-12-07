@@ -367,6 +367,7 @@ function screen_ID() => dword(0x00369334)
 //0x00b962e0=In Song
 //0x00bb17e0=Loading Into Results
 //0x00bb18d0=Results Screen
+in_song = 0x00b962e0
 load_results = 0x00bb17e0
 results_screen = 0x00bb18d0
 function score() => dword(dword(dword(0xb95ef4)  + 0x0) + 0x20)
@@ -703,5 +704,77 @@ achievement(
     trigger=
         shop_cheevo_videos()
 )
-
-
+leaderboard_list = {
+    0:{"Name":"I Love Rock & Roll", "ID":0x0044c301},
+    1:{"Name":"I Wanna Be Sedated", "ID":0x0044c3db},
+    2:{"Name":"Thunder Kiss 65", "ID":0x0044c7d4},
+    3:{"Name":"Smoke On The Water", "ID":0x0044c593},
+    4:{"Name":"Infected", "ID":0x0044c366},
+    5:{"Name":"Iron Man", "ID":0x0044c3a3},
+    6:{"Name":"More Than A Feeling", "ID":0x0044c487},
+    7:{"Name":"You Got Another Thing Comin'", "ID":0x0044c85d},
+    8:{"Name":"Take Me Out", "ID":0x0044c74b},
+    9:{"Name":"Sharp Dressed Man", "ID":0x0044c533},
+    10:{"Name":"Killer Queen", "ID":0x0044c43b},
+    11:{"Name":"Hey You", "ID":0x0044c27d},
+    12:{"Name":"Stellar", "ID":0x0044c662},
+    13:{"Name":"Heart Full of Black", "ID":0x0044c218},
+    14:{"Name":"Symphony of Destruction", "ID":0x0044c69a},
+    15:{"Name":"Ziggy Stardust", "ID":0x0044c8e5},
+    16:{"Name":"Fat Lip", "ID":0x0044c157},
+    17:{"Name":"Cochise", "ID":0x0044c06e},
+    18:{"Name":"Take It Off", "ID":0x0044c709},
+    19:{"Name":"Unsung", "ID":0x0044c82a},
+    20:{"Name":"Spanish Castle Magic", "ID":0x0044c5f3},
+    21:{"Name":"Higher Ground", "ID":0x0044c2b0},
+    22:{"Name":"No One Knows", "ID":0x0044c4ec},
+    23:{"Name":"Ace of Spades", "ID":0x0044bf61},
+    24:{"Name":"Crossroads", "ID":0x0044c110},
+    25:{"Name":"Godzilla", "ID":0x0044c1db},
+    26:{"Name":"Texas Flood", "ID":0x0044c78d},
+    27:{"Name":"Frankenstein", "ID":0x0044c18a},
+    28:{"Name":"Cowboys From Hell", "ID":0x0044c0b0},
+    29:{"Name":"Bark At The Moon", "ID":0x0044c009},
+    30:{"Name":"Fire It Up", "ID":0x0044cc24},
+    31:{"Name":"Cheat On The Church", "ID":0x0044cabc},
+    32:{"Name":"Caveman Rejoice", "ID":0x0044ca61},
+    33:{"Name":"Eureka, I've Found Love", "ID":0x0044cb63},
+    34:{"Name":"All Of This", "ID":0x0044c93b},
+    35:{"Name":"Behind The Mask", "ID":0x0044c97d},
+    36:{"Name":"The Breaking Wheel", "ID":0x0044c9d3},
+    37:{"Name":"Callout", "ID":0x0044ca29},
+    38:{"Name":"Decontrol", "ID":0x0044cb21},
+    39:{"Name":"Even Rats", "ID":0x0044cb96},
+    40:{"Name":"Farewell Myth", "ID":0x0044cbd3},
+    41:{"Name":"Fly On The Wall", "ID":0x0044cc82},
+    42:{"Name":"Get Ready 2 Rokk", "ID":0x0044ccd3},
+    43:{"Name":"Guitar Hero", "ID":0x0044cd29},
+    44:{"Name":"Hey", "ID":0x0044cd70},
+    45:{"Name":"Sail Your Ship By", "ID":0x0044cd94},
+    46:{"Name":"Story of My Love", "ID":0x0044cdef}
+}
+function game_state() => dword(0x00b96018)
+in_menu = 0
+in_game = 1
+restart = 2
+//function difficulty() => dword(0x00b960f8)
+difficulty_list = {
+    0:"Easy",
+    1:"Medium",
+    2:"Hard",
+    3:"Expert"
+}
+for i in range(0, 46){ //Song list length
+    for j in range(0, 3){
+        leaderboard(
+            leaderboard_list[i]["Name"] + " - " + difficulty_list[j],
+            "Highest score!",
+            game_state() == in_game && screen_ID() == in_song && difficulty() == j && song_ID() == leaderboard_list[i]["ID"] && score() != 0,
+            score() < prev(score()) || game_state() == in_menu,
+            game_state() == in_game && screen_ID() == results_screen,
+            score(),
+            "VALUE",
+            false
+        )
+    }
+}
