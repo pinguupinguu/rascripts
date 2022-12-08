@@ -11,8 +11,8 @@ function profile_slot() => dword(0x00b8a698)
 function populate_profile_alt_clears(difficulty_table, start, end){
     logic = always_false()
     for i in range(0, 7){
-        logic = logic || sum_of(range(difficulty_table[i] + (0x20 * start), difficulty_table[i] + (0x20 * end), 0x20), b => prev(dword(b)) == 1) == 4 &&
-        measured(sum_of(range(difficulty_table[i] + (0x20 * start), difficulty_table[i] + (0x20 * end), 0x20), b => dword(b) == 1) == 5, profile_slot() == i)
+        logic = logic || sum_of(range(difficulty_table[i] + (0x20 * start), difficulty_table[i] + (0x20 * end), 0x20), b => prev(dword(b))) == 4 &&
+        measured(sum_of(range(difficulty_table[i] + (0x20 * start), difficulty_table[i] + (0x20 * end), 0x20), b => dword(b)) == 5, profile_slot() == i)
     }
     return logic
 }
@@ -778,3 +778,61 @@ for i in range(0, 46){ //Song list length
         )
     }
 }
+//Rich Presence
+function combo() => dword(dword(dword(0xb95ef4)  + 0x0) + 0x24) //Required for in-song string!
+songs_rp_list = { //ID:ASCII string Song Name
+    0x0044c301:"I Love Rock & Roll",
+    0x0044c3db:"I Wanna Be Sedated",
+    0x0044c7d4:"Thunder Kiss 65",
+    0x0044c593:"Smoke On The Water",
+    0x0044c366:"Infected",
+    0x0044c3a3:"Iron Man",
+    0x0044c487:"More Than A Feeling",
+    0x0044c85d:"You Got Another Thing Comin'",
+    0x0044c74b:"Take Me Out",
+    0x0044c533:"Sharp Dressed Man",
+    0x0044c43b:"Killer Queen",
+    0x0044c27d:"Hey You",
+    0x0044c662:"Stellar",
+    0x0044c218:"Heart Full of Black",
+    0x0044c69a:"Symphony of Destruction",
+    0x0044c8e5:"Ziggy Stardust",
+    0x0044c157:"Fat Lip",
+    0x0044c06e:"Cochise",
+    0x0044c709:"Take It Off",
+    0x0044c82a:"Unsung",
+    0x0044c5f3:"Spanish Castle Magic",
+    0x0044c2b0:"Higher Ground",
+    0x0044c4ec:"No One Knows",
+    0x0044bf61:"Ace of Spades",
+    0x0044c110:"Crossroads",
+    0x0044c1db:"Godzilla",
+    0x0044c78d:"Texas Flood",
+    0x0044c18a:"Frankenstein",
+    0x0044c0b0:"Cowboys From Hell",
+    0x0044c009:"Bark At The Moon",
+    0x0044cc24:"Fire It Up",
+    0x0044cabc:"Cheat On The Church",
+    0x0044ca61:"Caveman Rejoice",
+    0x0044cb63:"Eureka, I've Found Love",
+    0x0044c93b:"All Of This",
+    0x0044c97d:"Behind The Mask",
+    0x0044c9d3:"The Breaking Wheel",
+    0x0044ca29:"Callout",
+    0x0044cb21:"Decontrol",
+    0x0044cb96:"Even Rats",
+    0x0044cbd3:"Farewell Myth",
+    0x0044cc82:"Fly On The Wall",
+    0x0044ccd3:"Get Ready 2 Rock",
+    0x0044cd29:"Guitar Hero",
+    0x0044cd70:"Hey",
+    0x0044cd94:"Sail Your Ship By",
+    0x0044cdef:"Story of My Love"
+}
+rich_presence_conditional_display(screen_ID() == in_song, "🎵 Rockin' out to {0} on {1}! Points: {2} Combo : {3}",
+    rich_presence_lookup("Song", song_ID(), songs_rp_list),
+    rich_presence_lookup("Difficulty", difficulty(), difficulty_list),
+    rich_presence_macro("Number", score()),
+    rich_presence_macro("Number", combo())
+) 
+rich_presence_display("In Menu")
