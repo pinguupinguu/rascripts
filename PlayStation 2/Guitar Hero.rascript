@@ -221,11 +221,11 @@ achievement(
 function populate_profile_star_clears(difficulty_table, songs, start, end){
     logic = always_false()
     for i in range(0, 7)
-       {     
+       {     //
             logic = logic ||
             unless(profile_slot() != i) &&
             tally_of(range(difficulty_table[i] + (0x20 * start), difficulty_table[i] + (0x20 * end), 0x20), songs - 1, b => once(prev(byte(b)) == 5)) &&
-            measured(tally_of(range(difficulty_table[i] + (0x20 * start), difficulty_table[i] + (0x20 * end), 0x20), songs, b => once(prev(byte(b)) == 5))) &&
+            measured(tally_of(range(difficulty_table[i] + (0x20 * start), difficulty_table[i] + (0x20 * end), 0x20), songs, b => once(byte(b) == 5))) &&
             never(tally_of(range(difficulty_table[i] + (0x20 * start), difficulty_table[i] + (0x20 * end), 0x20), songs, b => once(prev(byte(b)) == 5)))            
        }          
     return logic
