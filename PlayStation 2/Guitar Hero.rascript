@@ -518,7 +518,7 @@ shop_skins_heads = {
 
 }
 function skins_generate_sum_chain(base_address) {
-    my_list = 1
+    my_list = 0
     for i  in range(0, 27) {
         base_address = base_address + shop_skins_padding[i]
         my_list = my_list + dword(base_address)
