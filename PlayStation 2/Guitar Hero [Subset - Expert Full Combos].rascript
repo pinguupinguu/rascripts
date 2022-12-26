@@ -4,13 +4,21 @@
 // $4A03E4: [32bit] Pointer
 //          +0xb58=Notes Passed
 //          Default=0xffffffff
+
 // $B95EF4: [32bit] Pointer
 //          --+ 0
 //          ----++0x20 = [32bit] Current Song Score
 //          ----++0x24 = [32bit] Current Combo
 //          ----++0x28 = [32bit] Current Combo Multiplier
 function score() => dword(dword(dword(0xb95ef4)  + 0x0) + 0x20)
-function combo() => dword(dword(dword(0xb95ef4)  + 0x0) + 0x24)
+function notes() => dword(dword(0x4ebb04) + 0x44)
+function combo_current() => dword(dword(0x4ebb04) + 0x48)
+function previous_streak() => dword(dword(0x4ebb04) + 0x4c)
+// $4EBB04: [32bit] Pointer
+//          +0x44 = Total Notes Hit
+//          +0x48 = Current Combo
+//          +0x4c = Last Previous Note Combo
+
 // $B96018: [32bit] Game State
 //          0x00=In Menu
 //          0x01=In Game
@@ -125,12 +133,12 @@ song_database = {
 for song in song_database {
     achievement(
         song_database[song]["Name"],
-        "Get an Expert Full Combo on " + song_database[song]["Name"],
+        "Get an Expert Full Combo on " + song_database[song]["Name"] + " (No Overstrum)",
         points=song_database[song]["Points"],
         trigger=
-            once(prev(score()) == 0 && prev(combo()) == 0 && combo() == 1) &&
-            trigger_when(prev(combo()) == song_database[song]["MaxNotes"] - 1 && combo() == song_database[song]["MaxNotes"]) &&
-            never(combo() < prev(combo())) &&
+            once(prev(score()) == 0 && prev(notes()) == 0 && notes() == 1) &&
+            trigger_when(prev(notes()) == song_database[song]["MaxNotes"] - 1 && notes() == song_database[song]["MaxNotes"]) &&
+            never(previous_streak() != prev(previous_streak()) && previous_streak() != song_database[song]["MaxNotes"]) &&
             never(game_state() == 0) &&
             unless(song_ID() != song) &&
             unless(difficulty() != 3)
