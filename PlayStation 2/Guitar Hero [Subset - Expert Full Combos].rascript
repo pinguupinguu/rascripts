@@ -1,6 +1,6 @@
 // Guitar Hero [Subset - Expert Full Combos]
 // #ID = 21462
-
+// Subset link: https://github.com/RetroAchievements/RAPatches/raw/main/PS2/Subset/21462-GuitarHeroSubsetExpertFullCombos.zip
 // $4A03E4: [32bit] Pointer
 //          +0xb58=Notes Passed
 //          Default=0xffffffff
@@ -18,7 +18,6 @@ function previous_streak() => dword(dword(0x4ebb04) + 0x4c)
 //          +0x44 = Total Notes Hit
 //          +0x48 = Current Combo
 //          +0x4c = Last Previous Note Combo
-
 // $B96018: [32bit] Game State
 //          0x00=In Menu
 //          0x01=In Game
