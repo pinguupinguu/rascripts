@@ -273,12 +273,12 @@ function sum_star(name, points, start, mode, count){
     puzzle_alts = always_false()
     for i in range(1, 3) {
     table_off = puzzles[start]["Profile " + i]
-    puzzle_alts = puzzle_alts || prev(sum_of(range(table_off, table_off + (count - 1) * 4, 4), addr => dword(addr))) < count &&  
-                                 measured(sum_of(range(table_off, table_off + (count - 1) * 4, 4), addr => dword(addr)) == count, profile_slot() == i - 1)  
+    puzzle_alts = puzzle_alts || prev(sum_of(range(table_off, table_off + (count - 1) * 4, 4), addr => dword(addr))) < count * 5 &&  
+                                 measured(sum_of(range(table_off, table_off + (count - 1) * 4, 4), addr => dword(addr)) == count * 5, profile_slot() == i - 1)  
     }
     achievement(
         "Star " + name + " Earner",
-        "Earn all " + count + " stars in " + name + " Mode",
+        "Earn all " + count * 5 + " stars in " + name + " Mode",
         points,
         trigger=
             prev(dword(gamestates[mode])) == 1 &&
