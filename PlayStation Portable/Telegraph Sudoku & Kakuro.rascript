@@ -286,8 +286,8 @@ function sum_star(name, points, start, mode, count){
     )
 }
 //==========STARS==========
-sum_star("Sudoku", 10, "sudoku_easy", "sudoku", 180)
-sum_star("Kakuro", 5, "kakuro_easy", "kakuro", 80)
-sum_star("Sudoku X", 5, "xsudoku_easy", "xsudoku", 80)
-sum_star("Jigsaw Sudoku", 5, "jigsaw_easy", "jigsaw", 80)
-sum_star("Mini Sudoku", 5, "mini_easy", "mini", 80)
+sum_star("Sudoku", 25, "sudoku_easy", "sudoku", 180)
+sum_star("Kakuro", 25, "kakuro_easy", "kakuro", 80)
+sum_star("Sudoku X", 25, "xsudoku_easy", "xsudoku", 80)
+sum_star("Jigsaw Sudoku", 25, "jigsaw_easy", "jigsaw", 80)
+sum_star("Mini Sudoku", 10, "mini_easy", "mini", 80)
