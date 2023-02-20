@@ -1,22 +1,18 @@
 // 1001 Crystal Mazes Collection (DSi)
 // #ID = 22458
 
-// $000076: [Offset] [8bit] Classic Collection - Completion Flags | Save 1
-//          --- bit7 | 1
-//          --- bit6 | 2
-//          --- bit5 | 3
-//          --- bit4 | 4
-//          --- bit3 | 5
-//          --- bit2 | 6
-//          --- bit1 | 7
-//          --- bit0 | 8
-// $0A3D48: Global timer lmao
+// $FFE00C: [32bit be] DSI App ID Hash
+//          0x4b4f4b50 = 1001 Crystal Mazes Collection (Europe)
+crystal_mazes_hash = 0x4b4f4b50
+function app_hash() => dword_be(0xffe00c)
 // $181F0C: [32bit] Screen ID
 //          0x00=Title Screen (First Boot)
 //          0x06=Name Creation
 //          0x05=Title Screen
 //          0x07=In Puzzle
 //          0x08=Puzzle Selection
+function screen_ID() => dword(0x181f0c)
+in_puzzle = 7
 // $2EADA4: [24bit] Pointer-Puzzle Check Flags
 //          Numbers are sequenced low>high, from bit7>bit0
 //          +0x76=Classic Collection | 1-8
@@ -151,37 +147,6 @@
 //          +0xF1=Bonus Collection 3 | 83-91
 //          +0xF2=Bonus Collection 3 | 91-99
 //          +0xF3=Bonus Collection 3 | 100 (bit7)
-// $2EF3F8: Classic Collection - Completion Flags | Save 1
-//          --- bit7 | 17
-//          --- bit6 | 18
-//          --- bit5 | 19
-//          --- bit4 | 20
-//          --- bit3 | 21
-//          --- bit2 | 22
-//          --- bit1 | 23
-//          --- bit0 | 24
-// $2EF3F9: Classic Collection - Completion Flags | Save 1
-//          --- bit7 | 25
-//          --- bit6 | 26
-//          --- bit5 | 27
-//          --- bit4 | 28
-//          --- bit3 | 29
-//          --- bit2 | 30
-//          --- bit1 | 31
-//          --- bit0 | 32
-// $2EF3FC: Classic Collection - Completion Flags | Save 1
-//          --- bit7 | 49
-//          --- bit6 | 50
-//          Relaxed Collection - Completion Flags | Save 1
-//          --- bit5 | 1
-//          --- bit4 | 2
-//          --- bit3 | 3
-//          --- bit2 | 4
-//          --- bit1 | 5
-//          --- bit0 | 6
-// $2EF474: First puzzle hours
-// $2EF85D: First puzzle minutes
-// $2EFC46: First puzzle seconds
 // $2F4C08: Active Save Slot [32-bit]
 // $2F8314: [16bit] Active Collection
 //          0x00=Classic Collection
@@ -203,12 +168,24 @@ rp_categories = {
 }
 // $2F8316: [16bit] Puzzle Number
 function puzzle_number() => word(0x2f8316)
-// $FFE00C: [32bit be] DSI App ID Hash
-//          0x4b4f4b50 = 1001 Crystal Mazes Collection (Europe)
-crystal_mazes_hash = 0x4b4f4b50
-function app_hash() => dword_be(0xffe00c)
+//          0x00=Title Screen (First Boot)
+//          0x06=Name Creation
+//          0x05=Title Screen
+//          0x07=In Puzzle
+//          0x08=Puzzle Selection
+rp_screens = {
+    0:"In the Title Screen...",
+    5:"In the Title Screen...",
+    6:"Creating a Profile...",
+    8:"Selecting a puzzle..."
+}
 
-rich_presence_conditional_display()
-
-
+rich_presence_conditional_display(app_hash() == crystal_mazes_hash && screen_ID() == in_puzzle, "Solving {0} 🧩 {1}",
+    rich_presence_lookup("Collection", puzzle_category(), rp_categories),
+    rich_presence_macro("Number", puzzle_number() + 1)
+)
+rich_presence_conditional_display(app_hash() == crystal_mazes_hash, "{0}",
+    rich_presence_lookup("Screen", screen_ID(), rp_screens)
+)
+rich_presence_display("In the DSi Menu...")
 
