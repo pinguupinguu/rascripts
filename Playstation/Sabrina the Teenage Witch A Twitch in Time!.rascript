@@ -101,10 +101,9 @@ achievement(
     points=10,
     id=292620,
     trigger=
-        map_ID() == 3 &&
+        
         save_protection() &&
-        clear_level() &&
-        bob_health() == 0
+        clock_virgo() > prev(clock_virgo())
 )
 achievement(
     "Into Egypt We Go!",
@@ -131,11 +130,9 @@ achievement(
     "Beat Ra in Tomb Construction Site and collect the Sagittarius clock piece!",
     points=10,
     id=292623,
-    trigger=
-        map_ID() == 6 &&
+    trigger=        
         save_protection() &&
-        clear_level() &&
-        ra_rainmaker_health() == 0
+        clock_saggitarius() > prev(clock_saggitarius())
 )
 achievement(
     "A Formal Trip to Japan!",
@@ -194,10 +191,8 @@ achievement(
     points=10,
     id=292629,
     trigger=
-        map_ID() == 0xc &&
         save_protection() &&
-        clear_level() &&
-        ra_rainmaker_health() == 0
+        clock_libra() > prev(clock_libra())
 )
 achievement(
     "The Final Matching Showdown!",
@@ -345,5 +340,3 @@ achievement(
 // $0C8566: [8bit] Costume Equipped
 //          0x00=Default
 //          0x02=Cavewoman
-
-
