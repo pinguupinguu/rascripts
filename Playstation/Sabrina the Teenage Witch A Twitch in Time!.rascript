@@ -13,14 +13,22 @@ function map_ID() => byte(0x07ca00)
 function save_protection() => prev(map_ID()) <= 0xe && prev(map_ID()) != 0
 // $07CA1E: [16bit] Selected Menu Option
 // $07CB28: [16bit] Level Gem Count
-// $07CB80: [8bit] End of Level?
-function clear_flag() => byte(0x07cb80)
+// $07CB80: [8bit] Player Locked
+function locked_flag() => byte(0x07cb80)
+// $06D5AC: [32bit] Game Menu is Loaded
+//          0x00000000=No
+//          0xffffffff=Yes
+function menu_load() => dword(0x06d5ac)
+function clear_level() => prev(locked_flag()) == 1 && prev(menu_load()) == 0x00000000 && menu_load() == 0xffffffff 
 // $08B210: [8bit] Health
 // $08B450: [8bit] Final Boss Health
 function final_boss_health() => byte(0x08b450)
 // $08B8D0: [8bit] Boss - Shogun Warrior Health
+function shogun_health() => byte(0x08b8d0)
 // $08BD50: [8bit] Boss - Ra Health & The Rainmaker
+function ra_rainmaker_health() => byte(0x08bd50)
 // $08BE70: [8bit] Boss - Bob the Brawler Boss Health
+function bob_health() => byte(0x08be70)
 // $0C8518: [8bit] Lives
 // $0C8556: [8bit] Global Gem Count
 
@@ -74,7 +82,8 @@ achievement(
     id=292618,
     trigger=
         map_ID() == 1 &&
-        clear_flag() > prev(clear_flag())
+        save_protection() &&
+        clear_level()
 )
 achievement(
     "The Flintstones Don't Live Here",
@@ -82,15 +91,20 @@ achievement(
     points=5,
     id=292619,
     trigger=       
-        progression(volcano_caves_flag())
+        map_ID() == 2 &&
+        save_protection() &&
+        clear_level()
 )
 achievement(
     "Volcanic Caves Smackdown!",
-    "Defeat Bob the Brawler and collect the Virgo clock piece!",
+    "Defeat Bob the Bowler and collect the Virgo clock piece!",
     points=10,
     id=292620,
     trigger=
-        progression(clock_virgo())
+        map_ID() == 3 &&
+        save_protection() &&
+        clear_level() &&
+        bob_health() == 0
 )
 achievement(
     "Into Egypt We Go!",
@@ -98,8 +112,9 @@ achievement(
     points=5,
     id=292621,
     trigger=
-        progression(egyptian_village_flag()) &&
-        clock_libra() == 0
+        map_ID() == 4 &&
+        save_protection() &&
+        clear_level()
 )
 achievement(
     "The Nile High Club",
@@ -107,7 +122,9 @@ achievement(
     points=5,
     id=292622,
     trigger=
-        progression(tomb_site_flag())
+        map_ID() == 5 &&
+        save_protection() &&
+        clear_level()
 )
 achievement(
     "The Cool Sun God",
@@ -115,7 +132,10 @@ achievement(
     points=10,
     id=292623,
     trigger=
-        progression(clock_saggitarius()) 
+        map_ID() == 6 &&
+        save_protection() &&
+        clear_level() &&
+        ra_rainmaker_health() == 0
 )
 achievement(
     "A Formal Trip to Japan!",
@@ -123,7 +143,9 @@ achievement(
     points=5,
     id=292624,
     trigger=
-        progression(fortress_flag()) 
+        map_ID() == 7 &&
+        save_protection() &&
+        clear_level()
 )
 achievement(
     "Fortress of Jugs",
@@ -131,7 +153,9 @@ achievement(
     points=5,
     id=292625,
     trigger=
-        progression(mountaintop_flag()) 
+        map_ID() == 8 &&
+        save_protection() &&
+        clear_level()
 )
 achievement(
     "Samurai Master",
@@ -139,7 +163,10 @@ achievement(
     points=10,
     id=292626,
     trigger=
-        progression(clock_scorpio()) 
+        map_ID() == 9 &&
+        save_protection() &&
+        clear_level() &&
+        shogun_health() == 0
 )
 achievement(
     "This Isn't South Dakota",
@@ -147,7 +174,9 @@ achievement(
     points=5,
     id=292627,
     trigger=
-        progression(mining_flag()) 
+        map_ID() == 0xa &&
+        save_protection() &&
+        clear_level()
 )
 achievement(
     "Mining for Diamonds. Wow!",
@@ -155,7 +184,9 @@ achievement(
     points=5,
     id=292628,
     trigger=
-        progression(ghost_flag())
+        map_ID() == 0xb &&
+        save_protection() &&
+        clear_level()
 ) 
 achievement(
     "The Weather Outside Isn't Frightful!",
@@ -163,7 +194,10 @@ achievement(
     points=10,
     id=292629,
     trigger=
-        progression(clock_libra())
+        map_ID() == 0xc &&
+        save_protection() &&
+        clear_level() &&
+        ra_rainmaker_health() == 0
 )
 achievement(
     "The Final Matching Showdown!",
@@ -311,4 +345,5 @@ achievement(
 // $0C8566: [8bit] Costume Equipped
 //          0x00=Default
 //          0x02=Cavewoman
+
 
