@@ -7,6 +7,7 @@
 function game_mode() => byte(0xbe15)
 A=0x00
 B=0xFF
+
 // $BE16: [8bit] Number of Players
 function player_count() => byte(0xbe16)
 // $BEA8: [8bit] Frame Number
@@ -35,30 +36,39 @@ function no_demo() => byte(0xcff7) != 1
 function score_cheevo(game, target) =>
     no_demo() &&
     game_mode() == game &&
+    player_count() == 1 &&
     game_state() == in_game &&
     prev(score()) < target && 
     score() >= target
-
+function game_b_throws() => low4(0xbf0b) + high4(0xbf0b) * 10
+function game_b_end() => prev(byte(0x00bf72)) == 0x00 && byte(0x00bf72) == 0xff
+function game_b_cheevo(throws) =>
+    no_demo() &&
+    game_mode() == B &&
+    player_count() == 1 &&   
+    game_b_throws() <= throws &&
+    game_state() == in_game &&
+    game_b_end()
 achievement(
     "Yoko's First Rodeo",
     "Score 50 points or more in Game A!",
-    points=2,
+    points=3,
     trigger=
-        score_cheevo(B, 50)
+        score_cheevo(A, 50)
 )
 achievement(
     "Watch The Gutters!",
     "Score 100 points or more in Game A!",
     points=5,
     trigger=
-        score_cheevo(B, 100)
+        score_cheevo(A, 100)
 )
 achievement(
     "Learning Ball Control",
     "Score 150 points or more in Game A!",
     points=5,
     trigger=
-        score_cheevo(B, 150)
+        score_cheevo(A, 150)
 )
 achievement(
     "Learning Ball Spin",
@@ -75,37 +85,104 @@ achievement(
         score_cheevo(A, 250)
 )
 achievement(
+    "Out of This World!",
+    "Score 300 points in Game A and get a special surprise!",
+    points=25,
+    trigger=
+        score_cheevo(A, 300)
+)
+achievement(
     "Yoko's Second Rodeo",
-    "Score 50 points or more in Game B!",
+    "Beat Game B in 80 throws or less!",
     points=2,
     trigger=
-        score_cheevo(B, 50)
+        game_b_cheevo(80)
 )
 achievement(
     "The Lane Needs More Oil!",
-    "Score 100 points or more in Game B!",
+    "Beat Game B in 70 throws or less!",
     points=5,
     trigger=
-        score_cheevo(B, 100)
+        game_b_cheevo(70)
 )
 achievement(
     "PBA Tour Time!",
-    "Score 150 points or more in Game B!",
+    "Beat Game B in 60 throws or less!",
     points=5,
     trigger=
-        score_cheevo(B, 150)
+        game_b_cheevo(60)
 )
 achievement(
     "PBA Semi-Finalist",
-    "Score200 points or more in Game B!",
+    "Beat Game B in 50 throws or less!",
     points=5,
     trigger=
-        score_cheevo(B, 200)
+        game_b_cheevo(50)
 )
 achievement(
     "PBA Finalist",
-    "Score 250 points or more in Game B!",
+    "Beat Game B in 40 throws or less!",
     points=10,
     trigger=
-        score_cheevo(B, 250)
+        game_b_cheevo(40)
+)
+achievement(
+    "Better Than Perfection",
+    "Beat Game B in 30 throws or less!",
+    points=25,
+    trigger=
+        game_b_cheevo(30)
+)
+rp_game = {
+    0:"A",
+    0xFF:"B"
+}
+rich_presence_conditional_display(!(no_demo()), "Viewing the Demo...")
+rich_presence_conditional_display(game_mode() == A && game_state() == in_game && player_count() > 1, "Bowling Game {0} with {1} players!",
+    rich_presence_lookup("Game", game_mode(), rp_game),
+    rich_presence_macro("Number", player_count())
+)
+rich_presence_conditional_display(game_mode() == A && game_state() == in_game, "Bowling Game A, Points: {0}",
+    rich_presence_macro("Number", score())
+)
+rich_presence_conditional_display(game_mode() == B && game_state() == in_game, "Bowling Game B, Number of Throws: {0}",
+    rich_presence_macro("Number", game_b_throws())
+)
+rich_presence_display("In Menu")
+function lb(game){
+    leaderboard(
+        "Game " + rp_game[game],
+        "Highest Score!",
+        no_demo() && game_mode() == game && prev(game_state()) == in_menu && game_state() == in_game,
+        always_false(),
+        prev(game_state()) == in_game && game_state() == end_game,
+        score(),
+        "Score",
+        false
+    )
+}
+lb(0x00)
+function game_b_ones() => low4(0x00bf00)
+function game_b_tens() => high4(0x00bf00) * 10
+function game_b_hundreds() => low4(0x00bf01) * 100
+
+leaderboard(
+    "Game B - Current Score Bal",
+    "Land directly on 500 to win!",
+    no_demo() && game_mode() == 0xff && player_count() == 1 && prev(game_state()) == in_menu && game_state() == in_game,
+    game_b_end(),
+    always_false(),
+    game_b_hundreds() + game_b_tens() + game_b_ones(),
+    "Score",
+    false
+)
+leaderboard(
+    "Game B - Lowest Throws",
+    "Lowest Number of throws to beat the game!",
+    no_demo() && game_mode() == 0xff && player_count() == 1 && prev(game_state()) == in_menu && game_state() == in_game,
+    always_false(),
+    game_b_end(),
+    game_b_throws(),
+    "Score",
+    true
 )
