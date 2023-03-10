@@ -156,8 +156,32 @@ for i in range(0, 107){
             golf_courses[i]["Pointer"] <= golf_courses[i]["Par"]
     )
 }
+function generate_hole_in_ones() {
+    my_list = always_false()
+    for hole in golf_courses{
+        my_list = my_list || prev(golf_courses[hole]["Pointer"]) != 1 && golf_courses[hole]["Pointer"] == 1
+        
+    }
+    return my_list
+}
+achievement(
+    "A Lucky Shot!",
+    "Get a hole-in-one on any course in the game!",
+    points=10,
+    trigger=
+        app_check() && 
+        in_game() &&
+        byte(0x1472c1) == prev(byte(0x1472c1)) &&
+        generate_hole_in_ones()            
+)
 
-
+state = {
+    0:"In Menu",
+    1:"Golfin' the Day Away!"
+}
+rich_presence_display("{0}", 
+    rich_presence_lookup("State", dword(0x0f37dc), state)
+)
 
 
 
