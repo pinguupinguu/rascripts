@@ -33,6 +33,7 @@ function artix_health_max() => byte(0x06d6)
 // $06DA: [8bit] Number of Coins (Ones)
 // $06DB: [8bit] Number of Coins (Tens)
 // $06DC: [8bit] Artix Current Level (Ones)
+function artix_level_ones() => byte(0x06dc)
 // $06DD: [8bit] Artix Current Level (Tens)
 // $06E1: [8bit] Skill Unlock - Undead Doggie (Gives Artix Level)
 
@@ -63,4 +64,14 @@ achievement(
         location() == caves &&
         map_ID() == 0x72 &&
         artix_health_max() - prev(artix_health_max()) == 1
+)
+achievement(
+    "A Boney Journey for Artix's Axe!",
+    "Recover your axe in the caves and level Artix up to level 1!",
+    points=2,
+    trigger=
+        location() == caves &&
+        map_ID() == 0x53 &&
+        prev(artix_level_ones()) == 0 &&
+        artix_level_ones() == 1
 )
