@@ -116,7 +116,7 @@ achievement(
 )
 
 achievement(
-    "Special Staircase combo!",
+    "Special Combo: 5 Klax Staircase",
     "Earn 20,000 points from creating a 5 Klax staircase!",
     points=5,
     trigger=
@@ -130,6 +130,23 @@ achievement(
         )
 
 )
+achievement(
+    "Special Combo: Big Earns on Wave 1",
+    "Earn a LOT of points on Wave 1! (See Forum Topic!)",
+    points=5,
+    trigger=
+        game_loaded() &&
+        wave_number() == 0 &&
+        prev(byte(0x005a33)) == prev(byte(0x005a3b)) && prev(byte(0x005a33)) == prev(byte(0x005a39)) && prev(byte(0x005a33)) == prev(byte(0x005a35)) && 
+            prev(byte(0x005a33)) == prev(byte(0x005a63)) && prev(byte(0x005a33)) == prev(byte(0x005a61)) && prev(byte(0x005a33)) == prev(byte(0x005a5d)) && prev(byte(0x005a33)) == prev(byte(0x005a5b)) && //Columns 1 & 5 &&
+        prev(byte(0x005a3d)) == prev(byte(0x005a45)) && prev(byte(0x005a3d)) == prev(byte(0x005a43)) && prev(byte(0x005a3d)) == prev(byte(0x005a3f))     
+            
+)
+
+
+
+
+
 
 
 
