@@ -115,18 +115,19 @@ achievement(
         any_of(klax_bricks(), b  => bit7(b) < prev(bit7(b)) )
 )
 
+function klax_flash(addr) => prev(byte(addr)) != 0 && byte(addr) == 0xc
+
 achievement(
     "Special Combo: 5 Klax Staircase",
-    "Earn 20,000 points from creating a 5 Klax staircase!",
+    "Earn 20,000 points from creating a 5 Klax staircase! (See Forum Topic!)",
     points=5,
     trigger=
         game_loaded() &&
         (always_false()
-        || (prev(byte(0x005a33)) == prev(byte(0x005a3f)) && prev(byte(0x005a33)) == prev(byte(0x005a4b)) && prev(byte(0x005a33)) == prev(byte(0x005a57)) && 
-                prev(byte(0x005a33)) == prev(byte(0x005a63)) && prev(byte(0x005a33)) != 0 && byte(0x005a33) == 0xc ) //5 Klax Ascending Staircase
-        
-          || prev(byte(0x005a5b)) == prev(byte(0x005a53)) && prev(byte(0x005a5b)) == prev(byte(0x005a4b)) && prev(byte(0x005a5b)) == prev(byte(0x005a43)) &&
-                prev(byte(0x005a5b)) == prev(byte(0x005a3b)) && prev(byte(0x005a5b)) != 0 && byte(0x005a5b) == 0xc //5 Klax Descending Staircase
+        || (prev(byte(0x005a33)) == prev(byte(0x005a3f)) && prev(byte(0x005a33)) == prev(byte(0x005a4b)) && prev(byte(0x005a33)) == prev(byte(0x005a57)) && prev(byte(0x005a33)) == prev(byte(0x005a63)) &&
+            klax_flash(0x005a33)) //5 Klax Ascending Staircase                
+        || (prev(byte(0x005a5b)) == prev(byte(0x005a53)) && prev(byte(0x005a5b)) == prev(byte(0x005a4b)) && prev(byte(0x005a5b)) == prev(byte(0x005a43)) && prev(byte(0x005a5b)) == prev(byte(0x005a3b)) &&
+            klax_flash(0x005a5b)) //5 Klax Descending Staircase               
         )
 
 )
@@ -139,10 +140,30 @@ achievement(
         wave_number() == 0 &&
         prev(byte(0x005a33)) == prev(byte(0x005a3b)) && prev(byte(0x005a33)) == prev(byte(0x005a39)) && prev(byte(0x005a33)) == prev(byte(0x005a35)) && 
             prev(byte(0x005a33)) == prev(byte(0x005a63)) && prev(byte(0x005a33)) == prev(byte(0x005a61)) && prev(byte(0x005a33)) == prev(byte(0x005a5d)) && prev(byte(0x005a33)) == prev(byte(0x005a5b)) && //Columns 1 & 5 &&
-        prev(byte(0x005a3d)) == prev(byte(0x005a45)) && prev(byte(0x005a3d)) == prev(byte(0x005a43)) && prev(byte(0x005a3d)) == prev(byte(0x005a3f))     
-            
+        prev(byte(0x005a3d)) == prev(byte(0x005a45)) && prev(byte(0x005a3d)) == prev(byte(0x005a43)) && prev(byte(0x005a3d)) == prev(byte(0x005a3f)) && //Column 2    
+        prev(byte(0x005a51)) == prev(byte(0x005a59)) && prev(byte(0x005a51)) == prev(byte(0x005a57)) && prev(byte(0x005a51)) == prev(byte(0x005a53)) && //Column 4    
+        prev(byte(0x005a47)) == prev(byte(0x005a37)) && prev(byte(0x005a47)) == prev(byte(0x005a41)) && prev(byte(0x005a47)) == prev(byte(0x005a4b)) && 
+            prev(byte(0x005a47)) == prev(byte(0x005a49)) && prev(byte(0x005a47)) == prev(byte(0x005a55)) && prev(byte(0x005a47)) == prev(byte(0x005a5f)) && //Column 3 & Center Row.
+            klax_flash(0x005a33)
 )
-
+achievement(
+    "Special Combo: The Bridge",
+    "Earn 2 x 10,000 points with this combo! (See Forum Topic!)",
+    points=5,
+    trigger=
+        game_loaded() &&
+        (always_false()
+        || (prev(byte(0x005a33)) == prev(byte(0x005a3f)) && prev(byte(0x005a33)) == prev(byte(0x005a4b)) && prev(byte(0x005a33)) == prev(byte(0x005a53)) && prev(byte(0x005a33)) == prev(byte(0x005a5b)) &&
+            klax_flash(0x005a33)
+        ) // Row 1 Start
+        || (prev(byte(0x005a35)) == prev(byte(0x005a41)) && prev(byte(0x005a35)) == prev(byte(0x005a4d)) && prev(byte(0x005a35)) == prev(byte(0x005a55)) && prev(byte(0x005a35)) == prev(byte(0x005a5d)) &&
+            klax_flash(0x005a35)
+            ) // Row 2 Start
+        || (prev(byte(0x005a37)) == prev(byte(0x005a43)) && prev(byte(0x005a37)) == prev(byte(0x005a4f)) && prev(byte(0x005a37)) == prev(byte(0x005a57)) && prev(byte(0x005a37)) == prev(byte(0x005a5f)) &&
+            klax_flash(0x005a37)
+        ) // Row 3 Start        
+        )
+)
 
 
 
