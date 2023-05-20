@@ -115,7 +115,7 @@ achievement(
         any_of(klax_bricks(), b  => bit7(b) < prev(bit7(b)) )
 )
 
-function klax_flash(addr) => prev(byte(addr)) != 0 && byte(addr) == 0xc
+function klax_flash(addr) => prev(byte(addr)) != 0 && byte(addr) > 0xa && bit7(addr) == 0 //Check for flash, but also make sure tile is not wild card or a color.
 
 achievement(
     "Special Combo: 5 Klax Staircase",
@@ -164,7 +164,42 @@ achievement(
         ) // Row 3 Start        
         )
 )
-
+achievement(
+    "Special Combo: Mini X",
+    "Earn 2 x 10,000 points with this combo! (See Forum Topic!)",
+    points=5,
+    trigger=
+        game_loaded() &&
+        (always_false()
+        || (prev(byte(0x005a33)) == prev(byte(0x005a37)) && prev(byte(0x005a33)) == prev(byte(0x005a3f)) && prev(byte(0x005a33)) == prev(byte(0x005a4b)) && prev(byte(0x005a33)) == prev(byte(0x005a47)) && 
+            klax_flash(0x005a33)
+            )
+        || (prev(byte(0x005a35)) == prev(byte(0x005a39)) && prev(byte(0x005a35)) == prev(byte(0x005a41)) && prev(byte(0x005a35)) == prev(byte(0x005a4d)) && prev(byte(0x005a35)) == prev(byte(0x005a49)) && 
+            klax_flash(0x005a35)
+            )    
+        || (prev(byte(0x005a37)) == prev(byte(0x005a3b)) && prev(byte(0x005a37)) == prev(byte(0x005a43)) && prev(byte(0x005a37)) == prev(byte(0x005a4f)) && prev(byte(0x005a37)) == prev(byte(0x005a4b)) && 
+            klax_flash(0x005a37)
+            ) //Column 1 Based choices
+        || (prev(byte(0x005a3d)) == prev(byte(0x005a41)) && prev(byte(0x005a3d)) == prev(byte(0x005a49)) && prev(byte(0x005a3d)) == prev(byte(0x005a55)) && prev(byte(0x005a3d)) == prev(byte(0x005a51)) && 
+            klax_flash(0x005a3d)
+            )
+        || (prev(byte(0x005a3f)) == prev(byte(0x005a43)) && prev(byte(0x005a3f)) == prev(byte(0x005a4b)) && prev(byte(0x005a3f)) == prev(byte(0x005a57)) && prev(byte(0x005a3f)) == prev(byte(0x005a53)) && 
+            klax_flash(0x005a3f)
+            )
+        || (prev(byte(0x005a41)) == prev(byte(0x005a45)) && prev(byte(0x005a41)) == prev(byte(0x005a4d)) && prev(byte(0x005a41)) == prev(byte(0x005a59)) && prev(byte(0x005a41)) == prev(byte(0x005a55)) && 
+            klax_flash(0x005a41)
+            ) //Column 2 Based choices   
+        || (prev(byte(0x005a47)) == prev(byte(0x005a4b)) && prev(byte(0x005a47)) == prev(byte(0x005a53)) && prev(byte(0x005a47)) == prev(byte(0x005a5f)) && prev(byte(0x005a47)) == prev(byte(0x005a5b)) && 
+            klax_flash(0x005a47)
+            )
+        || (prev(byte(0x005a49)) == prev(byte(0x005a4d)) && prev(byte(0x005a49)) == prev(byte(0x005a55)) && prev(byte(0x005a49)) == prev(byte(0x005a61)) && prev(byte(0x005a49)) == prev(byte(0x005a5d)) && 
+            klax_flash(0x005a49)
+            )
+        || (prev(byte(0x005a4b)) == prev(byte(0x005a4f)) && prev(byte(0x005a4b)) == prev(byte(0x005a57)) && prev(byte(0x005a4b)) == prev(byte(0x005a63)) && prev(byte(0x005a4b)) == prev(byte(0x005a5f)) && 
+            klax_flash(0x005a4b)
+            ) //Column 3 Based choices
+        )   
+)
 
 
 
