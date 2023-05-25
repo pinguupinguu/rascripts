@@ -145,7 +145,7 @@ golf_courses = {
 }
 for i in range(0, 107){
     achievement(
-        "Island " + golf_courses[i]["Island"] + " Course " + golf_courses[i]["Hole"],
+        "Island " + golf_courses[i]["Island"] + " Hole " + golf_courses[i]["Hole"],
         "Get a par score!",
         points=golf_courses[i]["Points"],
         trigger=
