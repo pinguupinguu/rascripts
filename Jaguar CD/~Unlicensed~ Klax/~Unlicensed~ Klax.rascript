@@ -474,6 +474,55 @@ achievement(
             byte(0x005A58) > prev(byte(0x005A58)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A5E) > prev(byte(0x005A5E))
         ) //Row 3
 )
+achievement(
+    "Wild Combo 3",
+    "Earn 3 x 10,050 points with this combo! (See Forum Topic!)",
+    points=10,
+    trigger=
+        game_loaded() &&
+        (always_false()
+        //FACE RIGHT
+        || (byte(0x005A36) > prev(byte(0x005A36)) && byte(0x005A34) > prev(byte(0x005A34)) && byte(0x005A32) > prev(byte(0x005A32)) && byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A3E) > prev(byte(0x005A3E)) && 
+            byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A46) > prev(byte(0x005A46)) && byte(0x005A54) > prev(byte(0x005A54)) 
+            ) //Column 1, Row 1
+        || (byte(0x005A38) > prev(byte(0x005A38)) && byte(0x005A36) > prev(byte(0x005A36)) && byte(0x005A34) > prev(byte(0x005A34)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A40) > prev(byte(0x005A40)) && 
+            byte(0x005A4C) > prev(byte(0x005A4C)) && byte(0x005A48) > prev(byte(0x005A48)) && byte(0x005A56) > prev(byte(0x005A56)) 
+            ) //Column 1, Row 2
+        || (byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A38) > prev(byte(0x005A38)) && byte(0x005A36) > prev(byte(0x005A36)) && byte(0x005A44) > prev(byte(0x005A44)) && byte(0x005A42) > prev(byte(0x005A42)) && 
+            byte(0x005A4E) > prev(byte(0x005A4E)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A58) > prev(byte(0x005A58)) 
+            ) //Column 1, Row 3   
+        || (byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A3E) > prev(byte(0x005A3E)) && byte(0x005A3C) > prev(byte(0x005A3C)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A48) > prev(byte(0x005A48)) && 
+            byte(0x005A54) > prev(byte(0x005A54)) && byte(0x005A50) > prev(byte(0x005A50)) && byte(0x005A5E) > prev(byte(0x005A5E)) 
+            ) //Column 2, Row 1  
+        || (byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A3E) > prev(byte(0x005A3E)) && byte(0x005A4C) > prev(byte(0x005A4C)) && byte(0x005A4A) > prev(byte(0x005A4A)) && 
+            byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A52) > prev(byte(0x005A52)) && byte(0x005A60) > prev(byte(0x005A60)) 
+            ) //Column 2, Row 2
+        || (byte(0x005A44) > prev(byte(0x005A44)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A4E) > prev(byte(0x005A4E)) && byte(0x005A4C) > prev(byte(0x005A4C)) && 
+            byte(0x005A58) > prev(byte(0x005A58)) && byte(0x005A54) > prev(byte(0x005A54)) && byte(0x005A62) > prev(byte(0x005A62)) 
+            ) //Column 2, Row 3
+        //FACE LEFT
+        || (byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A46) > prev(byte(0x005A46)) && byte(0x005A54) > prev(byte(0x005A54)) && byte(0x005A52) > prev(byte(0x005A52)) && 
+            byte(0x005A5E) > prev(byte(0x005A5E)) && byte(0x005A5C) > prev(byte(0x005A5C)) && byte(0x005A5A) > prev(byte(0x005A5A)) 
+            ) //Column 5, Row 1
+        || (byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A4C) > prev(byte(0x005A4C)) && byte(0x005A48) > prev(byte(0x005A48)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A54) > prev(byte(0x005A54)) && 
+            byte(0x005A60) > prev(byte(0x005A60)) && byte(0x005A5E) > prev(byte(0x005A5E)) && byte(0x005A5C) > prev(byte(0x005A5C)) 
+            ) //Column 5, Row 2
+        || (byte(0x005A44) > prev(byte(0x005A44)) && byte(0x005A4E) > prev(byte(0x005A4E)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A58) > prev(byte(0x005A58)) && byte(0x005A56) > prev(byte(0x005A56)) && 
+            byte(0x005A62) > prev(byte(0x005A62)) && byte(0x005A60) > prev(byte(0x005A60)) && byte(0x005A5E) > prev(byte(0x005A5E)) 
+            ) //Column 5, Row 3
+        || (byte(0x005A36) > prev(byte(0x005A36)) && byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A3C) > prev(byte(0x005A3C)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A48) > prev(byte(0x005A48)) && 
+            byte(0x005A54) > prev(byte(0x005A54)) && byte(0x005A52) > prev(byte(0x005A52)) && byte(0x005A50) > prev(byte(0x005A50)) 
+            ) //Column 4, Row 1
+        || (byte(0x005A38) > prev(byte(0x005A38)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A3E) > prev(byte(0x005A3E)) && byte(0x005A4C) > prev(byte(0x005A4C)) && byte(0x005A4A) > prev(byte(0x005A4A)) && 
+            byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A54) > prev(byte(0x005A54)) && byte(0x005A52) > prev(byte(0x005A52)) 
+            ) //Column 4, Row 2    
+        || (byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A44) > prev(byte(0x005A44)) && byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A4E) > prev(byte(0x005A4E)) && byte(0x005A4C) > prev(byte(0x005A4C)) && 
+            byte(0x005A58) > prev(byte(0x005A58)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A54) > prev(byte(0x005A54)) 
+            ) //Column 4, Row 3
+        
+        )
+)
+
 
 function wave_target() => dword_be(0x005340)
 function wave_current() => dword_be(0x00535a)
