@@ -221,7 +221,16 @@ achievement(
             ) // Column 3, Row 3    
         )
 )
-
+achievement(
+    "Special Combo: Complex Staircase",
+    "Earn 2 x 25,000 points with this combo! (See Forum Topic!)",
+    points=10,
+    trigger=
+        game_loaded() &&
+        prev(byte(0x005a3b)) == prev(byte(0x005a43)) && prev(byte(0x005a3b)) == prev(byte(0x005a4b)) && prev(byte(0x005a3b)) == prev(byte(0x005a57)) && 
+        prev(byte(0x005a3b)) == prev(byte(0x005a53)) && prev(byte(0x005a3b)) == prev(byte(0x005a63)) && prev(byte(0x005a3b)) == prev(byte(0x005a5b)) &&
+        klax_flash(0x005a3b)
+)
 
 
 
