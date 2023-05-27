@@ -200,7 +200,27 @@ achievement(
             ) //Column 3 Based choices
         )   
 )
-
+achievement(
+    "Special Combo: The Big T",
+    "Earn 2 x 10,050 points with this combo! (See Forum Topic!)",
+    points=5,
+    trigger=
+        game_loaded() &&
+        (always_false()
+        || (prev(byte(0x005a47)) == prev(byte(0x005a37)) && prev(byte(0x005a47)) == prev(byte(0x005a41)) && prev(byte(0x005a47)) == prev(byte(0x005a4b)) && 
+            prev(byte(0x005a47)) == prev(byte(0x005a49)) && prev(byte(0x005a47)) == prev(byte(0x005a55)) && prev(byte(0x005a47)) == prev(byte(0x005a5f)) && 
+            klax_flash(0x005a47)
+            ) // Column 3, Row 1
+        || (prev(byte(0x005a49)) == prev(byte(0x005a39)) && prev(byte(0x005a49)) == prev(byte(0x005a43)) && prev(byte(0x005a49)) == prev(byte(0x005a4d)) && 
+            prev(byte(0x005a49)) == prev(byte(0x005a4b)) && prev(byte(0x005a49)) == prev(byte(0x005a57)) && prev(byte(0x005a49)) == prev(byte(0x005a61)) && 
+            klax_flash(0x005a49)
+            ) // Column 3, Row 2
+        || (prev(byte(0x005a4b)) == prev(byte(0x005a3b)) && prev(byte(0x005a4b)) == prev(byte(0x005a45)) && prev(byte(0x005a4b)) == prev(byte(0x005a4f)) && 
+            prev(byte(0x005a4b)) == prev(byte(0x005a4d)) && prev(byte(0x005a4b)) == prev(byte(0x005a59)) && prev(byte(0x005a4b)) == prev(byte(0x005a63)) && 
+            klax_flash(0x005a4b)
+            ) // Column 3, Row 3    
+        )
+)
 
 
 
