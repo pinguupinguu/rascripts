@@ -109,7 +109,7 @@ function klax_bricks() => range(klax_table_start(), klax_table_end(), 2) //Read 
 achievement(
     "New Technology",
     "Use a wildcard tile to clear some Klax blocks!",
-    points=3,
+    points=5,
     trigger=
         game_loaded() &&
         any_of(klax_bricks(), b  => bit7(b) < prev(bit7(b)) )
