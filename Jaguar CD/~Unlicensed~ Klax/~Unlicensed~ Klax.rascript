@@ -231,6 +231,33 @@ achievement(
         byte(0x005A5A) > prev(byte(0x005A5A))
 )
 achievement(
+    "Special Combo: The Not So Spicy X",
+    "Earn 2 x 1,050 points with this combo! (See Forum Topic!)",
+    points=5,
+    trigger=
+        game_loaded() &&
+        (always_false()
+        || (byte(0x005A36) > prev(byte(0x005A36)) && byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A3E) > prev(byte(0x005A3E)) && byte(0x005A3C) > prev(byte(0x005A3C)) && byte(0x005A4A) > prev(byte(0x005A4A))
+        ) //Column 2, Row 1
+        || (byte(0x005A38) > prev(byte(0x005A38)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A3E) > prev(byte(0x005A3E)) && byte(0x005A4C) > prev(byte(0x005A4C))
+        ) //Column 2, Row 2
+        || (byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A44) > prev(byte(0x005A44)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A4E) > prev(byte(0x005A4E)) 
+        ) //Column 2, Row 3
+        || (byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A48) > prev(byte(0x005A48)) && byte(0x005A46) > prev(byte(0x005A46)) && byte(0x005A54) > prev(byte(0x005A54)) 
+        ) //Column 3, Row 1
+        || (byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A4C) > prev(byte(0x005A4C)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A48) > prev(byte(0x005A48)) && byte(0x005A56) > prev(byte(0x005A56)) 
+        ) //Column 3, Row 2
+        || (byte(0x005A44) > prev(byte(0x005A44)) && byte(0x005A4E) > prev(byte(0x005A4E)) && byte(0x005A4C) > prev(byte(0x005A4C)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A58) > prev(byte(0x005A58)) 
+        ) //Column 3, Row 3
+        || (byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A54) > prev(byte(0x005A54)) && byte(0x005A52) > prev(byte(0x005A52)) && byte(0x005A50) > prev(byte(0x005A50)) && byte(0x005A5E) > prev(byte(0x005A5E)) 
+        ) //Column 4, Row 1
+        || (byte(0x005A4C) > prev(byte(0x005A4C)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A54) > prev(byte(0x005A54)) && byte(0x005A52) > prev(byte(0x005A52)) && byte(0x005A60) > prev(byte(0x005A60)) 
+        ) //Column 4, Row 2
+        || (byte(0x005A4E) > prev(byte(0x005A4E)) && byte(0x005A58) > prev(byte(0x005A58)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A54) > prev(byte(0x005A54)) && byte(0x005A62) > prev(byte(0x005A62)) 
+        ) //Column 4, Row 3
+    )
+)
+achievement(
     "Special Combo: The Big Chungus",
     "Earn 4 x 50,050 points with this combo! (See Forum Topic!)",
     points=50,
