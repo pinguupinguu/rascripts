@@ -124,10 +124,12 @@ achievement(
     trigger=
         game_loaded() &&
         (always_false()
-        || (prev(byte(0x005a33)) == prev(byte(0x005a3f)) && prev(byte(0x005a33)) == prev(byte(0x005a4b)) && prev(byte(0x005a33)) == prev(byte(0x005a57)) && prev(byte(0x005a33)) == prev(byte(0x005a63)) &&
-            klax_flash(0x005a33)) //5 Klax Ascending Staircase                
-        || (prev(byte(0x005a5b)) == prev(byte(0x005a53)) && prev(byte(0x005a5b)) == prev(byte(0x005a4b)) && prev(byte(0x005a5b)) == prev(byte(0x005a43)) && prev(byte(0x005a5b)) == prev(byte(0x005a3b)) &&
-            klax_flash(0x005a5b)) //5 Klax Descending Staircase               
+        || (byte(0x005A32) > prev(byte(0x005A32)) && byte(0x005A3E) > prev(byte(0x005A3E)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A56) > prev(byte(0x005A56)) 
+            && byte(0x005A62) > prev(byte(0x005A62))
+            ) //5 Klax Ascending Staircase                
+        || (byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A52) > prev(byte(0x005A52)) 
+            && byte(0x005A5A) > prev(byte(0x005A5A)) 
+            ) //5 Klax Descending Staircase               
         )
 
 )
@@ -138,13 +140,12 @@ achievement(
     trigger=
         game_loaded() &&
         wave_number() == 0 &&
-        prev(byte(0x005a33)) == prev(byte(0x005a3b)) && prev(byte(0x005a33)) == prev(byte(0x005a39)) && prev(byte(0x005a33)) == prev(byte(0x005a35)) && 
-            prev(byte(0x005a33)) == prev(byte(0x005a63)) && prev(byte(0x005a33)) == prev(byte(0x005a61)) && prev(byte(0x005a33)) == prev(byte(0x005a5d)) && prev(byte(0x005a33)) == prev(byte(0x005a5b)) && //Columns 1 & 5 &&
-        prev(byte(0x005a3d)) == prev(byte(0x005a45)) && prev(byte(0x005a3d)) == prev(byte(0x005a43)) && prev(byte(0x005a3d)) == prev(byte(0x005a3f)) && //Column 2    
-        prev(byte(0x005a51)) == prev(byte(0x005a59)) && prev(byte(0x005a51)) == prev(byte(0x005a57)) && prev(byte(0x005a51)) == prev(byte(0x005a53)) && //Column 4    
-        prev(byte(0x005a47)) == prev(byte(0x005a37)) && prev(byte(0x005a47)) == prev(byte(0x005a41)) && prev(byte(0x005a47)) == prev(byte(0x005a4b)) && 
-            prev(byte(0x005a47)) == prev(byte(0x005a49)) && prev(byte(0x005a47)) == prev(byte(0x005a55)) && prev(byte(0x005a47)) == prev(byte(0x005a5f)) && //Column 3 & Center Row.
-            klax_flash(0x005a33)
+        byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A38) > prev(byte(0x005A38)) && byte(0x005A36) > prev(byte(0x005A36)) && byte(0x005A34) > prev(byte(0x005A34)) && 
+        byte(0x005A32) > prev(byte(0x005A32)) && byte(0x005A44) > prev(byte(0x005A44)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A40) > prev(byte(0x005A40)) && 
+        byte(0x005A3E) > prev(byte(0x005A3E)) && byte(0x005A3C) > prev(byte(0x005A3C)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A48) > prev(byte(0x005A48)) && 
+        byte(0x005A46) > prev(byte(0x005A46)) && byte(0x005A58) > prev(byte(0x005A58)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A54) > prev(byte(0x005A54)) && 
+        byte(0x005A52) > prev(byte(0x005A52)) && byte(0x005A50) > prev(byte(0x005A50)) && byte(0x005A62) > prev(byte(0x005A62)) && byte(0x005A60) > prev(byte(0x005A60)) && 
+        byte(0x005A5E) > prev(byte(0x005A5E)) && byte(0x005A5C) > prev(byte(0x005A5C)) && byte(0x005A5A) > prev(byte(0x005A5A)) 
 )
 achievement(
     "Special Combo: The Bridge",
@@ -153,15 +154,15 @@ achievement(
     trigger=
         game_loaded() &&
         (always_false()
-        || (prev(byte(0x005a33)) == prev(byte(0x005a3f)) && prev(byte(0x005a33)) == prev(byte(0x005a4b)) && prev(byte(0x005a33)) == prev(byte(0x005a53)) && prev(byte(0x005a33)) == prev(byte(0x005a5b)) &&
-            klax_flash(0x005a33)
-        ) // Row 1 Start
-        || (prev(byte(0x005a35)) == prev(byte(0x005a41)) && prev(byte(0x005a35)) == prev(byte(0x005a4d)) && prev(byte(0x005a35)) == prev(byte(0x005a55)) && prev(byte(0x005a35)) == prev(byte(0x005a5d)) &&
-            klax_flash(0x005a35)
+        || (byte(0x005A32) > prev(byte(0x005A32)) && byte(0x005A3E) > prev(byte(0x005A3E)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A52) > prev(byte(0x005A52)) && 
+            byte(0x005A5A) > prev(byte(0x005A5A))  
+            ) // Row 1 Start
+        || (byte(0x005A34) > prev(byte(0x005A34)) && byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A4C) > prev(byte(0x005A4C)) && byte(0x005A54) > prev(byte(0x005A54)) && 
+            byte(0x005A5C) > prev(byte(0x005A5C)) 
             ) // Row 2 Start
-        || (prev(byte(0x005a37)) == prev(byte(0x005a43)) && prev(byte(0x005a37)) == prev(byte(0x005a4f)) && prev(byte(0x005a37)) == prev(byte(0x005a57)) && prev(byte(0x005a37)) == prev(byte(0x005a5f)) &&
-            klax_flash(0x005a37)
-        ) // Row 3 Start        
+        || (byte(0x005A36) > prev(byte(0x005A36)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A4E) > prev(byte(0x005A4E)) && byte(0x005A56) > prev(byte(0x005A56)) && 
+            byte(0x005A5E) > prev(byte(0x005A5E)) 
+            ) // Row 3 Start        
         )
 )
 achievement(
@@ -171,32 +172,23 @@ achievement(
     trigger=
         game_loaded() &&
         (always_false()
-        || (prev(byte(0x005a33)) == prev(byte(0x005a37)) && prev(byte(0x005a33)) == prev(byte(0x005a3f)) && prev(byte(0x005a33)) == prev(byte(0x005a4b)) && prev(byte(0x005a33)) == prev(byte(0x005a47)) && 
-            klax_flash(0x005a33)
+        || (byte(0x005A36) > prev(byte(0x005A36)) && byte(0x005A32) > prev(byte(0x005A32)) && byte(0x005A3E) > prev(byte(0x005A3E)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A46) > prev(byte(0x005A46)) 
             )
-        || (prev(byte(0x005a35)) == prev(byte(0x005a39)) && prev(byte(0x005a35)) == prev(byte(0x005a41)) && prev(byte(0x005a35)) == prev(byte(0x005a4d)) && prev(byte(0x005a35)) == prev(byte(0x005a49)) && 
-            klax_flash(0x005a35)
+        || (byte(0x005A38) > prev(byte(0x005A38)) && byte(0x005A34) > prev(byte(0x005A34)) && byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A4C) > prev(byte(0x005A4C)) && byte(0x005A48) > prev(byte(0x005A48))
             )    
-        || (prev(byte(0x005a37)) == prev(byte(0x005a3b)) && prev(byte(0x005a37)) == prev(byte(0x005a43)) && prev(byte(0x005a37)) == prev(byte(0x005a4f)) && prev(byte(0x005a37)) == prev(byte(0x005a4b)) && 
-            klax_flash(0x005a37)
+        || (byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A36) > prev(byte(0x005A36)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A4E) > prev(byte(0x005A4E)) && byte(0x005A4A) > prev(byte(0x005A4A))
             ) //Column 1 Based choices
-        || (prev(byte(0x005a3d)) == prev(byte(0x005a41)) && prev(byte(0x005a3d)) == prev(byte(0x005a49)) && prev(byte(0x005a3d)) == prev(byte(0x005a55)) && prev(byte(0x005a3d)) == prev(byte(0x005a51)) && 
-            klax_flash(0x005a3d)
+        || (byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A3C) > prev(byte(0x005A3C)) && byte(0x005A48) > prev(byte(0x005A48)) && byte(0x005A54) > prev(byte(0x005A54)) && byte(0x005A50) > prev(byte(0x005A50))
             )
-        || (prev(byte(0x005a3f)) == prev(byte(0x005a43)) && prev(byte(0x005a3f)) == prev(byte(0x005a4b)) && prev(byte(0x005a3f)) == prev(byte(0x005a57)) && prev(byte(0x005a3f)) == prev(byte(0x005a53)) && 
-            klax_flash(0x005a3f)
+        || (byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A3E) > prev(byte(0x005A3E)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A52) > prev(byte(0x005A52))
             )
-        || (prev(byte(0x005a41)) == prev(byte(0x005a45)) && prev(byte(0x005a41)) == prev(byte(0x005a4d)) && prev(byte(0x005a41)) == prev(byte(0x005a59)) && prev(byte(0x005a41)) == prev(byte(0x005a55)) && 
-            klax_flash(0x005a41)
+        || (byte(0x005A44) > prev(byte(0x005A44)) && byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A4C) > prev(byte(0x005A4C)) && byte(0x005A58) > prev(byte(0x005A58)) && byte(0x005A54) > prev(byte(0x005A54))
             ) //Column 2 Based choices   
-        || (prev(byte(0x005a47)) == prev(byte(0x005a4b)) && prev(byte(0x005a47)) == prev(byte(0x005a53)) && prev(byte(0x005a47)) == prev(byte(0x005a5f)) && prev(byte(0x005a47)) == prev(byte(0x005a5b)) && 
-            klax_flash(0x005a47)
+        || (byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A46) > prev(byte(0x005A46)) && byte(0x005A52) > prev(byte(0x005A52)) && byte(0x005A5E) > prev(byte(0x005A5E)) && byte(0x005A5A) > prev(byte(0x005A5A))
             )
-        || (prev(byte(0x005a49)) == prev(byte(0x005a4d)) && prev(byte(0x005a49)) == prev(byte(0x005a55)) && prev(byte(0x005a49)) == prev(byte(0x005a61)) && prev(byte(0x005a49)) == prev(byte(0x005a5d)) && 
-            klax_flash(0x005a49)
+        || (byte(0x005A4C) > prev(byte(0x005A4C)) && byte(0x005A48) > prev(byte(0x005A48)) && byte(0x005A54) > prev(byte(0x005A54)) && byte(0x005A60) > prev(byte(0x005A60)) && byte(0x005A5C) > prev(byte(0x005A5C))
             )
-        || (prev(byte(0x005a4b)) == prev(byte(0x005a4f)) && prev(byte(0x005a4b)) == prev(byte(0x005a57)) && prev(byte(0x005a4b)) == prev(byte(0x005a63)) && prev(byte(0x005a4b)) == prev(byte(0x005a5f)) && 
-            klax_flash(0x005a4b)
+        || (byte(0x005A4E) > prev(byte(0x005A4E)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A62) > prev(byte(0x005A62)) && byte(0x005A5E) > prev(byte(0x005A5E))
             ) //Column 3 Based choices
         )   
 )
@@ -207,17 +199,14 @@ achievement(
     trigger=
         game_loaded() &&
         (always_false()
-        || (prev(byte(0x005a47)) == prev(byte(0x005a37)) && prev(byte(0x005a47)) == prev(byte(0x005a41)) && prev(byte(0x005a47)) == prev(byte(0x005a4b)) && 
-            prev(byte(0x005a47)) == prev(byte(0x005a49)) && prev(byte(0x005a47)) == prev(byte(0x005a55)) && prev(byte(0x005a47)) == prev(byte(0x005a5f)) && 
-            klax_flash(0x005a47)
+        || (byte(0x005A36) > prev(byte(0x005A36)) && byte(0x005A40) > prev(byte(0x005A40)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A48) > prev(byte(0x005A48)) && byte(0x005A46) > prev(byte(0x005A46)) && 
+            byte(0x005A54) > prev(byte(0x005A54)) && byte(0x005A5E) > prev(byte(0x005A5E)) 
             ) // Column 3, Row 1
-        || (prev(byte(0x005a49)) == prev(byte(0x005a39)) && prev(byte(0x005a49)) == prev(byte(0x005a43)) && prev(byte(0x005a49)) == prev(byte(0x005a4d)) && 
-            prev(byte(0x005a49)) == prev(byte(0x005a4b)) && prev(byte(0x005a49)) == prev(byte(0x005a57)) && prev(byte(0x005a49)) == prev(byte(0x005a61)) && 
-            klax_flash(0x005a49)
+        || (byte(0x005A38) > prev(byte(0x005A38)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A4C) > prev(byte(0x005A4C)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A48) > prev(byte(0x005A48)) && 
+            byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A60) > prev(byte(0x005A60)) 
             ) // Column 3, Row 2
-        || (prev(byte(0x005a4b)) == prev(byte(0x005a3b)) && prev(byte(0x005a4b)) == prev(byte(0x005a45)) && prev(byte(0x005a4b)) == prev(byte(0x005a4f)) && 
-            prev(byte(0x005a4b)) == prev(byte(0x005a4d)) && prev(byte(0x005a4b)) == prev(byte(0x005a59)) && prev(byte(0x005a4b)) == prev(byte(0x005a63)) && 
-            klax_flash(0x005a4b)
+        || (byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A44) > prev(byte(0x005A44)) && byte(0x005A4E) > prev(byte(0x005A4E)) && byte(0x005A4C) > prev(byte(0x005A4C)) && byte(0x005A4A) > prev(byte(0x005A4A)) && 
+            byte(0x005A58) > prev(byte(0x005A58)) && byte(0x005A62) > prev(byte(0x005A62)) 
             ) // Column 3, Row 3    
         )
 )
@@ -227,9 +216,9 @@ achievement(
     points=10,
     trigger=
         game_loaded() &&
-        prev(byte(0x005a3b)) == prev(byte(0x005a43)) && prev(byte(0x005a3b)) == prev(byte(0x005a4b)) && prev(byte(0x005a3b)) == prev(byte(0x005a57)) && 
-        prev(byte(0x005a3b)) == prev(byte(0x005a53)) && prev(byte(0x005a3b)) == prev(byte(0x005a63)) && prev(byte(0x005a3b)) == prev(byte(0x005a5b)) &&
-        klax_flash(0x005a3b)
+        byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A52) > prev(byte(0x005A52)) && 
+        byte(0x005A62) > prev(byte(0x005A62)) && byte(0x005A5A) > prev(byte(0x005A5A)) && byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A4A) > prev(byte(0x005A4A)) && 
+        byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A52) > prev(byte(0x005A52)) && byte(0x005A62) > prev(byte(0x005A62)) && byte(0x005A5A) > prev(byte(0x005A5A)) 
 )
 
 
