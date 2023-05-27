@@ -211,27 +211,7 @@ achievement(
         )
 )
 achievement(
-    "Special Combo: Complex Staircase",
-    "Earn 2 x 25,000 points with this combo! (See Forum Topic!)",
-    points=10,
-    trigger=
-        game_loaded() &&
-        byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A52) > prev(byte(0x005A52)) && 
-        byte(0x005A62) > prev(byte(0x005A62)) && byte(0x005A5A) > prev(byte(0x005A5A)) && byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A4A) > prev(byte(0x005A4A)) && 
-        byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A52) > prev(byte(0x005A52)) && byte(0x005A62) > prev(byte(0x005A62)) && byte(0x005A5A) > prev(byte(0x005A5A)) 
-)
-achievement(
-    "Special Combo: The Spicy X",
-    "Earn 3 x 40,050 points with this combo! (See Forum Topic!)",
-    points=25,
-    trigger=
-        game_loaded() &&
-        byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A32) > prev(byte(0x005A32)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A3E) > prev(byte(0x005A3E)) && byte(0x005A4A) > prev(byte(0x005A4A)) && 
-        byte(0x005A48) > prev(byte(0x005A48)) && byte(0x005A46) > prev(byte(0x005A46)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A52) > prev(byte(0x005A52)) && byte(0x005A62) > prev(byte(0x005A62)) && 
-        byte(0x005A5A) > prev(byte(0x005A5A))
-)
-achievement(
-    "Special Combo: The Not So Spicy X",
+    "Special Combo: The Not So Spicy T",
     "Earn 2 x 1,050 points with this combo! (See Forum Topic!)",
     points=5,
     trigger=
@@ -256,6 +236,26 @@ achievement(
         || (byte(0x005A4E) > prev(byte(0x005A4E)) && byte(0x005A58) > prev(byte(0x005A58)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A54) > prev(byte(0x005A54)) && byte(0x005A62) > prev(byte(0x005A62)) 
         ) //Column 4, Row 3
     )
+)
+achievement(
+    "Special Combo: Complex Staircase",
+    "Earn 2 x 25,000 points with this combo! (See Forum Topic!)",
+    points=10,
+    trigger=
+        game_loaded() &&
+        byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A4A) > prev(byte(0x005A4A)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A52) > prev(byte(0x005A52)) && 
+        byte(0x005A62) > prev(byte(0x005A62)) && byte(0x005A5A) > prev(byte(0x005A5A)) && byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A4A) > prev(byte(0x005A4A)) && 
+        byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A52) > prev(byte(0x005A52)) && byte(0x005A62) > prev(byte(0x005A62)) && byte(0x005A5A) > prev(byte(0x005A5A)) 
+)
+achievement(
+    "Special Combo: The Spicy X",
+    "Earn 3 x 40,050 points with this combo! (See Forum Topic!)",
+    points=25,
+    trigger=
+        game_loaded() &&
+        byte(0x005A3A) > prev(byte(0x005A3A)) && byte(0x005A32) > prev(byte(0x005A32)) && byte(0x005A42) > prev(byte(0x005A42)) && byte(0x005A3E) > prev(byte(0x005A3E)) && byte(0x005A4A) > prev(byte(0x005A4A)) && 
+        byte(0x005A48) > prev(byte(0x005A48)) && byte(0x005A46) > prev(byte(0x005A46)) && byte(0x005A56) > prev(byte(0x005A56)) && byte(0x005A52) > prev(byte(0x005A52)) && byte(0x005A62) > prev(byte(0x005A62)) && 
+        byte(0x005A5A) > prev(byte(0x005A5A))
 )
 achievement(
     "Special Combo: The Big Chungus",
