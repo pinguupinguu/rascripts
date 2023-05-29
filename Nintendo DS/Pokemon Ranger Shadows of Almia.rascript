@@ -1355,8 +1355,6 @@ pokemon_database = {
 // $0BBAF4: [32bit] Ranger Record - Player Time - Hours
 // $0BBAF8: [8bit] Ranger Record - Player Time (Minutes)
 // $0BBAF9: ??? [8bit] Ranger Record - Play Time (Seconds???)
-
-
 // $0BBB3C: [16bit] Party Slot 1 - Pokemon ID
 // $0BBB54: [16bit] Party Slot 2 - Pokemon ID
 // $0BBB6C: [16bit] Party Slot 3 - Pokemon ID
@@ -1403,6 +1401,8 @@ pokemon_database = {
 //          Bit6-7=Bidoof
 function save_check() => prev(bit7(0x0bafbf)) == 1
 function save_check_hits() => never(prev(bit7(0x0bafbf)) == 0)
+function game_state() => byte(0x08af58)
+function flicker_check() => game_state() < 3
 // $0B32B8: [8bit] Active Mission IsDisplayed Flag
 //          0x00=False
 //          0x01=True
@@ -2067,6 +2067,7 @@ achievement(
             pokemon_database["Dusknoir"]["dex_two"]
         )
 )
+
 achievement(
     "The Darkest Memories",
     "Obtain a S rank capture on Darkrai",
@@ -2080,6 +2081,8 @@ achievement(
         pokemon_database["Darkrai"]["cptr_one"] +
         pokemon_database["Darkrai"]["cptr_two"] == 0                
 )
+
+
 achievement(
     "Body of Ice",
     "Obtain a S rank capure on Regice",
@@ -2087,7 +2090,8 @@ achievement(
     badge="179425",
     points=10,
     trigger=
-        save_check() &&
+        save_check() && 
+        flicker_check() &&
         prev(pokemon_database["Regice"]["cptr_one"]) + 
         prev(pokemon_database["Regice"]["cptr_two"]) != 0 &&
         pokemon_database["Regice"]["cptr_one"] +
@@ -2101,6 +2105,7 @@ achievement(
     points=10,
     trigger=
         save_check() &&
+        flicker_check() &&
         prev(pokemon_database["Regirock"]["cptr_one"]) + 
         prev(pokemon_database["Regirock"]["cptr_two"]) != 0 &&
         pokemon_database["Regirock"]["cptr_one"] +
@@ -2114,6 +2119,7 @@ achievement(
     points=10,
     trigger=
         save_check() &&
+        flicker_check() &&
         prev(pokemon_database["Registeel"]["cptr_one"]) + 
         prev(pokemon_database["Registeel"]["cptr_two"]) != 0 &&
         pokemon_database["Registeel"]["cptr_one"] +
@@ -2127,6 +2133,7 @@ achievement(
     points=25,
     trigger=
         save_check() &&
+        flicker_check() &&
         prev(pokemon_database["Regigigas"]["cptr_one"]) + 
         prev(pokemon_database["Regigigas"]["cptr_two"]) != 0 &&
         pokemon_database["Regigigas"]["cptr_one"] +
@@ -2140,6 +2147,7 @@ achievement(
     points=10,
     trigger=
         save_check() &&
+        flicker_check() &&
         prev(pokemon_database["Dialga"]["cptr_one"]) + 
         prev(pokemon_database["Dialga"]["cptr_two"]) != 0 &&
         pokemon_database["Dialga"]["cptr_one"] +
@@ -2153,6 +2161,7 @@ achievement(
     points=10,
     trigger=
         save_check() &&
+        flicker_check() &&
         prev(pokemon_database["Palkia"]["cptr_one"]) + 
         prev(pokemon_database["Palkia"]["cptr_two"]) != 0 &&
         pokemon_database["Palkia"]["cptr_one"] +
@@ -2166,6 +2175,7 @@ achievement(
     points=10,
     trigger=
         save_check() &&
+        flicker_check() &&
         prev(pokemon_database["Celebi"]["cptr_one"]) + 
         prev(pokemon_database["Celebi"]["cptr_two"]) != 0 &&
         pokemon_database["Celebi"]["cptr_one"] +
@@ -2179,6 +2189,7 @@ achievement(
     points=10,
     trigger=
         save_check() &&
+        flicker_check() &&
         prev(pokemon_database["Shaymin"]["cptr_one"]) + 
         prev(pokemon_database["Shaymin"]["cptr_two"]) != 0 &&
         pokemon_database["Shaymin"]["cptr_one"] +
@@ -2526,7 +2537,7 @@ function styler_level() => byte(0x0bbafb)
 //          0x16=Reading Glossary
 //          0x1b=In Quests
 //          0x1c=Viewing Map
-function game_state() => byte(0x08af58)
+
 alternative_game_state ={
     0x3:"In Title Screen",
     0xb:"Browsing the Ranger Net",    
