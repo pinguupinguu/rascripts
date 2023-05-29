@@ -19,7 +19,9 @@ rp_waves ={
 // $535D: [8bit] Klax Left
 // $6460: [16bit] Timer Until Level Start
 // $6477: [8bit] Game Setting?
+// $6485: [8bit] Drop Meter Max
 // $6487: [8bit] Drop Meter
+function drop_meter_max_limit() => prev(byte(0x6487)) < byte(0x6485) && byte(0x6487) == byte(0x6485)
 // $648F: [8bit] Wave Number - 1
 function wave_number() => byte(0x648f)
 // $64AC: [Lower4] Score - Millions
@@ -641,3 +643,26 @@ rich_presence_conditional_display(game_loaded(), "Playing Klax on Wave {0} with 
     rich_presence_macro("Number", credits() + 1)
 )
 rich_presence_display("In Menu")
+function countdown() => prev(byte(0x006463)) == 1 && byte(0x006463) == 0
+function credit_end() => credits() == 0 && drop_meter_max_limit()
+function ones() => low4(0x0064b2)
+function tens() => low4(0x0064b1) * 10
+function hundreds() => low4(0x0064b0) * 100
+function thousands() => low4(0x0064af) * 1000
+function tenthousands() => low4(0x0064ae) * 10000
+function hundredthousands() => low4(0x0064ad) * 100000
+function millions() => low4(0x0064ac) * 1000000
+function score() => ones() + tens() + hundreds() + thousands() + tenthousands() + hundredthousands() + millions()
+leaderboard(
+    "Highest Score - Wave 1",
+    "Highest score starting from Wave 1!",
+    game_loaded() && wave_number() == 0,
+    always_false(),
+    countdown() && credit_end(),
+    score(),
+    "SCORE",
+    false
+)
+
+
+
