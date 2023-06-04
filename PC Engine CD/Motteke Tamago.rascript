@@ -1,11 +1,7 @@
 // Motteke Tamago
 // #ID = 13188
 
-// $1A61: [NBit] Player Active Flags
-//        Bit0=1P
-//        Bit1=2P
-//        Bit2=3P
-//        bit3=4P
+
 // $1A62: [8bit] 1P State
 //        0x00=Player
 //        0x04=CPU
@@ -22,8 +18,8 @@
 //        0x00=Player
 //        0x04=CPU
 //        0xff=Inactive
-// $1A66: [8bit] World
-// $1A67: [8bit] Stage (Value - 1)
+
+
 // $1A6D: [8bit] Number of Eggs Required
 // $1A6E: [8bit] Eggs Left Before Stage Ends
 // $1B74: [32bit] 1P - Color Chicks - Bonus #2
@@ -34,10 +30,7 @@
 // $1B89: [8bit] 2P - Black Chicks (Penalty - "Anti Bonus")
 // $1B8C: [8bit] P1 - Bonus #5 - Swans (From Gold Eggs)
 // $1B8D: [8bit] P1 - Bonus #5 - Swans (From Gold Eggs)
-// $1B90: [16bit] 1P Score - * 10 = Value
-// $1B92: [16bit] 2P Score - * 10 = Value
-// $1B94: [16bit] 3P Score - * 10 = Value
-// $1B96: [16bit] 4P Score - * 10 = Value
+
 // $1B98: [8bit] P1 Lives (Bonus #4)
 // $1B99: [8bit] P2 Lives
 // $1BC2: [8bit] Walk Type Option
@@ -160,19 +153,7 @@
 // $1C07: [NBit] V.S. 3 Computer Flags
 //        Bit1=3-9
 //        Bit3=3-10
-// $1C27: [8bit] Active Bonus Screen
-//        0x00=Round Over
-//        0x01=Bonus 1 Calculation
-//        0x02=Bonus 2 Calculation
-//        0x03=Bonus 3 Calculation (Pink chicks)
-//        0x04=Bonus 4 - Player's Lives
-//        0x05=Swans (gold eggs0
-//        0x06=Anti-bonus (Black Chicks)
-//        0x07=Screen: "As A Result..."
-//        0x08=Screen: "The Winner of this round..."
-//        0x09="is...."
-//        0x0a=Final Results
-//        0x0b=Final Results - Duck runs across screen
+
 // $1C36: [6 bytes] Player One - Score Tally
 //        From Left to Right:
 //        [8bit] Ones
@@ -234,10 +215,11 @@ function world_three_four_pl() =>
     bit_sum(0x001c06) +
     bit1(0x001c07) +
     bit3(0x001c07)
-    
+function demo_disabled() => byte(0x001c0a) == 0    
 function progression(wrld, target) =>
     prev(wrld) == target - 1 &&
-    wrld == target
+    wrld == target &&
+    demo_disabled()
 achievement(
     "A Softboiled Start",
     "Beat five stages in World 1 in 1 CPU mode!",
@@ -284,6 +266,8 @@ achievement(
     "An Over Easy Start",
     "Beat five stages in World 1 in 2 CPU mode!",
     points=10,
+    id=324468,
+    badge="362273",
     trigger=
         progression(world_one_three_pl(), 5)
 )
@@ -364,3 +348,49 @@ achievement(
     trigger=
         progression(world_three_four_pl(), 10)
 )
+//Rich Presence
+// $1A61: [NBit] Player Active Flags
+//        Bit0=1P
+//        Bit1=2P
+//        Bit2=3P
+//        bit3=4P
+function player_sum() => bit0(0x1a61) + bit1(0x1a61) + bit2(0x1a61) + bit3(0x1a61)
+// $1A66: [8bit] World
+function world() => byte(0x1a66)
+// $1A67: [8bit] Stage (Value - 1)
+function stage() => byte(0x1a67) + 1
+// $1B90: [16bit] 1P Score - * 10 = Value
+// $1B92: [16bit] 2P Score - * 10 = Value
+// $1B94: [16bit] 3P Score - * 10 = Value
+// $1B96: [16bit] 4P Score - * 10 = Value
+function in_match_check() => word(0x1b90) + word(0x1b92) + word(0x1b94) + word(0x1b96) !=0
+// $1C27: [8bit] Active Bonus Screen
+//        0x00=Round Over
+//        0x01=Bonus 1 Calculation
+//        0x02=Bonus 2 Calculation
+//        0x03=Bonus 3 Calculation (Pink chicks)
+//        0x04=Bonus 4 - Player's Lives
+//        0x05=Swans (gold eggs0
+//        0x06=Anti-bonus (Black Chicks)
+//        0x07=Screen: "As A Result..."
+//        0x08=Screen: "The Winner of this round..."
+//        0x09="is...."
+//        0x0a=Final Results
+//        0x0b=Final Results - Duck runs across screen
+function in_results_check() => byte(0x1c27) != 0
+matches = {
+    1:"Solo",
+    2:"Two Player",
+    3:"Three Player",
+    4:"Four Player"
+}
+rich_presence_conditional_display(!demo_disabled(), "In Demo")
+rich_presence_conditional_display(in_match_check(), "Playing a {0} match on World {1}-{2}",
+    rich_presence_lookup("MatchCount", player_sum(), matches),
+    rich_presence_macro("Number", world()),
+    rich_presence_macro("Number", stage())
+    )
+rich_presence_conditional_display(in_results_check(), "Viewing Match Results")
+rich_presence_display("In Menu")
+
+
