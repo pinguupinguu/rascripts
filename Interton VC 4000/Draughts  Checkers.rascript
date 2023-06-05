@@ -23,11 +23,81 @@ function mode_pause() => unless(once(mode() != prev(mode())))
 //        0xee=Selecting Option
 function state() => byte(0x05c8)
 in_game = 0
+in_option = 0xee
 function progression(num) => //Put the mode number in!
-    mode() == num &&
+    bcd(mode()) == num &&
     mode_pause() &&
     player_one_flash() &&
     player_two_flash_pause() &&
     (always_false()
-    || never(prev(state()) == in_game && start() > prev(start()))    
+    || never(prev(state()) != in_option && start() > prev(start()))    
     )
+achievement(
+    "Ready or Draught, Here We Go!",
+    "Win against the CPU on Mode 3!",
+    points=5,
+    trigger=
+        progression(3)
+)
+achievement(
+    "Diagonal Alley",
+    "Win against the CPU on Mode 4!",
+    points=5,
+    trigger=
+        progression(4)
+)
+achievement(
+    "Harder Times to Get Crowns",
+    "Win against the CPU on Mode 5!",
+    points=10,
+    trigger=
+        progression(5)
+)
+achievement(
+    "Crowned Against Hard Times",
+    "Win against the CPU on Mode 6!",
+    points=10,
+    trigger=
+        progression(6)
+)
+achievement(
+    "Difficult Times, Difficult Moves",
+    "Win against the CPU on Mode 7!",
+    points=10,
+    trigger=
+        progression(7)
+)
+achievement(
+    "CPU Frier",
+    "Win against the CPU on Mode 8!",
+    points=10,
+    trigger=
+        progression(8)
+)
+start = 1
+for i in range(9, 14){
+    achievement(
+        "Checkers Eliminator " + start,
+        "Win against the CPU on Mode " + i + "!",
+        points=5,
+        trigger=
+            progression(i)
+    )
+    start = start + 1
+}
+modes = {
+    1:"Player v.s. Player",
+    2:"Player v.s. Player",    
+    3:"Player v.s. CPU (Easy)",
+    4:"Player v.s. CPU (Easy)",
+    5:"Player v.s. CPU (Hard)",
+    6:"Player v.s. CPU (Hard)",
+    7:"Player v.s. CPU (Difficult)",
+    8:"Player v.s. CPU (Difficult)",
+    15:"Custom Board Placements"
+    
+}
+rich_presence_display("Playing a game of {0} on Mode {1}",
+    rich_presence_lookup("Mode", bcd(mode()), modes, "Player v.s. CPU - Elimination"),
+    rich_presence_macro("Number", bcd(mode()))
+)
