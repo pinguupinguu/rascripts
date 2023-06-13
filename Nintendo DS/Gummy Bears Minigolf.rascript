@@ -62,6 +62,9 @@ course_bank_one = 0x09bc6d
 // $09BC6E: [NBit] Profile 1 - Course Flags
 //          Bit0=Candy Land Unlocked
 course_bank_two = 0x09bc6e
+// $09bc95: [8bit] Profile 1 - Total Number of Putters Bought from Store
+//          0x18 = All Purchased
+putters = 0x09bc95
 // $09BC75: [8bit] Profile 1 - Total Number of Clothes from Store
 //          0x18=All Bought
 hats = 0x09bc75
@@ -74,6 +77,15 @@ nameplates = 0x09bcaf
 //          Bit2=Brown Golf Ball
 //          Bit3=Yellow Golf Ball
 balls = 0x09bcf8
+// $09BCFA: [NBit] Profile 1 - Trails Shop Flags
+//          Bit0=Balloon Trail
+//          Bit1=Bubble Trail
+//          Bit2=Flower Trail
+//          Bit3=Gummy Trail
+//          Bit4=Lightning Trail
+//          Bit5=Rainbow Trail
+//          Bit6=Star Trail
+trails = 0x09bcfa
 // $09BD00: [32bit] Profile 1 Coins
 coins = 0x09bd00
 // $09BD04: [NBit] Profile 1 - Award Flags
@@ -106,30 +118,30 @@ awards_bank_three = 0x09bd06
 // $099A54: [32bit] Profile Index
 function profile_index() => dword(0x099a54)
 function profile_offset() => profile_index() * 0xF8
-achievement(
-    "A Gummy Park Adventure!",
-    "Unlock the Adventure Park course",
-    points=5,
-    trigger=    
-        save_protection() &&
-        bit6(profile_offset() + course_bank_one) > prev(bit6(profile_offset() + course_bank_one))
-)
-achievement(
-    "A Rainbow Adventure!",
-    "Unlock the Rainbow City course",
-    points=5,
-    trigger=
-        save_protection() &&
-        bit7(profile_offset() + course_bank_one) > prev(bit7(profile_offset() + course_bank_one))
-)
-achievement(
-    "Visiting the Land of Candy!",
-    "Unlock the Candy Land course",
-    points=5,
-    trigger=
-        save_protection() &&
-        bit0(profile_offset() + course_bank_two) > prev(bit0(profile_offset() + course_bank_two))
-)
+//achievement(
+//    "A Gummy Park Adventure!",
+//    "Unlock the Adventure Park course",
+//    points=5,
+//   trigger=    
+//        save_protection() &&
+//        bit6(profile_offset() + course_bank_one) > prev(bit6(profile_offset() + course_bank_one))
+//)
+//achievement(
+//    "A Rainbow Adventure!",
+//   "Unlock the Rainbow City course",
+//    points=5,
+//   trigger=
+//       save_protection() &&
+//       bit7(profile_offset() + course_bank_one) > prev(bit7(profile_offset() + course_bank_one))
+//)
+//achievement(
+//    "Visiting the Land of Candy!",
+//    "Unlock the Candy Land course",
+//    points=5,
+//    trigger=
+//        save_protection() &&
+//       bit0(profile_offset() + course_bank_two) > prev(bit0(profile_offset() + course_bank_two))
+//)
 function golf_ball_sum() =>
     bit0(profile_offset() + balls) +
     bit1(profile_offset() + balls) +
@@ -138,16 +150,52 @@ function golf_ball_sum() =>
 achievement(
     "Many Balls, Many Choices",
     "Buy all the Golf Balls from the shop!",
-    points=2,
+    points=5,
     trigger=
         save_protection() &&
         prev(golf_ball_sum()) == 3 &&
         measured(golf_ball_sum() == 4)
 )
 achievement(
+    "New Putters!",
+    "Buy half of the putters from the shop!",
+    points=10,
+    trigger=
+        save_protection() &&
+        prev(byte(profile_offset() + putters)) == 0xb &&
+        byte(profile_offset() + putters) == 0xc    
+)
+achievement(
+    "Puttin' In Style",
+    "Buy all of the putters from the shop!",
+    points=25,
+    trigger=
+        save_protection() &&
+        prev(byte(profile_offset() + putters)) == 0x17 &&
+        byte(profile_offset() + putters) == 0x18 
+)
+function trails_sum() =>
+    bit0(profile_offset() + trails) +
+    bit1(profile_offset() + trails) +
+    bit2(profile_offset() + trails) +
+    bit3(profile_offset() + trails) +
+    bit4(profile_offset() + trails) +
+    bit5(profile_offset() + trails) +
+    bit6(profile_offset() + trails)
+
+achievement(
+    "Happy Trails!",
+    "Buy all of the trails from the shop!",
+    points=10,
+    trigger=
+        save_protection() &&
+        prev(trails_sum()) == 6 &&
+        trails_sum() == 7
+)
+achievement(
     "A Gummy of Many Hats",
     "Buy all of the Hats in the Shop!",
-    points=3,
+    points=25,
     trigger=
         save_protection() && 
         prev(byte(profile_offset() + hats)) == 0x17 &&
@@ -156,7 +204,7 @@ achievement(
 achievement(
     "Halfway Decorative",
     "Buy 50% of the nameplates available in the shop!",
-    points=5,
+    points=10,
     trigger=
         save_protection() &&
         prev(byte(profile_offset() + nameplates)) == 0x23 &&
@@ -165,42 +213,43 @@ achievement(
 achievement(
     "Fully Fashionable",
     "Buy all of the nameplates available in the shop!",
-    points=10,
+    points=25,
     trigger=
         save_protection() &&
         prev(byte(profile_offset() + nameplates)) == 0x47 &&
         measured(byte(profile_offset() + nameplates) == 0x48)
 )
-function award(title, addr) {
+
+function award(title, addr, my_points) {
     achievement(
         title,
         "Unlock this award!",
-        points=2,
+        points=my_points,
         trigger=
             save_protection() &&
             addr > prev(addr)
     )
 }
-award("Fairytale Kingdom Badge", bit0(profile_offset() + awards_bank_one))
-award("Fairytale Kingdom Star", bit1(profile_offset() + awards_bank_one))
-award("Adventure Park Badge", bit2(profile_offset() + awards_bank_one))
-award("Adventure Park Star", bit3(profile_offset() + awards_bank_one))
-award("Rainbow City Badge", bit4(profile_offset() + awards_bank_one))
-award("Rainbow City Star", bit5(profile_offset() + awards_bank_one))
-award("Candy Land Badge", bit6(profile_offset() + awards_bank_one))
-award("Candy Lane Star", bit7(profile_offset() + awards_bank_one))
-award("Ace Shooter", bit0(profile_offset() + awards_bank_two))
-award("B for Bogey", bit1(profile_offset() + awards_bank_two))
-award("Minigolf Designer", bit2(profile_offset() + awards_bank_two))
-award("Gummy Bear King", bit3(profile_offset() + awards_bank_two))
-award("Hole in One!", bit4(profile_offset() + awards_bank_two))
-award("Hotshot", bit5(profile_offset() + awards_bank_two))
-award("On Par!", bit6(profile_offset() + awards_bank_two))
-award("Par for the course!", bit7(profile_offset() + awards_bank_two))
-award("Stay on the grass!", bit0(profile_offset() + awards_bank_three))
-award("Swimming Badge", bit1(profile_offset() + awards_bank_three))
-award("Top of the Class", bit2(profile_offset() + awards_bank_three))
-award("To the Max", bit3(profile_offset() + awards_bank_three))
+award("Fairytale Kingdom Badge", bit0(profile_offset() + awards_bank_one), 2)
+award("Fairytale Kingdom Star", bit1(profile_offset() + awards_bank_one), 2)
+award("Adventure Park Badge", bit2(profile_offset() + awards_bank_one), 2)
+award("Adventure Park Star", bit3(profile_offset() + awards_bank_one), 2)
+award("Rainbow City Badge", bit4(profile_offset() + awards_bank_one), 2)
+award("Rainbow City Star", bit5(profile_offset() + awards_bank_one), 2)
+award("Candy Land Badge", bit6(profile_offset() + awards_bank_one), 2)
+award("Candy Lane Star", bit7(profile_offset() + awards_bank_one), 2)
+award("Ace Shooter", bit0(profile_offset() + awards_bank_two), 2)
+award("B for Bogey", bit1(profile_offset() + awards_bank_two), 2)
+award("Minigolf Designer", bit2(profile_offset() + awards_bank_two), 2)
+award("Gummy Bear King", bit3(profile_offset() + awards_bank_two), 2)
+award("Hole in One!", bit4(profile_offset() + awards_bank_two), 2)
+award("Hotshot", bit5(profile_offset() + awards_bank_two), 2)
+award("On Par!", bit6(profile_offset() + awards_bank_two), 2)
+award("Par for the course!", bit7(profile_offset() + awards_bank_two), 2)
+award("Stay on the grass!", bit0(profile_offset() + awards_bank_three), 2)
+award("Swimming Badge", bit1(profile_offset() + awards_bank_three), 2)
+award("Top of the Class", bit2(profile_offset() + awards_bank_three), 5)
+award("To the Max", bit3(profile_offset() + awards_bank_three), 2)
 //RICH PRESENCE
 // $099694: [32bit] Mode
 //          0x00=Single Player
