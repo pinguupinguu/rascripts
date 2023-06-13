@@ -106,30 +106,30 @@ awards_bank_three = 0x09bd06
 // $099A54: [32bit] Profile Index
 function profile_index() => dword(0x099a54)
 function profile_offset() => profile_index() * 0xF8
-achievement(
-    "A Gummy Park Adventure!",
-    "Unlock the Adventure Park course",
-    points=5,
-    trigger=    
-        save_protection() &&
-        bit6(profile_offset() + course_bank_one) > prev(bit6(profile_offset() + course_bank_one))
-)
-achievement(
-    "A Rainbow Adventure!",
-    "Unlock the Rainbow City course",
-    points=5,
-    trigger=
-        save_protection() &&
-        bit7(profile_offset() + course_bank_one) > prev(bit7(profile_offset() + course_bank_one))
-)
-achievement(
-    "Visiting the Land of Candy!",
-    "Unlock the Candy Land course",
-    points=5,
-    trigger=
-        save_protection() &&
-        bit0(profile_offset() + course_bank_two) > prev(bit0(profile_offset() + course_bank_two))
-)
+//achievement(
+//    "A Gummy Park Adventure!",
+//    "Unlock the Adventure Park course",
+//    points=5,
+//   trigger=    
+//        save_protection() &&
+//        bit6(profile_offset() + course_bank_one) > prev(bit6(profile_offset() + course_bank_one))
+//)
+//achievement(
+//    "A Rainbow Adventure!",
+//   "Unlock the Rainbow City course",
+//    points=5,
+//   trigger=
+//       save_protection() &&
+//       bit7(profile_offset() + course_bank_one) > prev(bit7(profile_offset() + course_bank_one))
+//)
+//achievement(
+//    "Visiting the Land of Candy!",
+//    "Unlock the Candy Land course",
+//    points=5,
+//    trigger=
+//        save_protection() &&
+//       bit0(profile_offset() + course_bank_two) > prev(bit0(profile_offset() + course_bank_two))
+//)
 function golf_ball_sum() =>
     bit0(profile_offset() + balls) +
     bit1(profile_offset() + balls) +
