@@ -62,6 +62,9 @@ course_bank_one = 0x09bc6d
 // $09BC6E: [NBit] Profile 1 - Course Flags
 //          Bit0=Candy Land Unlocked
 course_bank_two = 0x09bc6e
+// $09bc95: [8bit] Profile 1 - Total Number of Putters Bought from Store
+//          0x18 = All Purchased
+putters = 0x09bc95
 // $09BC75: [8bit] Profile 1 - Total Number of Clothes from Store
 //          0x18=All Bought
 hats = 0x09bc75
@@ -74,6 +77,15 @@ nameplates = 0x09bcaf
 //          Bit2=Brown Golf Ball
 //          Bit3=Yellow Golf Ball
 balls = 0x09bcf8
+// $09BCFA: [NBit] Profile 1 - Trails Shop Flags
+//          Bit0=Balloon Trail
+//          Bit1=Bubble Trail
+//          Bit2=Flower Trail
+//          Bit3=Gummy Trail
+//          Bit4=Lightning Trail
+//          Bit5=Rainbow Trail
+//          Bit6=Star Trail
+trails = 0x09bcfa
 // $09BD00: [32bit] Profile 1 Coins
 coins = 0x09bd00
 // $09BD04: [NBit] Profile 1 - Award Flags
@@ -145,6 +157,42 @@ achievement(
         measured(golf_ball_sum() == 4)
 )
 achievement(
+    "New Putters!",
+    "Buy half of the putters from the shop!",
+    points=10,
+    trigger=
+        save_protection() &&
+        prev(byte(profile_offset() + putters)) == 0xb &&
+        byte(profile_offset() + putters) == 0xc    
+)
+achievement(
+    "Puttin' In Style",
+    "Buy all of the putters from the shop!",
+    points=25,
+    trigger=
+        save_protection() &&
+        prev(byte(profile_offset() + putters)) == 0x17 &&
+        byte(profile_offset() + putters) == 0x18 
+)
+function trails_sum() =>
+    bit0(profile_offset() + trails) +
+    bit1(profile_offset() + trails) +
+    bit2(profile_offset() + trails) +
+    bit3(profile_offset() + trails) +
+    bit4(profile_offset() + trails) +
+    bit5(profile_offset() + trails) +
+    bit6(profile_offset() + trails)
+
+achievement(
+    "Happy Trails!",
+    "Buy all of the trails from the shop!",
+    points=10,
+    trigger=
+        save_protection() &&
+        prev(trails_sum()) == 6 &&
+        trails_sum() == 7
+)
+achievement(
     "A Gummy of Many Hats",
     "Buy all of the Hats in the Shop!",
     points=3,
@@ -171,6 +219,7 @@ achievement(
         prev(byte(profile_offset() + nameplates)) == 0x47 &&
         measured(byte(profile_offset() + nameplates) == 0x48)
 )
+
 function award(title, addr) {
     achievement(
         title,
