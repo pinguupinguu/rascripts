@@ -120,7 +120,7 @@ achievement(
     points=5,
     trigger=
         save_protection() &&
-        bit7(profile_offset() + course_bank_one) > prev(bit6(profile_offset() + course_bank_one))
+        bit7(profile_offset() + course_bank_one) > prev(bit7(profile_offset() + course_bank_one))
 )
 achievement(
     "Visiting the Land of Candy!",
