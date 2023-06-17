@@ -9,10 +9,6 @@
 //          0x44=Loading Player Profile
 inactive = 0xffffffff
 function save_protection() => prev(dword(0x1fc744)) != inactive
-
-
-
-
 // $2A69B8: [NBit] Option Menu Flags,  0x00=Off, 0x01=On
 //          Bit1=Auto Highlights
 //          Assists
@@ -28,6 +24,189 @@ function save_protection() => prev(dword(0x1fc744)) != inactive
 // $2A6F77: [8bit] Lives - 3 Strikes
 // $2A6F7C: [32bit] Puzzle Number - Num + 1
 // $2A6F80: [32bit] Puzzle Number (Maximum)
+
+
+// $2A69A0: [16bit] Difficulty
+//          0x00=Easy
+//          0x01=Medium
+//          0x02=Hard
+//          0x03=Super Difficult
+function difficulty() => word(0x2a69a0)
+easy = 0
+medium = 1
+hard = 2
+super_difficult = 3
+// $2A69A2: [16bit] Game Mode
+//          0x00=Classic
+//          0x01=Beat The Clock
+//          0x02=Extra Time
+//          0x03=Perfection
+//          0x04=3 Strikes
+//          0x05=Career Mode
+//          0x06=Challenge Carol
+function game_mode() => word(0x2a69a2)
+classic = 0
+beat_the_clock = 1
+extra_time = 2
+perfection = 3
+three_strikes = 4
+// $2A6A91: [81 bytes] Solution Grid
+solution_start = 0x2a6a91
+// $2A6AE2: [81 bytes] Grid
+grid = 0x2a6ae2
+function grid_check() => all_of(range(solution_start, solution_start + 80), b => byte(b) == byte(b + 0x51))
+function grid_change() => any_of(range(grid, grid + 80), b => byte(b) != prev(byte(b)))
+
+function measured_arg(target){
+    if(target != 0) return measured(repeated(target, grid_change() && grid_check()))
+    else return grid_change() && grid_check()
+}
+
+function grid_clear_cheevo(target, difficulty, mode) =>
+    measured_arg(target) &&
+    unless(game_mode() != mode) &&
+    unless(difficulty() != difficulty) 
+
+achievement(
+    "Classic Round: Easy",
+    "Complete 5 puzzles on Easy difficulty in Classic mode(One Session)",
+    points=2,
+    trigger=
+        grid_clear_cheevo(5, easy, classic)
+)
+achievement(
+    "Classic Round: Medium",
+    "Complete 5 puzzles on Medium difficulty in Classic mode (One Session)",
+    points=3,
+    trigger=
+        grid_clear_cheevo(5, medium, classic)
+)
+achievement(
+    "Classic Round: Hard",
+    "Complete 5 puzzles on Hard difficulty in Classic mode (One Session)",
+    points=4,
+    trigger=
+        grid_clear_cheevo(5, hard, classic)
+)
+achievement(
+    "Classic Round: Super Difficult",
+    "Complete 5 puzzles on Super Difficult in Classic mode (One Session)",
+    points=5,
+    trigger=
+        grid_clear_cheevo(5, super_difficult, classic)
+)
+achievement(
+    "Easy Time Cruncher",
+    "Complete a puzzle on Easy in Beat The Clock mode",
+    points=2,
+    trigger=
+        grid_clear_cheevo(0, easy, beat_the_clock)
+)
+achievement(
+    "Medium Time Cruncher",
+    "Complete a puzzle on Medium in Beat The Clock mode",
+    points=3,
+    trigger=
+        grid_clear_cheevo(0, medium, beat_the_clock)
+)
+achievement(
+    "Hard Time Crusher",
+    "Complete a puzzle on Hard in Beat The Clock mode",
+    points=4,
+    trigger=
+        grid_clear_cheevo(0, hard, beat_the_clock)
+)
+achievement(
+    "Super Difficult Time Crusher",
+    "Complete a puzzle on Super Difficult in Beat The Clock mode",
+    points=5,
+    trigger=
+        grid_clear_cheevo(0, super_difficult, beat_the_clock)
+)
+achievement(
+    "Swift Solver",
+    "Complete a puzzle on Easy in Extra Time mode",
+    points=2,
+    trigger=
+        grid_clear_cheevo(0, easy, extra_time)
+)
+achievement(
+    "Timed Sharpness",
+    "Complete a puzzle on Medium in Extra Time mode",
+    points=3,
+    trigger=
+        grid_clear_cheevo(0, medium, extra_time)
+)
+achievement(
+    "Timed Puzzler",
+    "Complete a puzzle on Hard in Extra Time mode",
+    points=4,
+    trigger=
+        grid_clear_cheevo(0, hard, extra_time)
+)
+achievement(
+    "Timed Wizard",
+    "Complete a puzzle on Super Difficult in Extra Time mode",
+    points=5,
+    trigger=
+        grid_clear_cheevo(0, super_difficult, extra_time)
+)
+achievement(
+    "Flawless Foundation",
+    "Complete a puzzle on Easy in Perfection mode",
+    points=2,
+    trigger=
+        grid_clear_cheevo(0, easy, perfection)
+)
+achievement(
+    "Precision Maestro",
+    "Complete a puzzle on Medium in Perfection mode",
+    points=3,
+    trigger=
+        grid_clear_cheevo(0, medium, perfection)
+)
+achievement(
+    "Unyielding Precision",
+    "Complete a puzzle on Hard in Perfection mode",
+    points=4,
+    trigger=
+        grid_clear_cheevo(0, hard, perfection)
+)
+achievement(
+    "Immaculate Victory",
+    "Complete a puzzle on Super Difficult in Perfection mode",
+    points=5,
+    trigger=
+        grid_clear_cheevo(0, super_difficult, perfection)
+)
+achievement(
+    "Life's Guardian",
+    "Complete a puzzle on Easy in 3 Strikes mode",
+    points=2,
+    trigger=
+        grid_clear_cheevo(0, easy, three_strikes)
+)
+achievement(
+    "Life's Shield",
+    "Complete a puzzle on Medium in 3 Strikes mode",
+    points=3,
+    trigger=
+        grid_clear_cheevo(0, medium, three_strikes)
+)
+achievement(
+    "Life's Sustainer",
+    "Complete a puzzle on Hard in 3 Strikes mode",
+    points=4,
+    trigger=
+        grid_clear_cheevo(0, hard, three_strikes)
+)
+achievement(
+    "Life's Guardian Angel",
+    "Complete a puzzle on Super Difficult in 3 Strikes mode",
+    points=5,
+    trigger=
+        grid_clear_cheevo(0, super_difficult, three_strikes)
+)
 
 // $2A6990: [8bit] Career -  Current Belt Rank Achieved
 //          0x00=White Belt
@@ -138,67 +317,6 @@ achievement(
     trigger=
         advance_tier(dan_level(), 3, 4)
 )
-// $2A69A0: [16bit] Difficulty
-//          0x00=Easy
-//          0x01=Medium
-//          0x02=Hard
-//          0x03=Super Difficult
-function difficulty() => word(0x2a69a0)
-easy = 0
-medium = 1
-hard = 2
-super_difficult = 3
-// $2A69A2: [16bit] Game Mode
-//          0x00=Classic
-//          0x01=Beat The Clock
-//          0x02=Extra Time
-//          0x03=Perfection
-//          0x04=3 Strikes
-//          0x05=Career Mode
-//          0x06=Challenge Carol
-function game_mode() => word(0x2a69a2)
-classic = 0
-// $2A6A91: [81 bytes] Solution Grid
-solution_start = 0x2a6a91
-// $2A6AE2: [81 bytes] Grid
-grid = 0x2a6ae2
-function grid_check() => all_of(range(solution_start, solution_start + 80), b => byte(b) == byte(b + 0x51))
-function grid_change() => any_of(range(grid, grid + 80), b => byte(b) != prev(byte(b)))
-
-function grid_clear_cheevo(target, difficulty, mode) =>
-    measured(repeated(target, grid_change() && grid_check())) &&    
-    unless(game_mode() != mode) &&
-    unless(difficulty() != difficulty) 
-
-achievement(
-    "Classic Round: Easy",
-    "Complete 5 puzzles on Easy difficulty in Classic mode(One Session)",
-    points=2,
-    trigger=
-        grid_clear_cheevo(5, easy, classic)
-)
-achievement(
-    "Classic Round: Medium",
-    "Complete 5 puzzles on Medium difficulty in Classic mode (One Session)",
-    points=3,
-    trigger=
-        grid_clear_cheevo(5, medium, classic)
-)
-achievement(
-    "Classic Round: Hard",
-    "Complete 5 puzzles on Hard difficulty in Classic mode (One Session)",
-    points=4,
-    trigger=
-        grid_clear_cheevo(5, hard, classic)
-)
-achievement(
-    "Classic Round: Super Difficult",
-    "Complete 5 puzzles on Super Difficult in Classic mode (One Session)",
-    points=5,
-    trigger=
-        grid_clear_cheevo(5, super_difficult, classic)
-)
-
 
 
 
