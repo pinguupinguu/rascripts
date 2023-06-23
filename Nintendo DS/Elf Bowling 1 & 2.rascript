@@ -1,6 +1,5 @@
 // Elf Bowling 1 & 2
 // #ID = 1983
-
 // $1CB334: [Pointer] Elf Bowling 1 - Animal Data
 //          +0x7c=Deer State Flag
 //          0x01>0x03=Dead
@@ -120,13 +119,11 @@
 //          =====Miscellaneous=====
 //          +0x2f4=[32bit] Player One Current Elf Shooting
 //          +0x2f8=[32bit] Player Two Current Elf Shooting
-
 // $1CC064: [32bit] Game Mode
 //          0x00=Elf Bowling 1
 //          0x01=Elf Bowling 2: Elfs in Paradise
 function game_mode_classic() => dword(0x1cc064) == 0
 function game_mode_paradise() => dword(0x1cc064) == 1
-
 // $1CBAE8: [32bit] Elf Bowling 1 - Lane State
 //          0x00=Default No Prior Game During Session Loaded
 //          0x01=Elves Being Loaded
@@ -227,6 +224,8 @@ function paradise_player_count() => dword(0x1cbee8)
 //          0x08=Tallying Elves
 //          0x09=Results Screen
 function paradise_lane() => dword(0x1cbef8)
+load=1
+elf=3
 landed=7
 tally=8
 results=9
@@ -248,7 +247,6 @@ function paradise_single_player() => paradise_player_count() == 1 && paradise_la
 //          0x01=CPU
 function paradise_player_score() => dword(tbyte(0x1cbdb8) + 0xa0)
 function paradise_cpu_score() => dword(tbyte(0x1cbdb8) + 0xa4)
-
 achievement(
     "Welcome to Paradise!",
     "[Elf Bowling 2] Score 1,000 points!",
@@ -333,7 +331,6 @@ function player_turn() => dword(tbyte(0x1cbdb8) + 0x60) == 0 //Player 1 turn che
 death_shark = 0x64
 death_splash = 0x8c
 function cpu_elf_death(val) => any_of(range(0x130, 0x13c, 4), b => prev(dword(tbyte(0x1cbdc4) + b)) == 0 && dword(tbyte(0x1cbdc4) + b) ==  val)
-
 achievement(
     "Swimmin' Elf!",
     "[Elf Bowling 2] Knock an opponent elf off of the board's side and into the water!",
@@ -351,4 +348,25 @@ achievement(
         game_mode_paradise() &&
         paradise_single_player() &&
         cpu_elf_death(death_shark)
+)
+
+leaderboard(
+    "[Elf Bowling 2] Highest Score",
+    "Highest score obtained in a single player game",
+    game_mode_paradise() && paradise_player_count() == 1 && prev(paradise_lane()) == load && paradise_lane() == elf,
+    always_false(),
+    prev(paradise_lane()) == tally && paradise_lane() == results,
+    paradise_player_score(),
+    "POINTS",
+    false
+)
+leaderboard(
+    "[Elf Bowling 2] Highest Point Lead",
+    "Highest score lead against the CPU obtained in a game",
+    game_mode_paradise() && paradise_player_count() == 1 && prev(paradise_lane()) == load && paradise_lane() == elf,
+    prev(paradise_lane()) == tally && paradise_lane() == results && paradise_player_score() < paradise_cpu_score(),
+    prev(paradise_lane()) == tally && paradise_lane() == results && paradise_player_score() > paradise_cpu_score(),
+    paradise_player_score() - paradise_cpu_score(),
+    "POINTS",
+    false
 )
