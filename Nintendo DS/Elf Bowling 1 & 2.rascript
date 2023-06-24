@@ -12,7 +12,6 @@
 //          0x01=Facing Right
 //          0x02=Facing Left
 //          0x03=Running Away
-// $1CB344: [32bit] Elf Bowling 1 - Current Frame
 // $1CB348: [Pointer] Elf Bowling 1 Game Data
 //          Two Important Notes:
 //          0x0=Gutterball
@@ -229,6 +228,7 @@ elf=3
 landed=7
 tally=8
 results=9
+function paradise_game_check() => paradise_lane() >= elf && paradise_lane() <= results
 function paradise_single_player() => paradise_player_count() == 1 && paradise_lane() >= 3 && paradise_lane() <= 9
 // $1CBDB8: [Pointer] Elf Bowling 2
 //          +0x4=[32bit] Player 1 Score (Board)
@@ -349,7 +349,22 @@ achievement(
         paradise_single_player() &&
         cpu_elf_death(death_shark)
 )
-
+// Rich Presence
+// $1CB344: [32bit] Elf Bowling 1 - Current Frame
+function current_frame() => dword(0x1cb344) + 1
+rich_presence_conditional_display(game_mode_classic() && classic_ingame(), "Bowling a game of Elf Bowling 1 on Frame {0}! Score: {1}",
+    rich_presence_macro("Number", current_frame()),
+    rich_presence_macro("Number", classic_score())
+)
+rich_presence_conditional_display(game_mode_paradise() && paradise_player_count() == 2 && paradise_game_check(), "Playing a two-player game of Elf Bowling 2! P1 Score: {0} P2 Score: {1}",
+    rich_presence_macro("Number", paradise_player_score()),
+    rich_presence_macro("Number", paradise_cpu_score())
+)
+rich_presence_conditional_display(game_mode_paradise() && paradise_player_count() == 1 && paradise_game_check(), "Playing a one-player game of Elf Bowling 2! Score: {0}",
+    rich_presence_macro("Number", paradise_player_score())
+)
+rich_presence_display("In Menu")
+// Leaderboards
 leaderboard(
     "[Elf Bowling 2] Highest Score",
     "Highest score obtained in a single player game",
