@@ -11,22 +11,22 @@
 // $04CBB4: [80 bytes] Profile 1 -  Getting Started Time Records
 //          (20 total)
 //          Each puzzle [32bit] Time (Frames) Address
-puzzles_started = 0x04cbb4
+puzzles_started = 0x04c3d0
 function getting_started_table() => range(puzzles_started, puzzles_started + 76, 4) 
 // $04CC04: [400 bytes] Profile 1 - Kind Time Records
 //          (100 total)
 //          Each puzzle [32bit] Time (Frames) Address
-puzzles_kind = 0x04cc04
+puzzles_kind = 0x04c420
 function kind_table() => range(puzzles_kind, puzzles_kind + 396, 4)
 // $04CD94: [400 bytes] Profile 1 - Ordinary Time Records
 //          (100 total)
 //          Each puzzle [32bit] Time (Frames) Address
-puzzles_ordinary = 0x04cd94
+puzzles_ordinary = 0x04c5b0
 function ordinary_table() => range(puzzles_ordinary, puzzles_ordinary + 396, 4)
 // $04CF24: [200 bytes] Profile 1 - Difficult Time Records
 //          (50 total)
 //          Each puzzle [32bit] Time (Frames) Address
-puzzles_difficult = 0x04cf24
+puzzles_difficult = 0x04c740
 function difficult_table() => range(puzzles_difficult, puzzles_difficult + 196, 4)
 // $04D06C: [32bit] Other Stars!!
 // $04D3B4: [80 bytes] Profile 2 -  Getting Started Time Records
@@ -49,8 +49,9 @@ function difficult_table() => range(puzzles_difficult, puzzles_difficult + 196, 
 function profile_number() => byte(0x152fd3)
 function profile_protection() => profile_number() == prev(profile_number())
 function progression(table, target) =>    
-    prev(sum_of(table, b => dword(profile_number() * 0x800 + b) / dword(profile_number() * 0x800 + b))) == target - 1 &&
-    measured(sum_of(table, b => dword(profile_number() * 0x800 + b) / dword(profile_number() * 0x800 + b)) == target) &&
+    prev(sum_of(table, b => dword(b) / dword(b))) == target - 1 &&
+    measured(sum_of(table, b => dword(b) / dword(b)) == target) &&
+   // measured(sum_of(table, b => dword(b) / dword(b))) == target) &&
     profile_protection()
 
 achievement(
