@@ -154,10 +154,10 @@ achievement(
 )
 // $04D06C: [32bit] Profile 1 - Number of Stars
 function stars() => dword(profile_number() * 0x7ff + 0x04d06c)
-function star_cheevo(title, target, my_points) {
+function star_cheevo(title, desc_bit, target, my_points) {
         achievement(
         title,
-        "Earn " + target + " stars!",
+        "Earn " + desc_bit +  " " + target + " stars!",
         points=my_points,
         trigger=
             profile_protection() &&
@@ -166,9 +166,25 @@ function star_cheevo(title, target, my_points) {
             stars() >= target
     )
 }
-star_cheevo("Star Seeker", 200, 5)
-star_cheevo("Puzzling Prodigy", 400, 5)
-star_cheevo("Constellation Champion", 600, 5)
-star_cheevo("Stellar Strategist", 800, 10)
-star_cheevo("Puzzle Mastermind", 1000, 10)
-star_cheevo("Galactic Genius", 1260, 25)
+star_cheevo("Star Seeker", "at least", 200, 5)
+star_cheevo("Puzzling Prodigy", "at least", 400, 5)
+star_cheevo("Constellation Champion", "at least", 600, 5)
+star_cheevo("Stellar Strategist", "at least", 800, 10)
+star_cheevo("Puzzle Mastermind", "at least", 1000, 10)
+star_cheevo("Galactic Genius", "all", 1260, 25)
+function state() => dword(0x11aae8)
+function frametimer() => dword(0x11ab08)
+function puzzle_num() => dword(0x15314c) +1
+function difficulty() => dword(0x153138)
+difficulty_rp = {
+    0:"Getting Started (入門)",
+    1:"Kind (やさしい)",
+    2:"Ordinary (ふつう)",
+    3:"Difficult (むずかしい)"
+}
+rich_presence_conditional_display(state() <0xfff, "Solving a {0} puzzle {1} {2}",
+    rich_presence_lookup("Difficulty", difficulty(), difficulty_rp),
+    rich_presence_macro("Number", puzzle_num()),
+    rich_presence_value("Timer", frametimer(), "FRAMES")
+)
+rich_presence_display("In Menu")
