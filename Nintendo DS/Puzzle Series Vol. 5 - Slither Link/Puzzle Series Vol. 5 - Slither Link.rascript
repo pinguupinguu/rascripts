@@ -153,8 +153,8 @@ achievement(
     trigger=
         progression(difficult_table(), 50)
 )
-// $04D06C: [32bit] Profile 1 - Number of Stars
-function stars() => dword(profile_number() * 0x7ff + 0x04d06c)
+// $04D06C: [16bit] Number of Stars
+function stars() => word(0x04c888)
 function star_cheevo(title, desc_bit, target, my_points) {
         achievement(
         title,
