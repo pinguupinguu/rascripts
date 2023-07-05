@@ -25,7 +25,7 @@ function state() => byte(0x05c8)
 in_game = 0
 in_option = 0xee
 function progression(num) => //Put the mode number in!
-    bcd(mode()) == num &&
+    mode() == num &&
     mode_pause() &&
     player_one_flash() &&
     player_two_flash_pause() &&
@@ -81,7 +81,13 @@ for i in range(9, 14){
         "Win against the CPU on Mode " + i + "!",
         points=5,
         trigger=
-            progression(i)
+            mode() == i &&
+            mode_pause() &&
+            byte(0x0553) == 0 &&
+            prev(byte(0x00f1)) == 0x11 && trigger_when(byte(0x00f1)) == 0x77 &&
+            (always_false()
+                || never(prev(state()) != in_option && start() > prev(start()))    
+            )
     )
     start = start + 1
 }
