@@ -1,6 +1,5 @@
 // UzeMaze
 // #ID = 24801
-
 // $0EBD: [16bit] Moves
 function moves() => word(0x0ebd)
 // $0EBF: [8bit] Level
@@ -15,14 +14,14 @@ function progression(start, end, count) => measured(tally_of(range(start,end), c
 achievement(
     "Slidin' Noobie",
     "Clear puzzles 1-10 (One Session)",
-    points=2, 
+    points=5, 
     trigger=
         progression(1, 10, 10)
 )
 achievement(
     "A Sliding Test",
     "Clear puzzles 11-20 (One Session)",
-    points=3,
+    points=5,
     trigger=
         progression(11, 20, 10)
 )
@@ -57,7 +56,7 @@ achievement(
 achievement(
     "Button Masher",
     "Complete a level in under 5 seconds!",
-    points=3,
+    points=5,
     trigger=
         timer() != 0 &&
         timer() < 0x12c && //5 seconds = 0x12c @ 60frames
