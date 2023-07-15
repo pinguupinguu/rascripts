@@ -356,7 +356,7 @@ achievement(
 //        bit3=4P
 function player_sum() => bit0(0x1a61) + bit1(0x1a61) + bit2(0x1a61) + bit3(0x1a61)
 // $1A66: [8bit] World
-function world() => byte(0x1a66)
+function world() => byte(0x1a66) + 1
 // $1A67: [8bit] Stage (Value - 1)
 function stage() => byte(0x1a67) + 1
 // $1B90: [16bit] 1P Score - * 10 = Value
