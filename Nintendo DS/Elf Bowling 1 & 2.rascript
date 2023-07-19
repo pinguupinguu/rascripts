@@ -337,6 +337,7 @@ achievement(
     points=2,
     trigger=
         game_mode_paradise() &&
+        player_turn() &&
         paradise_single_player() &&
         cpu_elf_death(death_splash)
 )
