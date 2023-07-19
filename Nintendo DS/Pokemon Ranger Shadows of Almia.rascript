@@ -1399,10 +1399,11 @@ pokemon_database = {
 //==========START OF CALLS==========
 // $0BAFBF: [NBit] Pokemon Bitflags
 //          Bit6-7=Bidoof
-function save_check() => prev(bit7(0x0bafbf)) == 1
-function save_check_hits() => never(prev(bit7(0x0bafbf)) == 0)
 function game_state() => byte(0x08af58)
+//Add in state check to prevent autoflicker on menu! 7-19-2023
 function flicker_check() => prev(game_state()) < 3
+function save_check() => prev(bit7(0x0bafbf)) == 1 && flicker_check()
+function save_check_hits() => never(prev(bit7(0x0bafbf)) == 0)
 // $0B32B8: [8bit] Active Mission IsDisplayed Flag
 //          0x00=False
 //          0x01=True
