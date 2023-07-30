@@ -196,7 +196,8 @@ function award_flag_chug_a_mug_shifty_swifty_sash_boost_pads() => dword(0x1BC657
 //           0x08=Stinkolossus
 //           0x09=Chug-A-Mug!
 function challenge_mode_unlocked_levels() => dword(0x1BC65C4)
-function progression(target) => prev(challenge_mode_unlocked_levels()) == target - 1 && challenge_mode_unlocked_levels() == target && save_protection()
+function progression(target) => prev(challenge_mode_unlocked_levels()) == target - 1 && challenge_mode_unlocked_levels() == target && save_protection() &&
+                                cheat_invulnerability() != 1
 
 achievement(
     "Spoiled Beginnings",
@@ -206,3 +207,290 @@ achievement(
         progression(1)
     
 )
+achievement(
+    "An Unexpected A-Tak",
+    "Clear Stinky Escape in story mode!",
+    points=5,
+    trigger=
+        progression(2)
+)
+achievement(
+    "River Path",
+    "Clear Swollen River Ruins in story mode",
+    points=5,
+    trigger=
+        progression(3)
+)
+achievement(
+    "Trashin' Levels",
+    "Clear Trashthulu in story mode",
+    points=5,
+    trigger=
+        progression(4)
+)
+achievement(
+    "No Longer Leviathan",
+    "Clear Slopviathan in story mode",
+    points=10,
+    trigger=
+        progression(5)
+    
+)
+achievement(
+    "Not a Type of Cheese",
+    "Clear Gorgonzilla in story mode",
+    points=10,
+    trigger=
+        progression(6)
+)
+achievement(
+    "Rapid City",
+    "Clear Rancid Rapids in story mode",
+    points=10,
+    trigger=
+        progression(7)
+)
+achievement(
+    "Penultimate Juju Experience",
+    "Clear Stinkolossus in story mode",
+    points=10,
+    trigger=
+        progression(8)
+)
+achievement(
+    "Tak: The Guardian of Gross",
+    "Clear Chug-A-Mug and complete the game!",
+    points=25,
+    trigger=
+        progression(9)
+)
+function award_single(flag) => prev(flag) == 0 && flag == 1 && save_protection()
+achievement(
+    "The Spoiled Shrine: Tick Tock Tiki",
+    "Win the Speedrun award for The Spoiled Shrine",
+    points=5,
+    trigger=
+        award_single(award_flag_the_spoiled_shrine_tick_tock_tiki_speedrun())
+)
+achievement(
+    "stinky Escape: Chrono Cup",
+    "Win the Speedrun award for Stinky Escape",
+    points=5,
+    trigger=
+        award_single(award_flag_stinky_escape_chrono_cup_speedrun())
+)
+achievement(
+    "Swollen River Ruins: Watch Wand",
+    "Win the Speedrun award for Swollen River Ruins",
+    points=5,
+    trigger=
+        award_single(award_flag_swollen_river_ruins_watch_wand_speedrun())
+)
+achievement(
+    "Trashthulu: Cuckoo Cup",
+    "Win the Speedrun award for Trashthulu",
+    points=5,
+    trigger=
+        award_single(award_flag_trashthulu_cuckoo_cup_speedrun())
+)
+achievement(
+    "Slopviathan: Time Trial Tiki",
+    "Wih the Speedrun award for Slopviathan",
+    points=5,
+    trigger=
+        award_single(award_flag_slopviathan_time_trial_tiki_speedrun())    
+)
+achievement(
+    "Gorgonzilla: Racing Snake Belt",
+    "Win the Speedrun award for Gorgonzilla",
+    points=5,
+    trigger=
+        award_single(award_flag_gorgonzilla_racing_snake_belt_speedrun())    
+)
+achievement(
+    "Rancid Rapids: Greased Pig Plaque",
+    "Win the Speedrun award for Rancid Rapids",
+    points=5,
+    trigger=
+        award_single(award_flag_rancid_rapids_greased_pig_plaque_speedrun())
+)
+achievement(
+    "Stinkolossus: Turbo Trail Tiki",
+    "Win the Speedrun award for Stinkolossus",
+    points=5,
+    trigger=
+        award_single(award_flag_stinkolossus_turbo_trail_tiki_speedrun())
+)
+achievement(
+    "Chu-A-Mug: Rapid Rainforest Ruby",
+    "Win the Speedrun award for Chug-A-Mug!",
+    points=10,
+    trigger=
+        award_single(award_flag_chug_a_mug_rapid_rainforest_ruby_speedrun())
+)
+function award_mult(type, target) => prev(type) == target - 1 && type == target && save_protection()
+function nunu_sum() =>
+    award_flag_the_spoiled_shrine_scavenger_shield_nunu_collection() +
+    award_flag_stinky_escape_rainforest_rummage_rod_nunu_collection() +
+    award_flag_swollen_river_ruins_crafty_coconut_cup_nunu_collection() +
+    award_flag_trashthulu_sneaky_peeky_shield_nunu_collection() +
+    award_flag_slopviathan_mystery_mist_mace_nunu_collection() +
+    award_flag_gorgonzilla_nunu_ninja_star_nunu_collection() +
+    award_flag_rancid_rapids_curious_collector_crystal_nunu_collection() +
+    award_flag_stinkolossus_jungle_hunter_cup_nunu_collection() +
+    award_flag_chug_a_mug_swamp_search_shield_nunu_collection()
+achievement(
+    "Pupanunu Collection",
+    "Obtain 4/9 award medals under the Nunu Collection category! (See Forum Topic for List)",
+    points=10,
+    trigger=
+        award_mult(nunu_sum(), 4)
+)
+achievement(
+    "Memorabilia of the Pupanunu People",
+    "Obtain all award medals under the Nunu Collection category! (See Forum Topic for List)",
+    points=25,
+    trigger=
+        award_mult(nunu_sum(), 9)   
+)
+function juice_sum() =>
+    award_flag_the_spoiled_shrine_gather_gannet_cup_juju_juice() +
+    award_flag_swollen_river_ruins_greedy_gather_gong_juju_juice() +
+    award_flag_trashthulu_collect_a_nator_cup_juju_juice() +
+    award_flag_slopviathan_stockpile_star_juju_juice() +
+    award_flag_gorgonzilla_ju_jungle_jug_juju_juice() +
+    award_flag_rancid_rapids_sly_stash_shield_juju_juice() +
+    award_flag_stinkolossus_hog_haord_chest_juju_juice() 
+achievement(
+    "Juicenator I",
+    "Obtain 3/7 award medals under the Juju Juice category! (See Forum Topic for List)",
+    points=5,
+    trigger=
+        award_mult(juice_sum(), 3)
+)
+achievement(
+    "Juicenator II",
+    "Obtain all 7 award medals under the Juju Juice category! (See Forum Topic for List)",
+    points=10,
+    trigger=
+        award_mult(juice_sum(), 7)
+)
+function enemies_sum() =>
+    award_flag_the_spoiled_shrine_hog_wild_trophy_defeat_all_enemies() +
+    award_flag_swollen_river_ruins_destroyer_shield_defeat_all_enemies() +
+    award_flag_trashthulu_crazy_clash_cup_defeat_all_enemies() +
+    award_flag_gorgonzilla_tiger_tussle_trophy_defeat_all_enemies() +
+    award_flag_rancid_rapids_scrapper_skunk_shield_defeat_all_enemies() +
+    award_flag_stinkolossus_forest_fighter_award_defeat_all_enemies()
+achievement(
+    "Enemy Slayer I",
+    "Earn 3/6 medals under the Destroy All Enemies category! (See Forum Topic for List)",
+    points=5,
+    trigger=
+        award_mult(enemies_sum(), 3)
+)
+achievement(
+    "Enemy Slayer II",
+    "Obtain all 6 award medals under the Destroy All Enemies category! (See Forum Topic for List)",
+    points=10,
+    trigger=
+        award_mult(enemies_sum(), 6)
+    
+)
+achievement(
+    "The Spoiled Shrine: Toughnut Tankard",
+    "Earn the Damageless award on The Spoiled Shrine!",
+    points=5,
+    trigger=
+        award_single(award_flag_the_spoiled_shrine_toughnut_tankard_damageless())
+)
+achievement(
+    "Swollen River Ruins: Rhino Rumble Cup",
+    "Earn the Damageless award on Swollen River Ruins",
+    points=5,
+    trigger=
+        award_single(award_flag_swollen_river_ruins_rhino_rumble_cup_damageless())
+)
+achievement(
+    "Trashthulu: Burly Buffalo Shield",
+    "Earn the Damageless award on Trashthulu",
+    points=10,
+    trigger=
+        award_single(award_flag_trashthulu_burly_buffalo_shield_damageless())    
+)
+achievement(
+    "Slopviathan: Sturdy Star Shield",
+    "Earn the Damageless award on Slopviathan",
+    points=10,
+    trigger=
+        award_single(award_flag_slopviathan_sturdy_star_shield_damageless())
+)
+achievement(
+    "Gorgonzilla: Tussle King Crown",
+    "Earn the Damageless award on Gorgonzilla",
+    points=10,
+    trigger=
+        award_single(award_flag_gorgonzilla_tussle_king_crown_damageless())
+)
+achievement(
+    "Rancid Rapids: Brute Force Trophy",
+    "Earn the Damageless award on Rancid Rapids",
+    points=10,
+    trigger=
+        award_single(award_flag_rancid_rapids_brute_force_trophy_damageless())
+)
+achievement(
+    "Stinkolossus: Papanunu Protector Crown",
+    "Earn the Damageless award on Stinkolossus",
+    points=10,
+    trigger=
+        award_single(award_flag_stinkolossus_papanunu_protector_crown_damageless())
+)
+//Specific Special Awards
+achievement(
+    "TAK-Tical Planning",
+    "Earn the Accuracy award on Stinky Escape!",
+    points=5,
+    trigger=
+        award_single(award_flag_stinky_escape_tak_tical_award_accuracy())
+)
+achievement(
+    "The Destructinator Glove",
+    "Earn the Break all objects award on Stinky Escape!",
+    points=10,
+    trigger=
+        award_single(award_flag_stinky_escape_destructinator_glove_break_all_objects())
+)
+achievement(
+    "The Jungle Rumble Sword",
+    "Earn the Break all objects award on Chug-A-Mug!",
+    points=5,
+    trigger= 
+        award_single(award_flag_chug_a_mug_jungle_rumble_sword_destroy_objects())
+)
+achievement(
+    "The Shifty Swifty Sash",
+    "Earn the Boost Pads award on Chug-A-Mug!",
+    points=5,
+    trigger=
+        award_single(award_flag_chug_a_mug_shifty_swifty_sash_boost_pads())
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
