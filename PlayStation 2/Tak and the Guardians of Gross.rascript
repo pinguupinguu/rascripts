@@ -263,7 +263,7 @@ achievement(
         award_single(award_flag_the_spoiled_shrine_tick_tock_tiki_speedrun())
 )
 achievement(
-    "stinky Escape: Chrono Cup",
+    "Stinky Escape: Chrono Cup",
     "Win the Speedrun award for Stinky Escape",
     points=5,
     trigger=
@@ -522,18 +522,18 @@ achievement(
 )
 achievement(
     "Grabbed By the Goolies",
-    "Score 20.000 points in Goo Gunked!",
-    points=5,
+    "Score 30.000 points in Goo Gunked!",
+    points=10,
     
     trigger=
-        goo_score(20000)
+        goo_score(30000)
 )    
 achievement(
     "Goo Monster Hunter",
-    "Score 30.000 points in Goo Gunked!",
+    "Score 50.000 points in Goo Gunked!",
     points=10,
     trigger=
-        goo_score(30000)
+        goo_score(50000)
 )
 function skunk_sliding_arena_index() => dword(0x01941bec)
 function skunk_sliding_player_skunks() => dword(0x0194f2a8)
