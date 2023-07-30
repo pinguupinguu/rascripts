@@ -29,17 +29,7 @@ function level_id() => dword(0x4AAD74)
 //          +0x3550=[32bit] P1 Score
 function pointer() => dword(0x4ACACC)
 
-// $19A7364: [Float] Minigame Time (While In Minigame)
-function minigame_time_while_in_minigame() => float(0x19A7364)
 
-// $19A74C0: [32bit] Sheep Minigame - P1 Score (While In Minigame)
-function sheep_minigame_p1_score_while_in_minigame() => dword(0x19A74C0)
-
-// $19A7650: [32bit] Sheep Minigame - P2 Score (While In Minigame)
-function sheep_minigame_p2_score_while_in_minigame() => dword(0x19A7650)
-
-// $19A78E0: [32bit] Fondue Frenzy Score
-function fondue_frenzy_score() => dword(0x19A78E0)
 
 // $1BC649C: [Float] Time Taken for Level
 //           
@@ -475,14 +465,111 @@ achievement(
     trigger=
         award_single(award_flag_chug_a_mug_shifty_swifty_sash_boost_pads())
 )
+//Minigames
 
+// $19A7364: [Float] Minigame Time (While In Minigame)
+function minigame_time_while_in_minigame() => float(0x19A7364)
 
+// $19A74C0: [32bit] Sheep Minigame - P1 Score (While In Minigame)
+function sheep_minigame_p1_score_while_in_minigame() => dword(0x19A74C0)
 
+// $19A7650: [32bit] Sheep Minigame - P2 Score (While In Minigame)
+function sheep_minigame_p2_score_while_in_minigame() => dword(0x19A7650)
 
+function sheep_player_mode() => dword(0x01962fdc)
+one = 0
 
-
-
-
+achievement(
+    "Sheep Shooting Expert",
+    "Win a game of Tiki Shoot!",
+    points=5,
+    trigger=
+        sheep_minigame_p1_score_while_in_minigame() > sheep_minigame_p2_score_while_in_minigame() &&
+        sheep_player_mode() == one &&
+        prev(minigame_time_while_in_minigame()) != 0.0 &&
+        minigame_time_while_in_minigame() == 0.0
+)
+// $19A78E0: [32bit] Fondue Frenzy Score
+function fondue_fort_score() => dword(0x19A78E0)
+function fondue_player_index() => dword(0x195c74c)
+function fondue_fort_timer() => float(0x19a7784)
+achievement(
+    "Tower of Cheese!",
+    "Score 10.000 points in Fondue Fort!",
+    points=5,
+    trigger=
+        fondue_player_index() == one &&
+        fondue_fort_timer() != 0.0 &&
+        prev(fondue_fort_score()) < 10000 &&
+        fondue_fort_score() >= 10000 &&
+        fondue_fort_score() < 20000 //Prevent misfire when entering level.
+)
+function goo_gunk_timer() => float(0x019a7834)
+function goo_gunk_score() => dword(0x19a7990)
+function goo_gunk_index() => dword(0x195723c)
+function goo_score(target) =>
+    goo_gunk_index() == one &&
+    goo_gunk_timer() != 0.0 &&
+    prev(goo_gunk_score()) < target &&
+    goo_gunk_score() >= target &&
+    goo_gunk_score() < target + 10000 //Prevent misfire when entering level.
+achievement(
+    "Goo Zapper",
+    "Score 10.000 points in Goo Gunked!",
+    points=5,
+    trigger=
+        goo_score(10000)
+)
+achievement(
+    "Grabbed By the Goolies",
+    "Score 20.000 points in Goo Gunked!",
+    points=5,
+    
+    trigger=
+        goo_score(20000)
+)    
+achievement(
+    "Goo Monster Hunter",
+    "Score 30.000 points in Goo Gunked!",
+    points=10,
+    trigger=
+        goo_score(30000)
+)
+function skunk_sliding_arena_index() => dword(0x01941bec)
+function skunk_sliding_player_skunks() => dword(0x0194f2a8)
+function skunk_sliding_juju_skunks() => dword(0x018f26d8)
+function skunk_sliding_index() => dword(0x0196f7ac)
+function skunk_sliding_player_score() => dword(0x019a77a0)
+function skunk_sliding_juju_score() => dword(0x019a7930)
+function skunk_sliding_state_win() => prev(dword(0x019a77d0)) == 0xffffffff && dword(0x019a77d0) == 9
+function skunk_win(index) =>
+    skunk_sliding_index() == one &&
+    skunk_sliding_arena_index() == index &&
+    skunk_sliding_player_skunks() == 0 &&
+    skunk_sliding_juju_skunks() == 0 &&
+    skunk_sliding_player_score() > skunk_sliding_juju_score() &&
+    skunk_sliding_state_win()
+achievement(
+    "Smellin' Up the Arena",
+    "Win a game of Skunk Sliding on the first Arena layout!",
+    points=5,
+    trigger=
+        skunk_win(0)
+)
+achievement(
+    "Harder Shuffleboard",
+    "Win a game of Skunk Sliding on the second Arena layout!",
+    points=5,
+    trigger=
+        skunk_win(1)
+)
+achievement(
+    "Smelly Skunk Sliding",
+    "Win a game of Skunk Sliding on the third Arena layout!",
+    points=10,
+    trigger=
+        skunk_win(2)
+)
 
 
 
