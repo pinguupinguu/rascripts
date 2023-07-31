@@ -374,7 +374,7 @@ function enemies_sum() =>
     award_flag_stinkolossus_forest_fighter_award_defeat_all_enemies()
 achievement(
     "Enemy Slayer I",
-    "Earn 3/6 medals under the Destroy All Enemies category! (See Forum Topic for List)",
+    "Obtain 3/6 medals under the Destroy All Enemies category! (See Forum Topic for List)",
     points=5,
     trigger=
         award_mult(enemies_sum(), 3)
@@ -389,49 +389,49 @@ achievement(
 )
 achievement(
     "The Spoiled Shrine: Toughnut Tankard",
-    "Earn the Damageless award on The Spoiled Shrine!",
+    "Obtain the Damageless award on The Spoiled Shrine!",
     points=5,
     trigger=
         award_single(award_flag_the_spoiled_shrine_toughnut_tankard_damageless())
 )
 achievement(
     "Swollen River Ruins: Rhino Rumble Cup",
-    "Earn the Damageless award on Swollen River Ruins",
+    "Obtain the Damageless award on Swollen River Ruins",
     points=5,
     trigger=
         award_single(award_flag_swollen_river_ruins_rhino_rumble_cup_damageless())
 )
 achievement(
     "Trashthulu: Burly Buffalo Shield",
-    "Earn the Damageless award on Trashthulu",
+    "Obtain the Damageless award on Trashthulu",
     points=10,
     trigger=
         award_single(award_flag_trashthulu_burly_buffalo_shield_damageless())    
 )
 achievement(
     "Slopviathan: Sturdy Star Shield",
-    "Earn the Damageless award on Slopviathan",
+    "Obtain the Damageless award on Slopviathan",
     points=10,
     trigger=
         award_single(award_flag_slopviathan_sturdy_star_shield_damageless())
 )
 achievement(
     "Gorgonzilla: Tussle King Crown",
-    "Earn the Damageless award on Gorgonzilla",
+    "Obtain the Damageless award on Gorgonzilla",
     points=10,
     trigger=
         award_single(award_flag_gorgonzilla_tussle_king_crown_damageless())
 )
 achievement(
     "Rancid Rapids: Brute Force Trophy",
-    "Earn the Damageless award on Rancid Rapids",
+    "Obtain the Damageless award on Rancid Rapids",
     points=10,
     trigger=
         award_single(award_flag_rancid_rapids_brute_force_trophy_damageless())
 )
 achievement(
     "Stinkolossus: Papanunu Protector Crown",
-    "Earn the Damageless award on Stinkolossus",
+    "Obtain the Damageless award on Stinkolossus",
     points=10,
     trigger=
         award_single(award_flag_stinkolossus_papanunu_protector_crown_damageless())
@@ -439,28 +439,28 @@ achievement(
 //Specific Special Awards
 achievement(
     "TAK-Tical Planning",
-    "Earn the Accuracy award on Stinky Escape!",
+    "Obtain the Accuracy award on Stinky Escape!",
     points=5,
     trigger=
         award_single(award_flag_stinky_escape_tak_tical_award_accuracy())
 )
 achievement(
     "The Destructinator Glove",
-    "Earn the Break all objects award on Stinky Escape!",
+    "Obtain the Break all objects award on Stinky Escape!",
     points=10,
     trigger=
         award_single(award_flag_stinky_escape_destructinator_glove_break_all_objects())
 )
 achievement(
     "The Jungle Rumble Sword",
-    "Earn the Break all objects award on Chug-A-Mug!",
+    "Obtain the Break all objects award on Chug-A-Mug!",
     points=5,
     trigger= 
         award_single(award_flag_chug_a_mug_jungle_rumble_sword_destroy_objects())
 )
 achievement(
     "The Shifty Swifty Sash",
-    "Earn the Boost Pads award on Chug-A-Mug!",
+    "Obtain the Boost Pads award on Chug-A-Mug!",
     points=5,
     trigger=
         award_single(award_flag_chug_a_mug_shifty_swifty_sash_boost_pads())
