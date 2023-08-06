@@ -25,6 +25,13 @@ achievement(
 )
 //StingX2
 achievement(
+    "StingX2's Challenge",
+    "Solve StingX2's puzzle (#2) in 62 moves or less",
+    points=5,
+    trigger=
+        lvl_clr(2, 62)
+)
+achievement(
     "Daroachie's Challenge",
     "Solve Daroachie's puzzle (#3) in 17 moves or less",
     points=2,
@@ -56,7 +63,7 @@ achievement(
 achievement(
     "EldridgeCrimson's Challenge",
     "Solve EldridgeCrimson's puzzle (#7) in 18 moves or less",
-    points=2,
+    points=3,
     trigger=
         lvl_clr(7, 18)
 )
@@ -75,4 +82,18 @@ achievement(
     points=3,
     trigger=
         lvl_clr(9, 26)
+)
+achievement(
+    "NEOMAR's Challenge",
+    "Solve NEOMAR's puzzle (#10) in 81 moves or less",
+    points=5,
+    trigger=
+        lvl_clr(10, 81)
+)
+achievement(
+    "ZeeRA's Challenge",
+    "Solve ZeeRA's puzzle (#11) in 35 moves or less",
+    points=5,
+    trigger=
+        lvl_clr(11, 35)
 )
