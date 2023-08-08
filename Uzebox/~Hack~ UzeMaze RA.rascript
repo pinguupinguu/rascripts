@@ -97,3 +97,10 @@ achievement(
     trigger=
         lvl_clr(11, 35)
 )
+achievement(
+    "Labuff's Challenge",
+    "Solve Labuff's puzzle (#12) in 21 moves or less",
+    points=3,
+    trigger=
+        lvl_clr(12, 21)
+)
