@@ -5,193 +5,8 @@
 // $16EC84: [32bit] Studs - Graphics
 // $16ECEC: [8bit] Minikits - Level 1
 
-// $17105D: [3 bytes] Hint Bitflag Array
-//          Stored in order, Each bitflag represents a hint unlocked. Total: 23
-// $171060: [NBit] Character Flags
-//          Bit4=Chancellor Palpatine
-//          Bit5=Chancellor Palpatine Bought
-//          Bit6=Hondo Ohnaka
-//          Bit7=Hondo Ohnaka Bought
-// $171061: [NBit] Character Flags
-//          Bit2=Battle Droid
-//          Bit3=Battle Droid Bought
-//          Bit6=Senate Commando
-//          Bit7=Senate Commando Bought
-// $171062: [NBit] Character Flags
-//          Bit0=Asajj Ventress
-//          Bit1=Asajj Ventress Bought
-//          Bit2=Mace Windu
-//          Bit3=Mace Windu Bought
-//          Bit6=Commander Cody
-//          Bit7=Commander Cody Bought
-// $171063: [Nbit] Character Flags
-//          Bit2=Nute Gunray
-//          Bit3=Nute Gunray Bought
-//          Bit4=Ahsoka
-//          Bit5=Ahsoka Bought
-//          Bit6=Super Battle Droid
-//          Bit7=Super Battle Droid Bought
-// $171064: [NBit] Character Flags
-//          Bit0=Senate Commando Capt.
-//          Bit1=Senate Commando Capt. Bought
-//          Bit2=Captain Rex
-//          Bit3=Captain Rex Bought
-//          Bit4=General Grievous
-//          Bit5=General Grievous Bought
-//          Bit6=Jango Fett
-//          Bit7=Jango Fett Bought
-// $171065: [NBit] Character Flags
-//          Bit0=Senate Guard
-//          Bit1=Senate Gaurd Bought
-//          Bit2=Poggle The Lesser
-//          Bit3=Poggle The Lesser Bought
-//          
-//          Bit6=Barriss Offee
-//          Bit7=Barriss Offee Bought
-// $171066: [NBit] Character Flags
-//          Bit0=Turko Falso
-//          Bit1=Turk Falso Bought
-//          Bit2=Yoda
-//          Bit3=Yoda Bought
-//          Bit4=Padme
-//          Bit5=Padme Bought
-//          Bit6=Cato Parasitti
-//          Bit7=Cato Parasitti Bought
-// $171067: [NBit] Character Flags
-//          Bit0=Cham Syndulla
-//          Bit1=Cham Syndulla Bought
-//          Bit2=Chi Cho
-//          Bit3=Chi Cho Bought
-//          Bit4=Faro Argyus
-//          Bit5=Faro Argyus Bought
-// $171068: [NBit] Character Flags
-//          Bit0=Galactic Marine
-//          Bit1=Galactic Marine Bought
-//          Bit2=Bossk
-//          Bit3=Bossk Bought
-//          Bit4=Mar Tuuk
-//          Bit5=Mar Tuuk Bought
-//          Bit6=Numa
-//          Bit7=Numa Bought
-// $171069: [NBit] Character Flags
-//          Bit0=Chewbacca
-//          Bit1=Chewbacca Bought
-//          Bit2=Aayla Secura
-//          Bit3=Aayla Secura Bought
-//          Bit6=Riyo Chuchi
-//          Bit7=Riyo Chuchi Bought
-// $17106A: [NBit] Character Flags
-//          Bit0=Wullf Yularen
-//          Bit1=Wullf Yularen Bought
-//          Bit2=MagnaGuard
-//          Bit3=MagnaGuard Bought
-// $17106B: [NBit] Character Flags
-//          Bit0=Onaconda Farr
-//          Bit1=Onaconda Farr Bought
-//          Bit2=IG-86
-//          Bit3=IG-86 Bought
-// $17106C: [NBit] Character Flags
-//          Bit4=Kit Fisto
-//          Bit5=Kit Fisto Bought
-// $17106D: [NBit] Character Flags
-//          Bit0=R2-D2
-//          Bit1=R2-D2 Bought
-//          Bit2=TX-20
-//          Bit3=TX-20 Bought
-//          Bit4=Lok Durd
-//          Bit5=Lok Durd Bought
-//          Bit6=Dr Nuvo Vindi
-//          Bit7=Dr Nuvo Vindi Bought
-// $17106E: [NBit] Character Flags
-//          Bit0=Wag Too
-//          Bit1=Wag Too Bought
-//          Bit2=Bolla Ropal
-//          Bit3=Bolla Ropal Bought
-//          Bit4=Anakin (Snow)
-//          Bit5=Anakin (Snow) Bought
-//          Bit6=Thi-Sen
-//          Bit7=Thi-Sen Bought
-// $17106F: [NBit] Character Flags
-//          Bit0=Peppi Blow
-//          Bit1=Peppi Blow Bought
-//          Bit4=Gregar Typho
-//          Bit5=Gregar Typho Bought
-//          Bit6=Shahan Alama
-//          Bit7=Shahan Alama Bought
-// $171070: [NBit] Character Flags
-//          Bit0=Jar Jar (Bombad)
-//          Bit1=Jar Jar (Bombad) Bought
-//          
-//          Bit4=Stealth Trooper
-//          Bit5=Stealth Trooper Bought
-// $171071: [NBit] Character Flags
-//          Bit0=Weequay Pirate
-//          Bit1=Weequay Pirate Bought
-//          Bit2=Senator Organa
-//          Bit3=Senator Organa Bought
-// $171072: [NBit] Character Flags
-//          Bit0=Clone Trooper Boil (No Helmet)
-//          Bit1=Clone Trooper Boil (No Helmet) Bought
-//          
-//          Bit4=Clone Trooper Waxer (No Helmet)
-//          Bit5=Clone Trooper Waxer (No Helmet) Bought
-// $171073: [NBit] Character Flags
-//          Bit2=Wat Tambor
-//          Bit3=Wat Tambor Bought
-//          Bit4=Cad Bane
-//          Bit5=Cad Bane Bought
-//          Bit6=Aurra Sing
-//          Bit7=Aurra Sing Bought
-// $171074: [NBit] Character Flags
-//          Bit0=Obi-Wan (Snow)
-//          Bit1=Obi-Wan (Snow) Bought
-//          Bit2=Plo Koon
-//          Bit3=Plo Koon Bought
-// $171075: [NBit]
-//          Bit0=Robonino
-//          Bit1=Robonino Bought
-//          
-//          Bit4=Senator Philo
-//          Bit5=Senator Philo Bought
-//          Bit6=Kashyyyk Clone Trooper
-//          Bit7=Kashyyyk Clone Trooper Bought
-// $171076: [NBit] Character Flags
-//          Bit0=Darth Maul
-//          Bit1=Darth Maul Bought
-//          Bit2=Darth Sidious
-//          Bit3=Darth Sidious Brought
-//          Bit4=Darth Vader
-//          Bit5=Darth Vader Bought
-//          Bit6=Ewok
-//          Bit7=Ewok Bought
-// $171077: [NBit] Character Flags
-//          Bit0=Gha Nachkt
-//          Bit1=Gha Nachkt Bought
-//          Bit2=Han Solo
-//          Bit3=Han Solo Bought
-//          Bit4=Jawa
-//          Bit5=Jawa Bought
-//          Bit6=Ki-Adi-Mundi
-//          Bit7=Ki-Adi-Mundi Bought
-// $171078: [NBit] Character Flags
-//          Bit2=Lando Calrissian
-//          Bit3=Lando Calrissian Bought
-//          Bit4=Princess Leia (Slave)
-//          Bit5=Princess Leia (Slave) Bought
-//          Bit6=Luke Skywalker
-//          Bit7=Luke Skywalker Bought
-// $171079: [NBit] Character Flags
-//          Bit0=Old Ben Kenobi
-//          Bit1=Old Ben Kenobi Bought
-//          Bit2=Stormtrooper
-//          Bit3=Stormtrooper Bought
-//          Bit4=Tusken Raider
-//          Bit5=Tusken Raider Bought
-//          Bit6=TIE Fighter Pilot
-//          Bit7=TIE Fighter Pilot Bought
-// $17107A: [NBit] Character Flags
-//          Bit0=Clone Trooper Jetpack
-//          Bit1=Clone Trooper Jetpack Bought
+
+
 
 // $17107D: [NBit] Level Flags
 //          Bit0=Ambush Story Available (Default)
@@ -598,6 +413,11 @@ for i in range(0, 25, 2){
     start_id = start_id + 1
 }
 
+function collectibles(target, sum) =>
+    prev(target) == sum - 1 &&
+    measured(target == sum) &&
+    raw_utility_protections()
+
 // $1710A6: [NBit] Red Brick Flags - Bought
 //          Bit0=Unlock Minigames
 //          Bit1=Infinite Missiles
@@ -620,21 +440,440 @@ function red_brick_flags_bought() =>
     bit2(0x1710A7) +
     bit3(0x1710A7) + 
     bit4(0x1710A7)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+achievement(
+    "Extra! Extra! Get Ya Red Bricks Here!",
+    "Buy all Red Brick extras from the shop",
+    points=5,
+    trigger=
+        collectibles(red_brick_flags_bought(), 13)
+)
+// $17105D: [3 bytes] Hint Bitflag Array
+//          Stored in order, Each bitflag represents a hint unlocked. Total: 23
+function hints_bought() =>
+    bitcount(0x17105d) +
+    bitcount(0x17105e) +
+    bit0(0x17105f) +
+    bit1(0x17105f) +
+    bit2(0x17105f) +
+    bit3(0x17105f) +
+    bit4(0x17105f) +
+    bit5(0x17105f) +
+    bit6(0x17105f) 
+achievement(
+    "Tips for the Force",
+    "Buy all hints from the shop",
+    points=5,
+    trigger=
+        collectibles(hints_bought(), 23)
+)
+function characters_bought() =>
+// $171060: [NBit] Character Flags
+//          Bit4=Chancellor Palpatine
+//          Bit5=Chancellor Palpatine Bought
+bit5(0x171060) +
+//          Bit6=Hondo Ohnaka
+//          Bit7=Hondo Ohnaka Bought
+bit7(0x171060) +
+// $171061: [NBit] Character Flags
+//          Bit2=Battle Droid
+//          Bit3=Battle Droid Bought
+bit3(0x171061) +
+//          Bit6=Senate Commando
+//          Bit7=Senate Commando Bought
+bit7(0x171061) +
+// $171062: [NBit] Character Flags
+//          Bit0=Asajj Ventress
+//          Bit1=Asajj Ventress Bought
+bit1(0x171062) +
+//          Bit2=Mace Windu
+//          Bit3=Mace Windu Bought
+bit3(0x171062) +
+//          Bit6=Commander Cody
+//          Bit7=Commander Cody Bought
+bit7(0x171062) +
+// $171063: [Nbit] Character Flags
+//          Bit2=Nute Gunray
+//          Bit3=Nute Gunray Bought
+bit3(0x171063) +
+//          Bit4=Ahsoka
+//          Bit5=Ahsoka Bought
+bit5(0x171063) +
+//          Bit6=Super Battle Droid
+//          Bit7=Super Battle Droid Bought
+bit7(0x171063) +
+// $171064: [NBit] Character Flags
+//          Bit0=Senate Commando Capt.
+//          Bit1=Senate Commando Capt. Bought
+bit1(0x171064) +
+//          Bit2=Captain Rex
+//          Bit3=Captain Rex Bought
+bit3(0x171064) +
+//          Bit4=General Grievous
+//          Bit5=General Grievous Bought
+bit5(0x171064) +
+//          Bit6=Jango Fett
+//          Bit7=Jango Fett Bought
+bit7(0x171064) +
+// $171065: [NBit] Character Flags
+//          Bit0=Senate Guard
+//          Bit1=Senate Gaurd Bought
+bit1(0x171065) +
+//          Bit2=Poggle The Lesser
+//          Bit3=Poggle The Lesser Bought
+bit3(0x171065) +
+//          
+//          Bit6=Barriss Offee
+//          Bit7=Barriss Offee Bought
+bit7(0x171065) +
+// $171066: [NBit] Character Flags
+//          Bit0=Turko Falso
+//          Bit1=Turk Falso Bought
+bit1(0x171066) +
+//          Bit2=Yoda
+//          Bit3=Yoda Bought
+bit3(0x171066) +
+//          Bit4=Padme
+//          Bit5=Padme Bought
+bit5(0x171066) +
+//          Bit6=Cato Parasitti
+//          Bit7=Cato Parasitti Bought
+bit7(0x171066) +
+// $171067: [NBit] Character Flags
+//          Bit0=Cham Syndulla
+//          Bit1=Cham Syndulla Bought
+bit1(0x171067) +
+//          Bit2=Chi Cho
+//          Bit3=Chi Cho Bought
+bit3(0x171067) +
+//          Bit4=Faro Argyus
+//          Bit5=Faro Argyus Bought
+bit5(0x171067) +
+// $171068: [NBit] Character Flags
+//          Bit0=Galactic Marine
+//          Bit1=Galactic Marine Bought
+bit1(0x171068) +
+//          Bit2=Bossk
+//          Bit3=Bossk Bought
+bit3(0x171068) +
+//          Bit4=Mar Tuuk
+//          Bit5=Mar Tuuk Bought
+bit5(0x171068) +
+//          Bit6=Numa
+//          Bit7=Numa Bought
+bit7(0x171068) +
+// $171069: [NBit] Character Flags
+//          Bit0=Chewbacca
+//          Bit1=Chewbacca Bought
+bit1(0x171069) +
+//          Bit2=Aayla Secura
+//          Bit3=Aayla Secura Bought
+bit3(0x171069) +
+//          Bit6=Riyo Chuchi
+//          Bit7=Riyo Chuchi Bought
+bit7(0x171069) +
+// $17106A: [NBit] Character Flags
+//          Bit0=Wullf Yularen
+//          Bit1=Wullf Yularen Bought
+bit1(0x17106a) +
+//          Bit2=MagnaGuard
+//          Bit3=MagnaGuard Bought
+bit3(0x17106a) +
+// $17106B: [NBit] Character Flags
+//          Bit0=Onaconda Farr
+//          Bit1=Onaconda Farr Bought
+bit1(0x17106b) +
+//          Bit2=IG-86
+//          Bit3=IG-86 Bought
+bit3(0x17106b) +
+// $17106C: [NBit] Character Flags
+//          Bit4=Kit Fisto
+//          Bit5=Kit Fisto Bought
+bit5(0x17106c) +
+// $17106D: [NBit] Character Flags
+//          Bit0=R2-D2
+//          Bit1=R2-D2 Bought
+bit1(0x17106d) +
+//          Bit2=TX-20
+//          Bit3=TX-20 Bought
+bit3(0x17106d) +
+//          Bit4=Lok Durd
+//          Bit5=Lok Durd Bought
+bit5(0x17106d) +
+//          Bit6=Dr Nuvo Vindi
+//          Bit7=Dr Nuvo Vindi Bought
+bit7(0x17106d) +
+// $17106E: [NBit] Character Flags
+//          Bit0=Wag Too
+//          Bit1=Wag Too Bought
+bit1(0x17106e) +
+//          Bit2=Bolla Ropal
+//          Bit3=Bolla Ropal Bought
+bit3(0x17106e) +
+//          Bit4=Anakin (Snow)
+//          Bit5=Anakin (Snow) Bought
+bit5(0x17106e) +
+//          Bit6=Thi-Sen
+//          Bit7=Thi-Sen Bought
+bit7(0x17106e) +
+// $17106F: [NBit] Character Flags
+//          Bit0=Peppi Blow
+//          Bit1=Peppi Blow Bought
+bit1(0x17106f) +
+//          Bit4=Gregar Typho
+//          Bit5=Gregar Typho Bought
+bit5(0x17106f) +
+//          Bit6=Shahan Alama
+//          Bit7=Shahan Alama Bought
+bit7(0x17106f) +
+// $171070: [NBit] Character Flags
+//          Bit0=Jar Jar (Bombad)
+//          Bit1=Jar Jar (Bombad) Bought
+bit1(0x171070) +
+//          
+//          Bit4=Stealth Trooper
+//          Bit5=Stealth Trooper Bought
+bit5(0x171070) +
+// $171071: [NBit] Character Flags
+//          Bit0=Weequay Pirate
+//          Bit1=Weequay Pirate Bought
+bit1(0x171071) +
+//          Bit2=Senator Organa
+//          Bit3=Senator Organa Bought
+bit3(0x171071) +
+// $171072: [NBit] Character Flags
+//          Bit0=Clone Trooper Boil (No Helmet)
+//          Bit1=Clone Trooper Boil (No Helmet) Bought
+bit1(0x171072) +
+//          
+//          Bit4=Clone Trooper Waxer (No Helmet)
+//          Bit5=Clone Trooper Waxer (No Helmet) Bought
+bit5(0x171072) +
+// $171073: [NBit] Character Flags
+//          Bit2=Wat Tambor
+//          Bit3=Wat Tambor Bought
+bit3(0x171073) +
+//          Bit4=Cad Bane
+//          Bit5=Cad Bane Bought
+bit5(0x171073) +
+//          Bit6=Aurra Sing
+//          Bit7=Aurra Sing Bought
+bit7(0x171073) +
+// $171074: [NBit] Character Flags
+//          Bit0=Obi-Wan (Snow)
+//          Bit1=Obi-Wan (Snow) Bought
+bit1(0x171074) +
+//          Bit2=Plo Koon
+//          Bit3=Plo Koon Bought
+bit3(0x171074) +
+// $171075: [NBit]
+//          Bit0=Robonino
+//          Bit1=Robonino Bought
+bit1(0x171075) +
+//          
+//          Bit4=Senator Philo
+//          Bit5=Senator Philo Bought
+bit5(0x171075) +
+//          Bit6=Kashyyyk Clone Trooper
+//          Bit7=Kashyyyk Clone Trooper Bought
+bit7(0x171075) +
+// $171076: [NBit] Character Flags
+//          Bit0=Darth Maul
+//          Bit1=Darth Maul Bought
+bit1(0x171076) +
+//          Bit2=Darth Sidious
+//          Bit3=Darth Sidious Brought
+bit3(0x171076) +
+//          Bit4=Darth Vader
+//          Bit5=Darth Vader Bought
+bit5(0x171076) +
+//          Bit6=Ewok
+//          Bit7=Ewok Bought
+bit7(0x171076) +
+// $171077: [NBit] Character Flags
+//          Bit0=Gha Nachkt
+//          Bit1=Gha Nachkt Bought
+bit1(0x171077) +
+//          Bit2=Han Solo
+//          Bit3=Han Solo Bought
+bit3(0x171077) +
+//          Bit4=Jawa
+//          Bit5=Jawa Bought
+bit5(0x171077) +
+//          Bit6=Ki-Adi-Mundi
+//          Bit7=Ki-Adi-Mundi Bought
+bit7(0x171077) +
+// $171078: [NBit] Character Flags
+//          Bit2=Lando Calrissian
+//          Bit3=Lando Calrissian Bought
+bit3(0x171078) +
+//          Bit4=Princess Leia (Slave)
+//          Bit5=Princess Leia (Slave) Bought
+bit5(0x171078) +
+//          Bit6=Luke Skywalker
+//          Bit7=Luke Skywalker Bought
+bit7(0x171078) +
+// $171079: [NBit] Character Flags
+//          Bit0=Old Ben Kenobi
+//          Bit1=Old Ben Kenobi Bought
+bit1(0x171079) +
+//          Bit2=Stormtrooper
+//          Bit3=Stormtrooper Bought
+bit3(0x171079) +
+//          Bit4=Tusken Raider
+//          Bit5=Tusken Raider Bought
+bit5(0x171079) +
+//          Bit6=TIE Fighter Pilot
+//          Bit7=TIE Fighter Pilot Bought
+bit7(0x171079) +
+// $17107A: [NBit] Character Flags
+//          Bit0=Clone Trooper Jetpack
+//          Bit1=Clone Trooper Jetpack Bought
+bit1(0x17107a)
+achievement(
+    "Character Collection Halfway!",
+    "Buy half of the characters from the shop!",
+    points=10,
+    trigger=
+        collectibles(characters_bought(), 76/2)
+)
+achievement(
+    "A Jedi Collector",
+    "Buy all of the characters from the shop!",
+    points=25,
+    trigger=
+        collectibles(characters_bought(), 76)
+)
+volleyball_id = 0x41737472
+snowball_id = 0x536e6f77
+saberball_id = 0x53616265
+shootout_id = 0x56756c74
+function minigame_id_pointer() => dword_be(tbyte(0x16edcc) + 0)
+//Minigame pointer: 0x16da98
+function minigame_target() => dword(tbyte(0x16da98) + 0x250) //Volleyball Wins
+function in_minigame() => dword(0x16da98) != 0
+function volley_r2d2_score() => byte(tbyte(0x16dac8) + 0x38c)
+function volley_enemy_score() => byte(tbyte(0x16dac8) + 0x38d)
+achievement(
+    "Volleyball Beginner",
+    "Win your first game of Astromech Volleyball!",
+    points=5,
+    id=344643,
+    trigger=
+        minigame_id_pointer() == volleyball_id &&
+        in_minigame() &&
+        prev(minigame_target()) == 0 &&
+        minigame_target() == 1 &&
+        cheat_blocks() &&
+        debug_inactive()
+)
+achievement(
+    "Astromech Volleyball Pro",
+    "Win a game without letting your opponent score against you!",
+    points=10,
+    id=344644,
+    trigger=
+        minigame_id_pointer() == volleyball_id &&
+        in_minigame() &&
+        volley_enemy_score() == 0 &&
+        trigger_when(prev(volley_r2d2_score()) == 4 && volley_r2d2_score() == 5) &&
+        cheat_blocks() &&
+        debug_inactive()
+)
+achievement(
+    "Technological Ball Expertise",
+    "Win five consecutive games of Astromech Volleyball",
+    points=10,
+    id=344645,
+    trigger=
+        minigame_id_pointer() == volleyball_id &&
+        in_minigame() &&
+        prev(minigame_target()) == 4 &&
+        measured(minigame_target() == 5) &&
+        cheat_blocks() &&
+        debug_inactive()
+)
+function snowball_kos() => byte(tbyte(0x1704a8) +0x58)
+achievement(
+    "Frozen Balls",
+    "Get 10 K.O.s in a game of Snowball Fight!",
+    points=3,
+    trigger=
+        minigame_id_pointer() == snowball_id &&
+        in_minigame() &&
+        prev(snowball_kos()) == 9 &&
+        measured(snowball_kos() == 10) &&
+        cheat_blocks() &&
+        debug_inactive()
+)
+achievement(
+    "Shoving Snow Balls on Snowmen",
+    "Get 20 K.O.s in a game of Snowball Fight!",
+    points=3,
+    trigger=
+        minigame_id_pointer() == snowball_id &&
+        in_minigame() &&
+        prev(snowball_kos()) == 19 &&
+        measured(snowball_kos() == 20) &&
+        cheat_blocks() &&
+        debug_inactive()
+)
+achievement(
+    "Frozen Solid",
+    "Get 30 K.O.s in a game of Snowball Fight!",
+    points=3,
+    trigger=
+        minigame_id_pointer() == snowball_id &&
+        in_minigame() &&
+        prev(snowball_kos()) == 29 &&
+        measured(snowball_kos() == 30) &&
+        cheat_blocks() &&
+        debug_inactive()
+)
+function saberball_distance() => dword(tbyte(0x16da98) +0x1a8)
+limit_reqs = [2, 4, 8, 10]
+achievement(
+    "Scoring Above Expectations",
+    "Hit a ball in every single score ring in one game of Saberball!",
+    points=10,
+    trigger=
+        unless(minigame_id_pointer() != saberball_id) &&
+        never(!in_minigame()) &&
+        trigger_when(tally_of(limit_reqs, 4, b => once(saberball_distance() != prev(saberball_distance()) && saberball_distance() == b)))  &&
+        never(saberball_distance() == 0 ) 
+)
+achievement(
+    "Droid Exploder",
+    "Explode 20 droids in one game of Saberball!",
+    points=5,
+    trigger=
+        minigame_id_pointer() == saberball_id &&
+        in_minigame() &&
+        prev(minigame_target()) == 19 &&
+        measured(minigame_target() == 20)    
+)
+function vultures_shot() => dword(0x2b30f4)
+achievement(
+    "Vulture Apprentice",
+    "Shoot 10 vultures in a game of Vulture Shooter!",
+    points=5,
+    trigger=
+        minigame_id_pointer() == shootout_id &&
+        in_minigame() &&
+        prev(vultures_shot()) == 9 &&
+        measured(vultures_shot() == 20) &&
+        utility_protections()
+)
+achievement(
+    "Vulture Hunter",
+    "Shoot 20 vultures in a game of Vulture Shooter!",
+    points=5,
+    trigger=
+        minigame_id_pointer() == shootout_id &&
+        in_minigame() &&
+        prev(vultures_shot()) == 19 &&
+        measured(vultures_shot() == 20) &&
+        utility_protections()
+)
 
 
 
