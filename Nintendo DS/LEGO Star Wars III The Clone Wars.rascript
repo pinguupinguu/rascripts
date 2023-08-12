@@ -848,8 +848,8 @@ achievement(
     trigger=
         minigame_id_pointer() == saberball_id &&
         in_minigame() &&
-        prev(minigame_target()) == 19 &&
-        measured(minigame_target() == 20)    
+        prev(minigame_target()) < 20 &&
+        measured(minigame_target() >= 20)    
 )
 function vultures_shot() => dword(0x2b30f4)
 achievement(
