@@ -1,7 +1,8 @@
 // Ceiling Zero
 // #ID = 25365
-
+function lives() => byte(0x000054)
 function level() => byte(0x00005a)
+function score() => word(0x000069)
 function clear_lvl(a, b) => prev(level()) == a && level() == b
 level_names = {
     0:"Shooting Novice",
@@ -56,3 +57,18 @@ achievement(
     trigger=
         clear_lvl(0x0, 0x15)
 )
+achievement(
+    "Zero Deaths, Zero Ceilings",
+    "Starting from Ceiling Level 15, win the game without losing a life",
+    points=50,
+    trigger=
+        lives() == 3 &&
+        score() >= 0x10 &&
+        trigger_when(clear_lvl(0x0, 0x15))
+)
+
+rich_presence_conditional_display(score() >= 0x10, "Playing on Ceiling Level {0} Score: {1}",
+    rich_presence_macro("Number", bcd(level())),
+    rich_presence_macro("Number", bcd(score()))
+)
+rich_presence_display("In Menu")
