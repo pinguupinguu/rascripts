@@ -104,3 +104,10 @@ achievement(
     trigger=
         lvl_clr(12, 21)
 )
+achievement(
+    "Triforce's Challenge",
+    "Solve Triforce'z puzzle (#13) in 53 moves or less",
+    points=5,
+    trigger=
+        lvl_clr(13, 53)
+)
