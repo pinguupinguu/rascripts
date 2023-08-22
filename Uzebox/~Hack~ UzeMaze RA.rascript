@@ -6,16 +6,20 @@
 // $0EB8: [8bit] Cursor Location
 //        !=0 means in game!
 // $0EBD: [16bit] Moves
-function moves() => word(0xebd)
+function moves() => word(0x0f4d)
 // $0F1F: [8bit] Level
-function level() => byte(0x0f1f)
+function level() => byte(0x0f4f)
 // $0EC2: [8bit] flds
-function flds() => byte(0x0ec2)
+function flds() => byte(0x0f52)
 // $0EC0: [16bit] Level Time (Frames @ 60fps)
+function star_ui() => byte(0x042c) == 0x2a
+function uibox_lvl_clr() => byte(0x03ac)
 function lvl_clr(lvl, limit) =>
     level() == lvl &&
     moves() <= limit &&
-    trigger_when(prev(flds()) == 1 && flds() == 0)
+    trigger_when(prev(uibox_lvl_clr()) == 0x20 && uibox_lvl_clr() == 0x2a) &&
+    byte(0x42c) != 0x2a && //No Level Select
+    byte(0x0383) != 0x2a
 achievement(
     "Hexadigital's Challenge!",
     "Solve Hexadigital's puzzle (#1) in 59 moves or less",
@@ -111,3 +115,56 @@ achievement(
     trigger=
         lvl_clr(13, 53)
 )
+achievement(
+    "LadyLumina's Challenge",
+    "Solve LadyLumina's puzzle (#14) in 36 moves or less",
+    points=5,
+    trigger=
+        lvl_clr(14, 36)
+)
+achievement(
+    "pinguupinguu's Challenge",
+    "Solve pinguupinguu's puzzle (#15) in 36 moves or less",
+    points=5,
+    trigger=
+        lvl_clr(15, 36)
+)
+function state_solved() => byte(0x03ac) == 0x2a && flds() == 0
+function timer() => word(0x0f50)
+rp_puzzlenames = {
+    1:"Hexadigital",
+    2:"StingX2",
+    3:"Daroachie",
+    4:"Xalerzyx",
+    5:"Sutarion",
+    6:"Bryan1150",
+    7:"EldridgeCrimson",
+    8:"1stPrize",
+    9:"MarioKness",
+    10:"NEOMAR",
+    11:"ZeeRA",
+    12:"Labuff",
+    13:"Triforce",
+    14:"LadyLumina",
+    15:"pinguupinguu"
+}
+rich_presence_conditional_display(state_solved(), "Solved {0} 's puzzle in {1} moves!",
+    rich_presence_lookup("Name", level(), rp_puzzlenames),
+    rich_presence_macro("Number", moves())
+)
+rich_presence_conditional_display(star_ui(), "Selecting a level...")
+rich_presence_conditional_display(timer() != 0 && flds() != 0, "Solving {0}'s puzzle! Moves: {1} {2}",
+    rich_presence_lookup("Name", level(), rp_puzzlenames),
+    rich_presence_macro("Number", moves()),
+    rich_presence_value("Time", timer(), "MILLISECS")
+    
+)
+rich_presence_display("In Title Screen")
+function end_puzzle() => prev(flds()) == 1 && flds() == 0
+
+
+
+
+
+
+
