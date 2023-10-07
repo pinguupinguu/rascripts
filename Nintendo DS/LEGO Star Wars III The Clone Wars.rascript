@@ -331,7 +331,7 @@ for i in range(0, 12){
         points=10,
         trigger=
             utility_protections() &&
-            prev(my_array) < 9 &&
+            prev(my_array) <= 9 &&
             measured(my_array == 10)
     )
 }

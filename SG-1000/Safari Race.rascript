@@ -27,7 +27,7 @@ function in_demo_pause() => unless(demo_active())
 function section() => byte(0x007b)
 function distance() => word(0x02c1)
 function tires() => byte(0x02d0)
-function clear_lvl(goal) => prev(section()) == goal && section() == goal + 1
+function clear_lvl(goal) => prev(section()) == goal && section() == goal + 1 && byte(0x7a) != 1
 achievement(
     "First Road Trip",
     "Clear Section 1",
@@ -49,6 +49,7 @@ achievement(
     trigger=
         clear_lvl(3)
 )
+function timer() => word(0x2ef)
 achievement(
     "Roads & Trials",
     "Clear Section 1 in under 4:00",
@@ -66,8 +67,7 @@ achievement(
     trigger=
         !demo_active() &&
         section() == 2 &&
-        time_hours() < 8 &&
-        time_min() < 0x30 && //BCD
+        timer() < 0x730 &&
         trigger_when(prev(distance()) < 0x2000 && distance() == 0x2000)
 )
 achievement(
@@ -77,8 +77,7 @@ achievement(
     trigger=
         !demo_active() &&
         section() == 3 &&
-        time_hours() < 0x11 && //BCD
-        time_min() < 0x30 && //BCD
+        timer() < 0x1130 &&
         trigger_when(prev(distance()) < 0x3000 && distance() == 0x3000)
 )
 achievement(

@@ -66,7 +66,7 @@ achievement(
     trigger=
         game_state() == in_game &&
         player_cnt() == 1 &&
-        balls() - prev(balls()) == 1
+        any_of(range(0x20, 0xc0, 0x20), b => prev(byte(b)) != 0xa && byte(b) == 0xa)
 )
 function ball_not_loaded() => byte(0x012c) == 0
 rich_presence_conditional_display(ball_not_loaded(), "Booting...")
