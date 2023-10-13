@@ -93,7 +93,7 @@ function pwdprotection() => prev(state()) != 6
 function cheatinput() => byte(0x00FF97)
 // $FF99: [8bit] Frame Counter
 function cheat_protection() =>
-    unless(once( state() == 0x10 && health() > prev(health()))) &&
+    unless(once( state() == 0x10 && prev(cheatinput()) == 0x7 && cheatinput() == 0)) &&
     (always_false() ||  never(state() == 0x5))
 function basic_progression(room) =>
     pwdprotection() &&
