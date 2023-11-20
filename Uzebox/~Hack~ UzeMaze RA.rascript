@@ -20,6 +20,15 @@ function lvl_clr(lvl, limit) =>
     trigger_when(prev(uibox_lvl_clr()) == 0x20 && uibox_lvl_clr() == 0x2a) &&
     byte(0x42c) != 0x2a && //No Level Select
     byte(0x0383) != 0x2a
+function levels_cleared(cnt) => tally_of(range(1, 15, 1), cnt, b => once(level() == b && prev(flds()) == 1 && flds() == 0))
+achievement(
+    "Move-Free Solver",
+    "Solve all fifteen puzzles in one session",
+    points=5,
+    trigger=
+        levels_cleared(14) &&
+        measured(levels_cleared(15))
+)
 achievement(
     "Hexadigital's Challenge!",
     "Solve Hexadigital's puzzle (#1) in 59 moves or less",
