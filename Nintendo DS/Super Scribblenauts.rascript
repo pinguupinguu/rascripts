@@ -2231,3 +2231,123 @@ achievement(
 )
 // $2CF258: Character Unlock Page Number [8bit]
 // $2CF260: Current Character in Unlock Screen ID [8bit]
+function world_one() => range(0x218ef6, 0x218ef6 + (10 * 4), 4)
+achievement(
+    "Silver Crown Scorer: World 1",
+    "Obtain all silver crown clears in World 1!",
+    points=5,
+    trigger=
+        save_protection() &&
+        prev(sum_of(world_one(), b => bit1(b))) == 10 &&
+        measured(sum_of(world_one(), b => bit1(b)) == 11)
+)
+function world_two() => range(0x218f22, 0x218f22 + (8 * 4), 4)
+achievement(
+    "Silver Crown Scorer: World 2",
+    "Obtain all silver crown clears in World 2!",
+    points=5,
+    trigger=
+        save_protection() &&
+        prev(sum_of(world_two(), b => bit1(b))) == 8 &&
+        measured(sum_of(world_two(), b => bit1(b)) == 9)
+)
+function world_three() => range(0x218f46, 0x218f46 + (9 * 4), 4)
+achievement(
+    "Silver Crown Scorer: World 3",
+    "Obtain all silver crown clears in World 3!",
+    points=5,
+    trigger=
+        save_protection() &&
+        prev(sum_of(world_three(), b => bit1(b))) == 9 &&
+        measured(sum_of(world_three(), b => bit1(b)) == 10)
+)
+function world_four() => range(0x218f6e, 0x218f6e + (10 * 4), 4)
+achievement(
+    "Silver Crown Scorer: World 4",
+    "Obtain all silver crown clears in World 4!",
+    points=5,
+    trigger=
+        save_protection() &&
+        prev(sum_of(world_four(), b => bit1(b))) == 10 &&
+        measured(sum_of(world_four(), b => bit1(b)) == 11)
+)
+function world_five() => range(0x218f9a, 0x218f9a + (11 * 4), 4)
+achievement(
+    "Silver Crown Scorer: World 5",
+    "Obtain all silver crown clears in World 5!",
+    points=5,
+    trigger=
+        save_protection() &&
+        prev(sum_of(world_five(), b => bit1(b))) == 11 &&
+        measured(sum_of(world_five(), b => bit1(b)) == 12)
+)
+function world_six() => range(0x218fca, 0x218fca + (12 * 4), 4)
+achievement(
+    "Silver Crown Scorer: World 6",
+    "Obtain all silver crown clears in World 6!",
+    points=5,
+    trigger=
+        save_protection() &&
+        prev(sum_of(world_six(), b => bit1(b))) == 12 &&
+        measured(sum_of(world_six(), b => bit1(b)) == 13)
+)
+function world_seven() => range(0x218ffe, 0x218ffe + (7 * 4), 4)
+achievement(
+    "Silver Crown Scorer: World 7",
+    "Obtain all silver crown clears in World 7!",
+    points=5,
+    trigger=
+        save_protection() &&
+        prev(sum_of(world_seven(), b => bit1(b))) == 7 &&
+        measured(sum_of(world_seven(), b => bit1(b)) == 8)
+)
+function world_eight() => range(0x21901e, 0x21901e + (7 * 4), 4)
+achievement(
+    "Silver Crown Scorer: World 8",
+    "Obtain all silver crown clears in World 8!",
+    points=5,
+    trigger=
+        save_protection() &&
+        prev(sum_of(world_eight(), b => bit1(b))) == 7 &&
+        measured(sum_of(world_eight(), b => bit1(b)) == 8)
+)
+function world_nine() => range(0x21903e, 0x21903e + (9 * 4), 4)
+achievement(
+    "Silver Crown Scorer: World 9",
+    "Obtain all silver crown clears in World 9!",
+    points=5,
+    trigger=
+        save_protection() &&
+        prev(sum_of(world_nine(), b => bit1(b))) == 9 &&
+        measured(sum_of(world_nine(), b => bit1(b)) == 10)
+)
+function world_ten() => range(0x219066, 0x219066 + (4 * 4), 4)
+achievement(
+    "Silver Crown Scorer: World 10",
+    "Obtain all silver crown clears in World 10!",
+    points=5,
+    trigger=
+        save_protection() &&
+        prev(sum_of(world_ten(), b => bit1(b))) == 4 &&
+        measured(sum_of(world_ten(), b => bit1(b)) == 5)
+)
+function special_one() => range(0x21907a, 0x21907a + (8 * 4), 4)
+achievement(
+    "Silver Crown Scorer: Special 1",
+    "Obtain all silver crown clears in Special 1!",
+    points=5,
+    trigger=
+        save_protection() &&
+        prev(sum_of(special_one(), b => bit1(b))) == 8 &&
+        measured(sum_of(special_one(), b => bit1(b)) == 9)
+)
+function special_two() => range(0x21909e, 0x21909e + (13 * 4), 4)
+achievement(
+    "Silver Crown Scorer: Special 2",
+    "Obtain all silver crown clears in Special 2!",
+    points=5,
+    trigger=
+        save_protection() &&
+        prev(sum_of(special_two(), b => bit1(b))) == 13 &&
+        measured(sum_of(special_two(), b => bit1(b)) == 14)
+)

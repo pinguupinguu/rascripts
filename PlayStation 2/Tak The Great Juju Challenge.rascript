@@ -579,7 +579,7 @@ achievement(
     "You got a big loading head!",
     points=0,
     trigger=
-        level_ID() != 0x21 &&   
+        level_ID() < 0x21 &&   
         (always_false() ||
             prev(tak_head_scaling()) == default_scale &&
             tak_head_scaling() != default_scale ||
