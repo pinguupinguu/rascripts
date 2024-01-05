@@ -86,12 +86,57 @@ function training_one_clears() =>
     prof_pointer(0x10722d, "bit1") +
     prof_pointer(0x10722d, "bit0") +
     prof_pointer(0x10722c, "bit7")
+function training_two_clears() =>
+    prof_pointer(0x10722c, "bit2") +
+    prof_pointer(0x10722c, "bit3") +
+    prof_pointer(0x10722c, "bit4") +
+    prof_pointer(0x10722c, "bit5") +
+    prof_pointer(0x10722c, "bit6")
+function training_three_clears() =>
+    prof_pointer(0x10722c, "bit0") +
+    prof_pointer(0x10722c, "bit1") +
+    prof_pointer(0x107223, "bit5") +
+    prof_pointer(0x107233, "bit6") +
+    prof_pointer(0x107233, "bit7")
+function training_four_clears() =>
+    prof_pointer(0x107233, "bit0") +
+    prof_pointer(0x107233, "bit1") +
+    prof_pointer(0x107233, "bit2") +
+    prof_pointer(0x107233, "bit3") +
+    prof_pointer(0x107233, "bit4")
 achievement(
     "Training Noobie",
-    "Get All Game Clears on all Training Level 1 Categories.",
+    "Get game clears on all Level 1 Training categories.",
     points=5,
     trigger=
         prev(training_one_clears()) == 4 &&
         measured(training_one_clears() == 5) &&
+        index_protection()
+)
+achievement(
+    "Game Clear Collecting",
+    "Get game clears on all Level 2 Training categories.",
+    points=5,
+    trigger=
+        prev(training_two_clears()) == 4 &&
+        measured(training_two_clears() == 5) &&
+        index_protection()
+)
+achievement(
+    "Practice Means Improvement",
+    "Get game clears on all Level 3 Training categories.",
+    points=10,
+    trigger=
+        prev(training_three_clears()) == 4 &&
+        measured(training_three_clears() == 5) &&
+        index_protection()
+)
+achievement(
+    "Master of Expectations!",
+    "Get game clears on all Level 4 Training categories.",
+    points=10,
+    trigger=
+        prev(training_four_clears()) == 4 &&
+        measured(training_four_clears() == 5) &&
         index_protection()
 )
