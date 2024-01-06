@@ -140,3 +140,62 @@ achievement(
         measured(training_four_clears() == 5) &&
         index_protection()
 )
+function clifford() =>
+    prof_pointer(0x10722F, "bit3") +
+    prof_pointer(0x10722F, "bit4") +
+    prof_pointer(0x10722F, "bit5") +
+    prof_pointer(0x10722F, "bit6") +
+    prof_pointer(0x10722F, "bit7")
+function clear(input) =>
+    prev(input) == 4 &&
+    measured(input == 5) &&
+    index_protection()
+achievement(
+    "The Big Red Dog Place",
+    "Clear all challenges on the Clifford continent",
+    points=5,
+    trigger=
+        clear(clifford())
+)
+function patrick() =>
+    prof_pointer(0x10722F, "bit0") +
+    prof_pointer(0x10722F, "bit1") +
+    prof_pointer(0x10722F, "bit2") +
+    prof_pointer(0x10722E, "bit6") +
+    prof_pointer(0x10722E, "bit7")
+achievement(
+    "The Pink Star",
+    "Clear all challenges on the Patrick continent",
+    points=5,
+    trigger=
+        clear(patrick())
+)
+function marvin() =>
+    prof_pointer(0x10722E, "bit1") +
+    prof_pointer(0x10722E, "bit2") +
+    prof_pointer(0x10722E, "bit3") +
+    prof_pointer(0x10722E, "bit4") +
+    prof_pointer(0x10722E, "bit5") 
+achievement(
+    "The Space Martian",
+    "Clear all challenges on the Marvin continent",
+    points=10,
+    trigger=
+        clear(marvin())
+)
+function pete() =>
+    prof_pointer(0x10722E, "bit0") +
+    prof_pointer(0x10722D, "bit4") +
+    prof_pointer(0x10722D, "bit5") +
+    prof_pointer(0x10722D, "bit6") +
+    prof_pointer(0x10722D, "bit7")
+achievement(
+    "The Peg Leg",
+    "Clear all challenges on the Pete continent",
+    points=10,
+    trigger=
+        clear(pete())
+)
+
+
+    
