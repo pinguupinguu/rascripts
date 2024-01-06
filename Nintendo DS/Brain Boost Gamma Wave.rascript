@@ -1,6 +1,5 @@
 // Brain Boost: Gamma Wave
 // #ID = 27133
-
 // $107204: [8 bytes] Profile 1 - Colors Score Array
 //          Each Level in Order 1-4: [16bit] Score
 // $10720C: [8 bytes] Profile 1 - Numbers Score Array
@@ -152,7 +151,7 @@ function clear(input) =>
     index_protection()
 achievement(
     "The Big Red Dog Place",
-    "Clear all challenges on the Clifford continent",
+    "Clear all challenges on the Clifford Continent",
     points=5,
     trigger=
         clear(clifford())
@@ -165,7 +164,7 @@ function patrick() =>
     prof_pointer(0x10722E, "bit7")
 achievement(
     "The Pink Star",
-    "Clear all challenges on the Patrick continent",
+    "Clear all challenges on the Patrick Continent",
     points=5,
     trigger=
         clear(patrick())
@@ -178,7 +177,7 @@ function marvin() =>
     prof_pointer(0x10722E, "bit5") 
 achievement(
     "The Space Martian",
-    "Clear all challenges on the Marvin continent",
+    "Clear all challenges on the Marvin Continent",
     points=10,
     trigger=
         clear(marvin())
@@ -191,11 +190,82 @@ function pete() =>
     prof_pointer(0x10722D, "bit7")
 achievement(
     "The Peg Leg",
-    "Clear all challenges on the Pete continent",
+    "Clear all challenges on the Pete Continent",
     points=10,
     trigger=
         clear(pete())
 )
+function score_table(start) => range(start, start + (8 * 4), 8)
+level_one = 0x107204
+level_two = 0x107206
+level_three = 0x107208
+level_four = 0x10720a
+//Initialize logic once for condensed writing purposes.
+function training(level, target) =>
+        tally_of(score_table(level), 4, b => once(prev(prof_pointer(b, "word")) == target)) &&
+        measured(tally_of(score_table(level), 5, b=> once(prof_pointer(b, "word") == target))) &&
+        never(tally_of(score_table(level), 5, b => once(prev(prof_pointer(b, "word")) == target)))
+achievement(
+    "Initiative Brain Training",
+    "Achieve a perfect score of 100 on all Level 1 Training mode games",
+    points=5,
+    trigger=
+        training(level_one, 100)
+)
+achievement(
+    "Modal Mixture Braining",
+    "Achieve a perfect score of 200 on all Level 2 Training mode games",
+    points=10,
+    trigger=
+        training(level_two, 200)
+)
+achievement(
+    "Brain Forming",
+    "Achieve a perfect score of 300 on all Level 3 Training mode games",
+    points=10,
+    trigger=
+        training(level_three, 300)
+)
+achievement(
+    "Dr. Kawashima Approves!",
+    "Achieve a perfect score of 400 on all Level 4 Training mode games",
+    points=10,
+    trigger=
+        training(level_four, 400)
+)
 
-
-    
+function state() => byte(0x1073e0)
+function mode() => byte(0x107375)
+challenge = 0
+training = 1
+function level() => byte(0x107374)
+function level_num() => level() + 1
+continents = {
+    0:"Clifford",
+    1:"Patrick",
+    2:"Marvin",
+    3:"Pete"
+}
+function game() => byte(0x107378)
+game_mode = {
+    0:"Colors",
+    1:"Numbers",
+    2:"Circumstances",
+    3:"Faces",
+    4:"Images"
+}
+function question() => byte(0x137808)
+function score() => word(0x137c34)
+rich_presence_conditional_display(mode() == challenge && state() != 0 && level_num() < 5, "Playing Remember {0} on {1} Continent ❓ {2}/20 🏆 {3}", 
+    rich_presence_lookup("Game", game(), game_mode),
+    rich_presence_lookup("Continent", level(), continents),
+    rich_presence_macro("Number", question()),
+    rich_presence_macro("Number", score())
+)
+rich_presence_conditional_display(mode() == training && state() != 0 && level_num() < 5, "Training Remember {0} on Level {1} ❓ {2}/20 🏆 {3}", 
+    rich_presence_lookup("Game", game(), game_mode),
+    rich_presence_macro("Number", level_num()),
+    rich_presence_macro("Number", question()),
+    rich_presence_macro("Number", score())
+)
+rich_presence_display("In Menu")
