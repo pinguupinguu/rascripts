@@ -94,7 +94,7 @@ function training_two_clears() =>
 function training_three_clears() =>
     prof_pointer(0x10722c, "bit0") +
     prof_pointer(0x10722c, "bit1") +
-    prof_pointer(0x107223, "bit5") +
+    prof_pointer(0x107233, "bit5") +
     prof_pointer(0x107233, "bit6") +
     prof_pointer(0x107233, "bit7")
 function training_four_clears() =>
