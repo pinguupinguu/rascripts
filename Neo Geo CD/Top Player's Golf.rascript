@@ -130,7 +130,7 @@ for i in range(0, 17){
     
     achievement(
         snk_names[i],
-        "Achieve a par or better on " + "Top Player's Country Club Hole " + i + 1,
+        "Achieve a par or better on " + "SNK Championship Golf Course Hole " + i + 1,
         my_points,
         trigger=
             match_stroke() &&
@@ -140,7 +140,3 @@ for i in range(0, 17){
             hole_clear()
     )
 }
-
-
-
-
