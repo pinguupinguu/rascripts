@@ -5,6 +5,7 @@
 //        0x01=Match Play
 //        0x02=Nassau Game
 function match_stroke() => byte(0x006d) == 0
+function match_play() => byte(0x006d) == 1
 // $00BE: [16bit] Message Type
 //        0x02=Green On
 //        0x03=Rough
@@ -15,6 +16,9 @@ function strokes() => byte(0x0106)
 // $0108: [8bit] Course
 //        0x00=Top Player's Country Club
 //        0x01=SNK Championship Golf Course
+course_topplayers = 0x00
+course_snk = 0x1
+function course() => byte(0x0108)
 // $0109: [8bit] Hole Number - 1
 function hole() => byte(0x0109)
 // $019E: [8bit] Caddie
@@ -78,6 +82,7 @@ for i in range(0, 17){
         trigger=
             match_stroke() &&
             one_player() &&
+            course() == course_topplayers &&
             hole() == i &&
             strokes() <= tp_pars[i] &&
             hole_clear()
@@ -135,8 +140,38 @@ for i in range(0, 17){
         trigger=
             match_stroke() &&
             one_player() &&
+            course() == course_snk &&
             hole() == i &&
             strokes() <= snk_pars[i] &&
             hole_clear()
     )
 }
+function pone_strokes() => word(0x455)
+function ptwo_strokes() => word(0x457)
+function matchplay_win(course, holes) =>
+        match_play() &&
+        hole() == holes - 1 && //For readability purposes, calculate actual in-game check after function pass.
+        pone_strokes() < ptwo_strokes() &&
+        (always_false()
+         || pone_strokes() != prev(pone_strokes())
+         || ptwo_strokes() != prev(ptwo_strokes())
+        )
+    
+achievement(
+    "Front Nine Top Competition",
+    "Beat your opponent with a better score on Top Player's Championship Golf Course Holes 1-9",
+    points=10,
+    trigger=
+        matchplay_win(course_topplayers, 9)
+)
+achievement(
+    "Hole Master",
+    "Get a Hole in One on any course!",
+    points=10,
+    trigger=
+        one_player() &&
+        strokes() == 1 &&
+        hole_clear()
+)
+
+
