@@ -165,6 +165,13 @@ achievement(
         matchplay_win(course_topplayers, 9)
 )
 achievement(
+    "Top Player Trophy",
+    "Get a better score than your opponent on all 18 holes at Top Player's Championship Golf Course in Match Play Mode.",
+    points=25,
+    trigger=
+        matchplay_win(course_topplayers, 18)
+)
+achievement(
     "Hole Master",
     "Get a Hole in One on any course!",
     points=10,
