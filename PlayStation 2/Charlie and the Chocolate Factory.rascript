@@ -64,7 +64,7 @@ for i in range(0, 13){
         "Clear " + levels[i]["NAME"],
         points=5,
         trigger=
-            debug_off() &&
+            debug_off() && //Comment out for testing
             ascii_one() == levels[i]["IDONE"] &&
             ascii_two() == levels[i]["IDTWO"] &&
             level_clear()
