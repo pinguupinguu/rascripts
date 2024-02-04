@@ -61,6 +61,7 @@ hard = 2
 overeasy = 2
 hardboiled = 3
 bomb = 9
+solo = 0xa
 survival = 0xb
 function mode() => dword(0x4c08a4)
 function clear(mode, target) => mode() == mode && prev(rounds()) == target && rounds() == target+1
@@ -195,11 +196,95 @@ achievement(
     trigger=
         block_use(0, block_storm)    
 )
+function screen() => dword(0x4c081c)
+function difficulty() => dword(0x4c087c)
+easy = 0
+med = 1
+hard = 2
+over = 3
+function lb_speedrun(m_name, d_name, mode, diff, rounds){
+    leaderboard(
+        m_name + " Mode " + d_name,
+        "Fastest time to complete",
+        mode() == mode && difficulty() == diff && prev(screen()) == 4 && screen() == 0x270f,
+        screen() == 0,
+        rounds() == rounds && prev(level_state()) != 1 && level_state() == 1,
+        always_true(),
+        "FRAMES",
+        true
+    )
+}
 
 
+lb_speedrun("Over Easy", "", overeasy, over, 8)
+lb_speedrun("Hardboiled", "- Easy", hardboiled, easy, 8)
+lb_speedrun("Hardboiled", "- Medium", hardboiled, med, 9)
+lb_speedrun("Hardboiled", "- Hard", hardboiled, hard, 10)
+lb_speedrun("Bomb", "- Easy", bomb, easy, 8)
+lb_speedrun("Bomb",  "- Medium", bomb, med, 9)
+lb_speedrun("Bomb", "- Hard", bomb, hard, 10)
 
+function in_game() => screen() == 0x270f
+score = rich_presence_macro("Number", dword(0x004c05bc))
+function losses() => dword(0x004bffe4)
+credits = rich_presence_macro("Number", rounds() - 1 - losses())
+rounds = rich_presence_macro("Number", rounds())
+difficulties = {
+    0:"Easy",
+    1:"Medium",
+    2:"Hard"
+}
+diff = rich_presence_lookup("Difficulty", difficulty(), difficulties)
+char = {
+    0x00:"Eggy",
+    0x01:"Robo",
+    0x02:"Bebub",
+    0x03:"Yolko",
+    0x04:"Coolio",
+    0x05:"Funky",
+    0x06:"Astro",
+    0x07:"Spook",
+    0x08:"Spike",
+    0x09:"Angelica",
+    0x0a:"Sir Eggalot",
+    0x0b:"Poncho",
+    0x0d:"Yolkohama"
+}
+function char_id() => dword(0x004c0864)
+char = rich_presence_lookup("Character", char_id(), char)
+rich_presence_conditional_display(mode() == overeasy && in_game(), "Playing as {0} in Over Easy on Round {1} ❤️ {2} 🏆 {3}",
+    char,
+    rounds,
+    credits,
+    score
+)
+rich_presence_conditional_display(mode() == hardboiled && in_game(), "Playing as {0} in Hardboiled on Round {1} Difficulty: {2} ❤️ {3} 🏆 {4}",
+    char,
+    rounds,
+    diff,
+    credits,
+    score
+)
+rich_presence_conditional_display(mode() == bomb && in_game(), "Playing as {0} in Bomb Mode on Round {1} Difficulty: {2} ❤️ {3} 🏆 {4}",
+    char,
+    rounds,
+    diff,
+    credits,
+    score
 
-
+)
+rich_presence_conditional_display(mode() == survival && in_game(), "Playing as {0} in Survival Difficulty: {1}. Wins: {2} 🏆 {3}",
+    char,
+    diff,
+    rich_presence_macro("Number", survival_win()),
+    score
+)
+rich_presence_conditional_display(mode() == solo && in_game(), "Playing as {0} in Solo Difficulty: {1} 🏆 {2}",
+    char,
+    diff,
+    score
+)
+rich_presence_display("In Menu")
 
 
 

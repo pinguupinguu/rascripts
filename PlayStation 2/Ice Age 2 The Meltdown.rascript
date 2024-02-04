@@ -21,6 +21,7 @@
 // $3B64EC: [32bit] Cheat Flag - Level Select Active
 //          0x00=No
 //          0x01=Yes
+
 // $3B6504: [32bit] Cheat Flag  Unlock all bonuses
 //          0x00=No
 //          0x01=Yes
@@ -33,6 +34,9 @@
 // $3B6564: [32bit] Cheat Flag - Infinite Pebbles
 //          0x00=No
 //          0x01=Yes
+cheats = [0x3b64ec, 0x3b6504, 0x3b6534, 0x3b654c, 0x3b6564]
+function cheats_off() => all_of(cheats, b => dword(b) == 0)
+    
 // $3B7328: [32bit] Selected Menu Index
 // $3B7CDC: [Pointer] Animal Base
 //          +0x0 - Enemy Data 1
@@ -75,23 +79,199 @@
 //          0xe1>0xdf=End of game Glacier
 
 function level_id() => word(0x3b8194)
-function base_progression(start, dest) => prev(level_id()) == start && level_id() == dest
+function progress(start, dest) => prev(level_id()) == start && level_id() == dest //&& cheats_off() //Can turn off for testing purposes.
+waterpark_one = 0x6b
+waterpark_two = 0x6c
+waterpark_three = 0x6d
+waterpark_four = 0x6e
 waterpark_five = 0xc2
 eviscerator = 0x123
 forest_one = 0x77
+forest_two = 0x74
+forest_three = 0x75
+ice_river = 0x91
+maelstrom = 0x92
+maelstrom_two = 0x136
+mudbog_one = 0x8d
+mudbog_two = 0x8c
+mudbog_three = 0x8b
+mudbog_four = 0x8f
+mudbog_five = 0x8e
+slothvil_one = 0x8a
+slothvil_two = 0x87
+slothvil_three = 0x88
+slothvil_four = 0x89
+slothvil_five = 0x86
+glacier_one = 0xdf
+glacier_two = 0xe0
+glacier_three = 0xe1
+achievement(
+    "Park Basics",
+    "Clear Waterpark 1",
+    points=2,
+    trigger=
+        progress(waterpark_one, waterpark_two)
+)
+achievement(
+    "Diego's Arrival",
+    "Clear Waterpark 2",
+    points=2,
+    trigger=
+        progress(waterpark_two,  waterpark_three)
+)
+achievement(
+    "A Boaring Introduction",
+    "Clear Waterpark 3",
+    points=3,
+    trigger=
+        progress(waterpark_three, waterpark_four)
+)
+achievement(
+    "Batting Eyes",
+    "Clear Waterpark 4",
+    points=3,
+    trigger=
+        progress(waterpark_four, waterpark_five)
+)
 achievement(
     "The Ice Age Begins",
     "Clear Waterpark 5",
     points=5,
     trigger=
-        base_progression(0xc2, 0x123)
+        progress(waterpark_five, eviscerator)
 )
 achievement(
     "Treacherous Slide",
     "Clear Eviscerator",
     points=5,
     trigger=
-        base_progression(eviscerator, forest_one)
+        progress(eviscerator, forest_one)
+)
+achievement(
+    "New Environment!",
+    "Clear Forest 1",
+    points=5,
+    trigger=
+        progress(forest_one, forest_two)
+)
+achievement(
+    "Nest Rescuer",
+    "Clear Forest 2",
+    points=5,
+    trigger=
+        progress(forest_two, forest_three)
+)
+achievement(
+    "The Grand Tree",
+    "Clear Forest 3",
+    points=5,
+    trigger=
+        progress(forest_three, ice_river)
+)
+achievement(
+    "Polar Plunge",
+    "Clear Ice River",
+    points=5,
+    trigger=
+        progress(ice_river, maelstrom)
+)
+achievement(
+    "In The Mouth of the Beast",
+    "Clear Maelstrom",
+    points=5,
+    trigger=
+        progress(maelstrom, maelstrom_two)
+)
+achievement(
+    "Pond Exploration",
+    "Clear Mudbog 1",
+    points=5,
+    trigger=
+        progress(mudbog_one, mudbog_two)
+)
+achievement(
+    "Egg Mixup!",
+    "Clear Mudbog 2",
+    points=5,
+    trigger=
+        progress(mudbog_two, mudbog_three)
+)
+achievement(
+    "Hippo Mud Slide",
+    "Clear Mudbog 3",
+    points=5,
+    trigger=
+        progress(mudbog_three, mudbog_four)
+)
+achievement(
+    "Spider Caverns",
+    "Clear Mudbog 4",
+    points=5,
+    trigger=
+        progress(mudbog_four, mudbog_five)
+)
+achievement(
+    "Tasty Swamp Nuts",
+    "Clear Mudbog 5",
+    points=5,
+    trigger=
+        progress(mudbog_five, slothvil_one)
+)
+achievement(
+    "Ritualistic Dancing",
+    "Clear Sloth Village 1",
+    points=5,
+    trigger=
+        progress(slothvil_one, slothvil_two)
+)
+achievement(
+    "Tiki Towers for Hours",
+    "Clear Sloth Village 2",
+    points=5,
+    trigger=
+        progress(slothvil_two, slothvil_three)
+)
+achievement(
+    "Lava Land",
+    "Clear Sloth Village 3",
+    points=5,
+    trigger=
+        progress(slothvil_three, slothvil_four)
+)
+achievement(
+    "Webs, Fire, Lava",
+    "Clear Sloth Village 4",
+    points=5,
+    trigger=
+        progress(slothvil_four, slothvil_five)
+)
+achievement(
+    "Sacrifical Rescue",
+    "Clear Sloth Village 5",
+    points=5,
+    trigger=
+        progress(slothvil_five, glacier_one)
+)
+achievement(
+    "Frozen Horizons",
+    "Clear Glacier 1",
+    points=5,
+    trigger=
+        progress(glacier_one, glacier_two)
+)
+achievement(
+    "Piranha Waters",
+    "Clear Glacier 2",
+    points=10,
+    trigger=
+        progress(glacier_two, glacier_three)
+)
+achievement(
+    "End of the Meltdown",
+    "Clear Glacier 3 and beat the game!",
+    points=25,
+    trigger=
+        progress(glacier_three, glacier_one)
 )
 // $3B821C: [32bit] Game Paused
 //          0x00=No
@@ -116,8 +296,18 @@ achievement(
 // $1FFDCD0: [32bit] Acorn Pointer
 //           + 0x654 = Count
 
+// $3B4174: [32bit] Minigame Pointer
+//          +0xc = [32bit] Amt Collected
+//          +0x10 = [32bit] Target Count
+//          +0x1c = [Float] Time Left
+minigame_root = dword(0x3b4174)
+function minigame_amount() => dword(minigame_root + 0xc)
+function minigame_target() => dword(minigame_root + 0x10)
+function minigame_time() => float(minigame_root + 0x1c)
+
 // $3b8340: [Pointer] Evicserator
 //          +0x162=[16bit] Score! Wow!
+
 function eviscerator_score() => word(dword(0x3b8340) + 0x162)
 function evisc_cheevo(name, target, target_desc, points) {
     achievement(

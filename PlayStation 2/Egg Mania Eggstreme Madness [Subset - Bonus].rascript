@@ -174,9 +174,25 @@ achievement(
 
 
 
-
-
-
+function lb_speedrun(m_name, d_name, mode, diff, rounds){
+    leaderboard(
+        m_name + " Mode " + d_name,
+        "Fastest time to complete",
+        mode() == mode && difficulty() == diff && prev(screen()) == 4 && screen() == 0x270f,
+        screen() == 0,
+        round() == rounds && prev(level_state()) != 1 && level_state() == 1,
+        always_true(),
+        "FRAMES",
+        true
+    )
+}
+lb_speedrun("Over Easy", "", overeasy, over, 8)
+lb_speedrun("Hardboiled", "- Easy", hardboiled, easy, 8)
+lb_speedrun("Hardboiled", "- Medium", hardboiled, med, 9)
+lb_speedrun("Hardboiled", "- Hard", hardboiled, hard, 10)
+lb_speedrun("Bomb", "- Easy", bomb, easy, 8)
+lb_speedrun("Bomb",  "- Medium", bomb, med, 9)
+lb_speedrun("Bomb", "- Hard", bomb, hard, 10)
 
 
 

@@ -6,6 +6,7 @@
 //        0x02=Nassau Game
 function match_stroke() => byte(0x006d) == 0
 function match_play() => byte(0x006d) == 1
+function nassau_play() => byte(0x006d) == 2
 // $00BE: [16bit] Message Type
 //        0x02=Green On
 //        0x03=Rough
@@ -30,6 +31,7 @@ function hole() => byte(0x0109)
 //        0x00=1P
 //        0x01=2P
 function one_player() => byte(0x0618) == 0
+function two_player() => byte(0x0618) == 1
 //Top Player's Country Club Data:
 tp_pars = {
     0:4,
@@ -150,6 +152,7 @@ function pone_strokes() => word(0x455)
 function ptwo_strokes() => word(0x457)
 function matchplay_win(course, holes) =>
         match_play() &&
+        one_player() &&
         hole() == holes - 1 && //For readability purposes, calculate actual in-game check after function pass.
         pone_strokes() < ptwo_strokes() &&
         (always_false()
@@ -159,7 +162,7 @@ function matchplay_win(course, holes) =>
     
 achievement(
     "Front Nine Top Competition",
-    "Beat your opponent with a better score on Top Player's Championship Golf Course Holes 1-9",
+    "Beat your opponent with a better score on Top Player's Championship Golf Course Holes 1-9 in Match Play Mode",
     points=10,
     trigger=
         matchplay_win(course_topplayers, 9)
@@ -171,6 +174,53 @@ achievement(
     trigger=
         matchplay_win(course_topplayers, 18)
 )
+
+achievement(
+    "SNK Victory",
+    "Get a better score than your opponent on SNK Championship Golf Course Holes 1-9 in Match Play Mode",
+    points=10,
+    trigger=
+        matchplay_win(course_snk, 9)
+)
+achievement(
+    "SNK Trophy",
+    "Get a better score than your opponent on all 18 holes at SNK Championship Golf Course in Match Play Mode",
+    points=25,
+    trigger=
+        matchplay_win(course_snk, 18)
+)
+function nassau_mode() =>
+    byte(0x0619)
+out = 0
+in = 1
+function nassau_switch() => measured(repeated(1, pone_strokes() != prev(pone_strokes()) || ptwo_strokes() != prev(ptwo_strokes()))) 
+function nassau_result() =>
+    always_false() 
+    || hole() == 0 && nassau_mode() == in && nassau_switch()
+    || hole() == 17 && nassau_mode() == out && nassau_switch()
+    //|| hole() == 17 && nassau_mode() == out && repeated(0, pone_strokes() != prev(pone_strokes() || ptwo_strokes() != prev(ptwo_strokes()))
+achievement(
+    "Top Nassau Player",
+    "Win a Nassau Game against your opponent at Top Player's Championship Golf Course",
+    points=25,
+    trigger=
+        nassau_play() &&
+        course() == course_topplayers &&
+        one_player() &&
+        pone_strokes() < ptwo_strokes() &&
+        nassau_result()        
+)
+achievement(
+    "SNassauK Success",
+    "Win a Nassau Game against your opponent at SNK Championship Golf Course",
+    points=25,
+    trigger=
+        nassau_play() &&
+        course() == course_snk &&
+        one_player() &&
+        pone_strokes() < ptwo_strokes() &&
+        nassau_result() 
+)
 achievement(
     "Hole Master",
     "Get a Hole in One on any course!",
@@ -180,5 +230,12 @@ achievement(
         strokes() == 1 &&
         hole_clear()
 )
+
+
+
+
+
+
+
 
 
