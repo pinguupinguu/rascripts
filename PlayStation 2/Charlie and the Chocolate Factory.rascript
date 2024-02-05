@@ -34,6 +34,7 @@ function ascii_two() => dword_be(dword(0x4e4c80) +0x8f7)
 //          0x02=In Level
 //          0x03=End of Level
 //          2>3=End
+function in_game() => dword(0x93c41c) == 2
 function level_clear() => prev(dword(0x93c41c)) == 2 && dword(0x93c41c) == 3
 // $93CD68: [Pointer]
 //          +0x224c=[32bit] Collectible Slot 1
@@ -57,6 +58,9 @@ levels = {
     11:{"NAME":"Fizzy Lifting Drinks", "IDONE":0x4c46495a, "IDTWO":0x5a592e4a}, //Fizzy Lifting Drinks
     12:{"NAME":"Exploding Candy Room", "IDONE":0x4c455850, "IDTWO":0x4c4f2e4a}, //Exploding Candy Room
     13:{"NAME":"Television Room", "IDONE":0x4c545652, "IDTWO":0x4f4d2e4a}, //Television Room
+    14:{"NAME":"Chocolate Room (Revisit)", "IDONE":0x5243484f, "IDTWO":0x43322e4a},
+    15:{"NAME":"Inventing Room (Revisit)", "IDONE":0x52494e56, "IDTWO":0x4e542e4a},
+    16:{"NAME":"Television Room (Revisit)", "IDONE":0x52545652, "IDTWO":0x4f4d2e4a}
 }
 for i in range(0, 13){
     achievement(
@@ -70,3 +74,46 @@ for i in range(0, 13){
             level_clear()
     )
 }
+
+
+function collectible_slot_one() => dword(dword(0x0093cd68) + 0x224c)
+function revisit_collection(firstid, secondid, collectible, target) =>
+    debug_off() &&
+    ascii_one() == firstid &&
+    ascii_two() == secondid &&
+    prev(collectible) == target - 1 &&
+    measured(collectible == target)
+    
+//Levels - revisits:
+//RChocolate 0x5243484f 0x43322e4a
+achievement(
+    "Great Glass Chocolate",
+    "Collect all 30 Wonka collectibles in the Chocolate Room revisit",
+    points=10,
+    trigger=
+        revisit_collection(0x5243484f, 0x43322e4a, dword(0x0091384c), 30)
+)
+dword(0x0091395c) //Inventing Room
+//RInventing 0x52494e56 0x4e542e4a
+achievement(
+    "Great Inventing Glass",
+    "Collect all 26 Wonka collectibles in the Inventing Room revisit",
+    points=10,
+    trigger=
+        revisit_collection(0x52494e56, 0x4e542e4a, dword(0x0091395c), 26)
+)
+achievement(
+    "Great TV Room",
+    "Collect all 25 Wonka collectibles in the Television Room revisit",
+    points=10,
+    trigger=
+        revisit_collection(0x52545652, 0x4f4d2e4a, dword(0x00913a6c), 25)
+)
+rich_presence_conditional_display(!debug_off(), "Cheating!")
+for i in range(0, 16){
+    rich_presence_conditional_display(ascii_one() == levels[i]["IDONE"] && ascii_two() == levels[i]["IDTWO"] && in_game(), "Exploring " + levels[i]["NAME"]        
+    )
+}
+rich_presence_display("In Menu")
+
+
