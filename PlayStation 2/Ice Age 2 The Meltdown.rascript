@@ -79,7 +79,7 @@ function cheats_off() => all_of(cheats, b => dword(b) == 0)
 //          0xe1>0xdf=End of game Glacier
 
 function level_id() => word(0x3b8194)
-function progress(start, dest) => prev(level_id()) == start && level_id() == dest //&& cheats_off() //Can turn off for testing purposes.
+function progress(start, dest) => prev(level_id()) == start && level_id() == dest && cheats_off() //Can turn off for testing purposes.
 waterpark_one = 0x6b
 waterpark_two = 0x6c
 waterpark_three = 0x6d
@@ -105,6 +105,12 @@ slothvil_five = 0x86
 glacier_one = 0xdf
 glacier_two = 0xe0
 glacier_three = 0xe1
+minigame_root = dword(0x3b4174)
+function minigame_amount() => dword(minigame_root + 0xc)
+function minigame_target() => dword(minigame_root + 0x10)
+function minigame_time() => float(minigame_root + 0x1c)
+function minigame_time_max() => float(minigame_root + 0x20)
+function challenge(id, restriction, target) => level_id() == id && minigame_root != 0 && minigame_time() >= restriction && trigger_when(prev(minigame_amount()) == target - 1 && minigame_amount() == target)
 achievement(
     "Park Basics",
     "Clear Waterpark 1",
@@ -163,8 +169,8 @@ achievement(
 )
 achievement(
     "The Grand Tree",
-    "Clear Forest 3",
-    points=5,
+    "Finish catching Crash & Eddie and Clear Forest 3",
+    points=10,
     trigger=
         progress(forest_three, ice_river)
 )
@@ -177,8 +183,8 @@ achievement(
 )
 achievement(
     "In The Mouth of the Beast",
-    "Clear Maelstrom",
-    points=5,
+    "Defeat the eyeball monster and Clear Maelstrom",
+    points=10,
     trigger=
         progress(maelstrom, maelstrom_two)
 )
@@ -197,12 +203,23 @@ achievement(
         progress(mudbog_two, mudbog_three)
 )
 achievement(
+    "Enhanced Memory",
+    "Complete the Mudbog Memory Challenge!",
+    points=5,
+    trigger=
+        level_id() == mudbog_three &&
+        minigame_root != 0 &&
+        prev(minigame_amount()) == 4 &&
+        minigame_amount() == 5
+)
+achievement(
     "Hippo Mud Slide",
     "Clear Mudbog 3",
     points=5,
     trigger=
         progress(mudbog_three, mudbog_four)
 )
+
 achievement(
     "Spider Caverns",
     "Clear Mudbog 4",
@@ -219,8 +236,8 @@ achievement(
 )
 achievement(
     "Ritualistic Dancing",
-    "Clear Sloth Village 1",
-    points=5,
+    "Complete the Digging Challenge and Clear Sloth Village 1",
+    points=10,
     trigger=
         progress(slothvil_one, slothvil_two)
 )
@@ -300,10 +317,25 @@ achievement(
 //          +0xc = [32bit] Amt Collected
 //          +0x10 = [32bit] Target Count
 //          +0x1c = [Float] Time Left
-minigame_root = dword(0x3b4174)
-function minigame_amount() => dword(minigame_root + 0xc)
-function minigame_target() => dword(minigame_root + 0x10)
-function minigame_time() => float(minigame_root + 0x1c)
+
+
+
+achievement(
+    "Skatin' By Diego",
+    "Collect all the acorns behind Diego's back with 55 seconds or more left on the clock",
+    points=5,
+    trigger=
+        challenge(waterpark_three, 55.0, 14)
+)
+achievement(
+    "Batics to the Test",
+    "Complete the Bat Cave Challenge while not letting the timer run more than 10 seconds",
+    points=5,
+    trigger=
+        challenge(waterpark_four, 70.0, 3)
+)
+
+
 
 // $3b8340: [Pointer] Evicserator
 //          +0x162=[16bit] Score! Wow!
@@ -325,6 +357,16 @@ evisc_cheevo("Sid's Slipping Sliding Score", 13000, "13,000", 10)
 // $3B4174: [32bit] Minigame Pointer        
 //          ===PENGUIN BOWLING===
 //          +0x1e0=[32bit] Total Score
+achievement(
+    "Monkey Shooter",
+    "Complete the Forest Monkey Challenge!",
+    points=5,
+    trigger=
+        level_id() == forest_one &&
+        minigame_root != 0 &&
+        prev(minigame_amount()) == 24 &&
+        minigame_amount() == 25
+)
 function bowling_score() => word(dword(0x3b4174) + 0x1e0 ) 
 function in_bowling() => dword(0x3b4174) != 0 && level_id() == waterpark_five
 function bowling_cheevo(name, target, points) {
@@ -345,7 +387,98 @@ bowling_cheevo("Bowling Beaks Better", 150, 10)
 bowling_cheevo("Arctic Freeze", 200, 10)
 bowling_cheevo("Skipper Would Salute", 250, 10)  
 bowling_cheevo("Pingu's Perfect Plays", 300, 25)
+achievement(
+    "Prescription Change Needed",
+    "Complete the Maelstrom Eyeball Challenge with 20 seconds or more remaining on the clock",
+    points=5,
+    trigger=
+        challenge(maelstrom, 20.0, 30)
+)
+
+leaderboard(
+    "Diego's Acorn Challenge",
+    "Fastest time",
+    level_id() == waterpark_three && prev(minigame_root) == 0 && minigame_root != 0,
+    minigame_root == 0,
+    prev(minigame_amount()) == 13 && minigame_amount() == 14,
+    121.0 - minigame_time(),
+    "SECS",
+    true
+)
+level_ids = {
+    0x6b:"Waterpark 1",
+    0x6c:"Waterpark 2",
+    0x6d:"Waterpark 3",
+    0x6e:"Waterpark 4",
+    0xc2:"Waterpark 5",
+    0x123:"Eviscerator",
+    0x77:"Forest 1",
+    0x74:"Forest 2",
+    0x75:"Forest 3",
+    0x91:"Ice River",
+    0x92:"Maelstrom",
+    0x136:"Maelstrom 2",
+    0x8d:"Mud Bog 1",
+    0x8c:"Mud Bog 2",
+    0x8b:"Mud Bog 3",
+    0x8f:"Mud Bog 4",
+    0x8e:"Mud Bog 5",
+    0x8a:"Sloth Village 1",
+    0x87:"Sloth Village 2",
+    0x88:"Sloth Village 3",
+    0x89:"Sloth Village 4",
+    0x86:"Sloth Village 5",
+    0xdf:"Glacier 1",
+    0xe0:"Glacier 2",
+    0xe1:"Glacier 3"
+}
+//Penguin Bowling separate string
+minigame_names = {
+    0x6d:"Diego's Acorn Cave Challenge",
+    0x6e:"Bat Cave Challenge",
+    0x77:"Forest Monkey Challenge",
+    0x75:"Crash and Eddie Whack-A-Mole",
+    0x92:"Maelstrom Eyeball Challenge",
+    0x8b:"Mudbog Memory Challenge"    
+}
+minigame_emoji = {
+    0x6d:"🌰",
+    0x6e:"🦇",
+    0x77:"🐵",
+    0x75:"🐾",
+    0x92:"👁️",
+    0x8b:"🐷"	
+}
+function any_cheats() => any_of(cheats, b => dword(b) != 0)
+function health() => dword(dword(dword(0x003b3a20)  + 0x14c) + 0x2a0)
+function acorns() => dword(dword(dword(0x003b3a20)  + 0x14c) + 0x654)
 
 
 
+rich_presence_conditional_display(any_cheats(), "Dirty cheater!")
+
+rich_presence_conditional_display(level_id() == waterpark_five && minigame_root != 0, "Playing Penguin Bowling in Waterpark 5! | 💯 {0}",
+    rich_presence_macro("Number", bowling_score())
+)
+
+rich_presence_conditional_display(minigame_root != 0, "Playing {0} Minigame! | {1} {2}/{3} | ⏰ {4}",
+    rich_presence_lookup("Name", level_id(), minigame_names),
+    rich_presence_lookup("Emoji", level_id(), minigame_emoji),
+    rich_presence_macro("Number", minigame_amount()),
+    rich_presence_macro("Number", minigame_target()),
+    rich_presence_value("Timer", minigame_time(), "SECS")
+)
+
+rich_presence_conditional_display(level_id() == 0x67, "In Menu")
+rich_presence_conditional_display(health() <= 50 && level_id() == eviscerator, "Riding the Eviscerator! | 💯 {0}",
+    rich_presence_macro("Number", eviscerator_score())
+)
+rich_presence_conditional_display(health() <= 50, "Exploring {0} | ❤️ {1} | 🌰 {2}",
+    rich_presence_lookup("Level", level_id(), level_ids),
+    rich_presence_macro("Number", health()),
+    rich_presence_macro("Number", acorns())
+)
+rich_presence_display("Loading {0}...",
+    rich_presence_lookup("Level", level_id(), level_ids)
+)
 
