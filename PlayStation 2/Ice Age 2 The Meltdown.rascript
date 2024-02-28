@@ -253,7 +253,7 @@ achievement(
     "Clear Sloth Village 3",
     points=5,
     trigger=
-        progress(slothvil_three, slothvil_four)
+        progress(slothvil_three, slothvil_one) //Level One loaded & used as a cutscene between three and four.
 )
 achievement(
     "Webs, Fire, Lava",
@@ -281,7 +281,7 @@ achievement(
     "Clear Glacier 2",
     points=10,
     trigger=
-        progress(glacier_two, glacier_three)
+        progress(glacier_two, glacier_one)
 )
 achievement(
     "End of the Meltdown",
