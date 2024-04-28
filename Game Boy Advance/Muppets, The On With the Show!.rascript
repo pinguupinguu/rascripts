@@ -75,8 +75,8 @@ function game_ID() => byte(0x008688)
 // $BDEC: [8bit] Star Results
 function basic_progression(this_difficulty, unlock) =>
     difficulty() == this_difficulty &&
-    prev(game_ID()) == 5 &&
-    game_ID() == 6 &&
+    //prev(game_ID()) == 5 &&
+   // game_ID() == 6 &&
     prev(unlock_flag()) == unlock &&
     unlock_flag() == unlock + 1
 achievement(
