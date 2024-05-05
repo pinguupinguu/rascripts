@@ -1,6 +1,5 @@
 // Sudoku-NBP
 // #ID = 8690
-
 // $0102: [8bit] Game State
 //        0x00=Selecting Puzzle
 //        0x01=Hint Used
@@ -10,18 +9,18 @@
 //        0x06=In Menu  
 //        0x07=In Puzzle
 function state() => byte(0x000102)
-function cheat_protection() => unless(once(state() == 0x1)) && unless(once(state() == 0x5))
 // $018A: [Lower4] Selected Number
 // $0286: [8bit] Puzzle Number
 //        0x0-0xe=Easy
 //        0xf-0x18=Medium
 //        0x19-0x2c=Hard
 function puzzle_number() => byte(0x000286)
+
 // $028C: [8bit] Numbers Remaining
 function number_remaining() => byte(0x00028c)
+function cheat_protection() => unless(once(number_remaining() != 0 && state() == 0x1)) && unless(once(number_remaining() != 0 && state() == 0x5  ) )
 function sum_puzzles(start_num) =>
     tally_of(range(start_num, start_num + 4), 5, b =>  once( puzzle_number() == b && prev(number_remaining()) == 1 && number_remaining() == 0)) //count for each achievement is five puzzles!
-
 numbers = {
     0:{"Difficulty":"Easy", "Start":0, "End":0xe, "Points":2},
     1:{"Difficulty":"Medium", "Start":0xf, "End":0x18, "Points":3},
