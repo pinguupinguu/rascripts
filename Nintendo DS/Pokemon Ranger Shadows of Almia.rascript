@@ -1805,14 +1805,16 @@ achievement(
         trigger_when(prev(location()) == 0x105 && location() == 0x102)
 )
 //=====BOSS S-RANK CHALLENGES=====
+function in_swap() => byte(0x08af58) == 0x2
 function boss_rank_capture(cptr_one, cptr_two, dex_two) =>
     save_check() &&
     prev(dex_two) == 0 &&
     prev(cptr_one) + prev(cptr_two) != 0 &&
     cptr_one +
-    cptr_two == 0
+    cptr_two == 0 &&
+    in_swap()
 achievement(
-    "[m] Growing Through Capturing",
+    "Growing Through Capturing",
     "Obtain an S rank capture on Tangrowth on the first encounter",
     id=159570,
     badge="179400",
@@ -1825,7 +1827,7 @@ achievement(
             )    
 )   
 achievement(
-    "[M]aximum Poison",
+    "Maximum Poison",
     "Obtain a S rank capture on Toxicroak on the first encounter",
     id=159571,
     badge="179401",
@@ -1838,7 +1840,7 @@ achievement(
         )
 )
 achievement(
-    "[m] Rampaging Capture",
+    "Rampaging Capture",
     "Obtain a S rank capture on Rampardos on the first encounter",
     id=159572,
     badge="179402",
@@ -1851,7 +1853,7 @@ achievement(
         )
 )
 achievement(
-    "[m] Hunter J's Bounty",
+    "Hunter J's Bounty",
     "Obtain a S rank capture on Drapion on the first encounter",
     id=159573,
     badge="179403",
@@ -1864,7 +1866,7 @@ achievement(
         )
 )   
 achievement(
-    "[m] Rest in Spirits",
+    "Rest in Spirits",
     "Obtain a S rank capture on Spiritomb on the first encounter",
     id=159574,
     badge="179404",
@@ -1877,7 +1879,7 @@ achievement(
         )
 )
 achievement(
-    "[m] Frosty Attitude",
+    "Frosty Attitude",
     "Obtain a S rank capture on Froslass on the first encounter",
     id=159575,
     badge="179405",
@@ -1890,7 +1892,7 @@ achievement(
         )
 )
 achievement(
-    "[m] A Dramatic Fight!",
+    "A Dramatic Fight!",
     "Obtain a S rank capture on Lucario on the first encounter",
     id=159576,
     badge="179406",
@@ -1903,7 +1905,7 @@ achievement(
         ) 
 )
 achievement(
-    "[m] Super Fire Monkey",
+    "Super Fire Monkey",
     "Obtain a S rank capture on Infernape on the first encounter",
     id=159577,
     badge="179407",
@@ -1916,7 +1918,7 @@ achievement(
         )     
 )
 achievement(
-    "[m] Guardian of the Red Gem",
+    "Guardian of the Red Gem",
     "Obtain a S rank capture on Heatran on the first encounter",
     id=159578,
     badge="179408",
@@ -1929,7 +1931,7 @@ achievement(
         )   
 )
 achievement(
-    "[m] King of the Sea",
+    "King of the Sea",
     "Obtain a S rank capture on Kingdra on the first encounter",
     id=159579,
     badge="179409",
@@ -1942,7 +1944,7 @@ achievement(
         )
 )
 achievement(
-    "[m] Slicing Loops",
+    "Slicing Loops",
     "Obtain a S rank capture on Gliscor on the first encounter",
     id=159580,
     badge="179410",
@@ -1955,7 +1957,7 @@ achievement(
         )
 )
 achievement(
-    "[m] A Crescent Moon",
+    "A Crescent Moon",
     "Obtain a S rank capture on Cresselia on the first encounter",
     id=159581,
     badge="179411",
@@ -1968,7 +1970,7 @@ achievement(
         )
 )
 achievement(
-    "[m] Magnetic Energy",
+    "Magnetic Energy",
     "Obtain a S rank capture on Magnezone on the first encounter",
     id=159582,
     badge="179412",
@@ -1981,7 +1983,7 @@ achievement(
         )    
 )
 achievement(
-    "[m] Electrifying Encounter!",
+    "Electrifying Encounter!",
     "Obtain a S rank capture on Electivire on the first encounter",
     id=159583,
     badge="179413",
@@ -1994,7 +1996,7 @@ achievement(
         )
 )
 achievement(
-    "[m] Chompin' Away at the Browser",
+    "Chompin' Away at the Browser",
     "Obtain a S rank capture on Garchomp on the first encounter",
     id=159584,
     badge="179414",
@@ -2007,7 +2009,7 @@ achievement(
         )
 )
 achievement(
-    "[m] Rockin' Capture",
+    "Rockin' Capture",
     "Obtain a S rank capture on Rhyperior on the first encounter",
     id=159585,
     badge="179415",
@@ -2020,7 +2022,7 @@ achievement(
         )
 )
 achievement(
-    "[m] Hot Magma",
+    "Hot Magma",
     "Obtain a S rank capture on Magmortar on the first encounter",
     id=159586,
     badge="179416",
@@ -2033,7 +2035,7 @@ achievement(
         )
 )
 achievement(
-    "[m] Slashin' Your Loops",
+    "Slashin' Your Loops",
     "Obtain a S rank capture on Gallade on the first encounter",
     id=159587,
     badge="179417",
@@ -2056,7 +2058,7 @@ achievement(
         location() == 0x169
 )
 achievement(
-    "[m] Dusknoir the Explorer",
+    "Dusknoir the Explorer",
     "Obtain a S rank capture on Dusknoir on the first encounter",
     id=159589,
     badge="179419",
@@ -2413,7 +2415,7 @@ function terms_read_sum() =>
     bit1(0x0bb279)
 achievement(
     "Draco's Challenge",
-    "Read every new term in the Glossary. Knowledge is power!",
+    "Read every new terin the Glossary. Knowledge is power!",
     id=159595,
     badge="179428",
     points=5,
@@ -2430,7 +2432,7 @@ achievement(
             terms_read_sum() == 87            
         )        
 )
-//Gathers sum of all bitflags for Browser registering. (Seen & Captured)
+//Gathers suof all bitflags for Browser registering. (Seen & Captured)
 function browser_loop(memType){
     trigger = 0    
     if(memType == "delta"){
@@ -2862,7 +2864,7 @@ area_List = {
     0x164:"Altru Tower",
     0x165:"Altru Tower", //Barrier 2 destroyed?
     0x166:"Altru Tower",
-    0x167:"Altru Tower", //Transition Room before 3rd Barrier Destroyed.
+    0x167:"Altru Tower", //Transition Roobefore 3rd Barrier Destroyed.
     0x168:"Altru Tower", //Ice
     0x169:"Altru Tower", //3rd Barrier (Destroyed)
     0x16a:"Altru Tower",
@@ -2959,13 +2961,13 @@ rich_presence_lookup("Area", location(), area_List)
 rich_presence_display("{0}",
 rich_presence_lookup("AltGameState", game_state(), alternative_game_state)) //Other Menus.
 //=====LEADERBOARDS=====
-//Room ID:
-//0x101=Bottom Entrance
+//RooID:
+//0x101=BottoEntrance
 //0x102=Top Entrance
 //0x105=Qwilfish Room
 leaderboard(
     "Qwilfish Speedrun",
-    "Fastest time to get through Qwilfish room in Sea of Wailord",
+    "Fastest time to get through Qwilfish rooin Sea of Wailord",
     prev(location()) == 0x101 && location() == 0x105,
     prev(location()) == 0x105 && location() == 0x101,
     prev(location()) == 0x105 && location() == 0x102,
