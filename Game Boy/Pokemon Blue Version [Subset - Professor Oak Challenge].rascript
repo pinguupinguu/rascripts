@@ -402,7 +402,15 @@ pkmn = { //Reference table as pokemon_flags[name] for calls.
 }
 badges ={
     "Brock":bit0(0xd356),
-    "Misty":bit1(0xd356)
+    "Misty":bit1(0xd356),
+    "Lt. Surge":bit2(0xd356),
+    "Erika":bit3(0xd356),
+    "Koga":bit4(0xd356),
+    "Sabrina":bit5(0xd356),
+    "Blaine":bit6(0xd356),
+    "Giovanni":bit7(0xd356)
+    
+    
 }
 /* There are three ways of updating the Pokedex:
 Catching for the first time. (Typically first evolution)
@@ -633,3 +641,68 @@ achievement(
         measured(sum_of(gym_mons, b => b) == 47) &&
         trigger_when(map_bank == cerulean_gym && badges["Misty"] > prev(badges["Misty"]))
 )
+curr_check = sum_of(gym_mons, b => b) == 47 
+evolve("Raichu", 2, pkmn["Raichu"], pkmn["Pikachu"], badges["Koga"], 1, curr_check)
+gym(pkmn["Raichu"])
+obtain("Venonat", 1, pkmn["Venonat"], badges["Koga"], 1, curr_check)
+gym(pkmn["Venonat"])
+evolve("Venomoth", 2, pkmn["Venomoth"], pkmn["Venonat"], badges["Koga"], 1, curr_check)
+gym(pkmn["Venomoth"])
+obtain("Psyduck", 1, pkmn["Psyduck"], badges["Koga"], 1, curr_check)
+gym(pkmn["Psyduck"])
+evolve("Golduck", 2, pkmn["Golduck"], pkmn["Psyduck"], badges["Koga"], 1, curr_check)
+gym(pkmn["Golduck"])
+obtain("Poliwag", 1, pkmn["Poliwag"], badges["Koga"], 1, curr_check)
+gym(pkmn["Poliwag"])
+evolve("Poliwhirl", 2, pkmn["Poliwhirl"], pkmn["Poliwag"], badges["Koga"], 1, curr_check)
+gym(pkmn["Poliwhirl"])
+evolve("Poliwrath", 3, pkmn["Poliwrath"], pkmn["Poliwhirl"], badges["Koga"], 1, curr_check)
+gym(pkmn["Poliwrath"])
+obtain("Machop", 1, pkmn["Machop"], badges["Koga"], 1, curr_check)
+gym(pkmn["Machop"])
+evolve("Machoke", 2, pkmn["Machoke"], pkmn["Machop"], badges["Koga"], 1, curr_check)
+gym(pkmn["Machoke"])
+obtain("Tentacool", 1, pkmn["Tentacool"], badges["Koga"], 1, curr_check)
+gym(pkmn["Tentacool"])
+evolve("Tentacruel", 2, pkmn["Tentacruel"], pkmn["Tentacool"], badges["Koga"], 1, curr_check)
+gym(pkmn["Tentacruel"])
+obtain("Slowpoke", 1, pkmn["Slowpoke"], badges["Koga"], 1, curr_check)
+gym(pkmn["Slowpoke"])
+evolve("Slowbro", 1, pkmn["Slowbro"], pkmn["Slowpoke"], badges["Koga"], 1, curr_check)
+gym(pkmn["Slowbro"])
+obtain("Doduo", 1, pkmn["Doduo"], badges["Koga"], 1, curr_check)
+gym(pkmn["Doduo"])
+evolve("Dodrio", 2, pkmn["Dodrio"], pkmn["Doduo"], badges["Koga"], 1, curr_check)
+gym(pkmn["Dodrio"])
+obtain("Shellder", 1, pkmn["Shellder"], badges["Koga"], 1, curr_check)
+gym(pkmn["Shellder"])
+evolve("Cloyster", 1, pkmn["Cloyster"], pkmn["Shellder"], badges["Koga"], 1, curr_check)
+gym(pkmn["Cloyster"])
+obtain("Gastly", 1, pkmn["Gastly"], badges["Koga"], 1, curr_check)
+gym(pkmn["Gastly"])
+evolve("Haunter", 2, pkmn["Haunter"], pkmn["Gastly"], badges["Koga"], 1, curr_check)
+gym(pkmn["Haunter"])
+obtain("Onix", 1, pkmn["Onix"], badges["Koga"], 1, curr_check)
+gym(pkmn["Onix"])
+obtain("Krabby", 1, pkmn["Krabby"], badges["Koga"], 1, curr_check)
+gym(pkmn["Krabby"])
+evolve("Kingler", 2, pkmn["Kingler"], pkmn["Krabby"], badges["Koga"], 1, curr_check)
+gym(pkmn["Kingler"])
+obtain("Voltorb", 1, pkmn["Voltorb"], badges["Koga"], 1, curr_check)
+gym(pkmn["Voltorb"])
+evolve("Electrode", 2, pkmn["Electrode"], pkmn["Voltorb"], badges["Koga"], 1, curr_check)
+gym(pkmn["Electrode"])
+obtain("Exeggcute", 1, pkmn["Exeggcute"], badges["Koga"], 1, curr_check)
+gym(pkmn["Exeggcute"])
+evolve("Exeggutor", 2, pkmn["Exeggutor"], pkmn["Exeggcute"], badges["Koga"], 1, curr_check)
+gym(pkmn["Exeggutor"])
+obtain("Cubone", 1, pkmn["Cubone"], badges["Koga"], 1, curr_check)
+gym(pkmn["Cubone"])
+evolve("Marowak", 2, pkmn["Marowak"], pkmn["Cubone"], badges["Koga"], 1, curr_check)
+gym(pkmn["Marowak"])
+obtain("Lickitung", 1, pkmn["Lickitung"], badges["Koga"], 1, curr_check)
+gym(pkmn["Lickitung"])
+obtain("Rhyhorn", 1, pkmn["Rhyhorn"], badges["Koga"], 1, curr_check)
+gym(pkmn["Rhyhorn"])
+evolve("Rhydon", 2, pkmn["Rhydon"], pkmn["Rhyhorn"], badges["Koga"], 1, curr_check)
+gym(pkmn["Rhydon"])
