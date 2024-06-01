@@ -197,7 +197,7 @@
 //        bit7 = Raichu for Electrode Trade
 // $D738: Trades
 //        bit0 = Venonat for Tangela Trade
-//        bit1 = Nidoran M for Nidoran F Trade
+//        bit1 = NidoranM for NidoranF Trade
 // $D7B1: bit0 = Claimed Prize
 //        bit1 = Blackbelt 01 (Karate Master)
 //        bit2 = Blackbelt 02
@@ -217,6 +217,9 @@
 //        0x28=Oak's Lab
 map_bank = byte(0xd35e)
 oak_lab = 0x28
+brock_gym = 0x36
+in_title = 0x00
+save_protection = prev(map_bank) != in_title
 // $D164: [8bit] First Pokemon In Slot
 //        0xff=Invalid
 //        0x99=Bulbasaur
@@ -227,16 +230,31 @@ invalid = 0xff
 bulbasaur = 0x99
 charmander = 0xb0
 squirtle = 0xb1
-function caught(flag) => flag > prev(flag)
-pokemon_flags = { //Reference table as pokemon_flags[name] for calls.
-    "Bulbasaur": bit0(0xdf27),
-    "Ivysaur": bit1(0xdf27),
-    "Venusaur": bit2(0xdf27),
-    "Charmander": bit3(0xdf27),
-    "Charmeleon": bit4(0xdf27),
-    "Charizard": bit5(0xdf27),
-    "Squirtle": bit6(0xdf27),
-    "Wartortle": bit7(0xdf27),
+achievement(
+    "Beginning Your Journey",
+    "Select Charmander, Bulbasaur, or Squirtle as your starter Pokemon.",
+    points=1,
+    trigger=
+        map_bank == oak_lab &&
+        
+        prev(first_slot) == invalid &&
+        (always_false()
+         || first_slot == bulbasaur
+         || first_slot == charmander
+         || first_slot == squirtle
+        )        
+)
+function own(flag) => prev(flag) == 1
+function update(flag) => flag > prev(flag)
+pkmn = { //Reference table as pokemon_flags[name] for calls.
+    "Bulbasaur": bit0(0xd2f7),
+    "Ivysaur": bit1(0xd2f7),
+    "Venusaur": bit2(0xd2f7),
+    "Charmander": bit3(0xd2f7),
+    "Charmeleon": bit4(0xd2f7),
+    "Charizard": bit5(0xd2f7),
+    "Squirtle": bit6(0xd2f7),
+    "Wartortle": bit7(0xd2f7),
     "Blastoise": bit0(0xd2f8),
     "Caterpie": bit1(0xd2f8),
     "Metapod": bit2(0xd2f8),
@@ -381,3 +399,127 @@ pokemon_flags = { //Reference table as pokemon_flags[name] for calls.
     "Mewtwo": bit5(0xd309),
     "Mew": bit6(0xd309)
 }
+badges ={
+    "Brock":bit0(0xd356),
+    "Misty":bit1(0xd356)
+}
+/* There are three ways of updating the Pokedex:
+Catching for the first time. (Typically first evolution)
+Catching OR evolving (Middle Evolution)
+Evolving (Final evolution)
+We need to create three separate functions to account for these events across the dex.
+*/
+function obtain(name, points, flag, badge){
+    achievement(
+        name,
+        "Obtain " + name,
+        points=points,
+        trigger=
+            save_protection &&
+            badge == 0 &&
+            update(flag)
+    )
+}
+/*
+Check for either evolve or caught pokemon
+by utilizing two addresses in alts
+*/
+function evolve(name, points, flag, last_flag, badge){
+    achievement(
+        name,
+        "Obtain " + name,
+        points=points,
+        trigger=
+            save_protection &&
+            badge == 0 &&
+            prev(last_flag) == 1 && update(flag)
+    )
+}
+achievement(
+    "Charmeleon, Ivysaur, Wartortle",
+    "Evolve your starter for the first time",
+    points=2,
+    trigger=
+        save_protection &&
+        (always_false()
+        || own(pkmn["Bulbasaur"]) && update(pkmn["Ivysaur"])
+        || own(pkmn["Charmander"]) && update(pkmn["Charmeleon"])
+        || own(pkmn["Squirtle"]) && update(pkmn["Wartortle"])
+        )
+)
+achievement(
+    "Charizard, Venusaur, Blastoise",
+    "Evolve your starter for the second and final time",
+    points=3,
+    trigger=
+        save_protection &&
+        (always_false()
+        || own(pkmn["Ivysaur"]) && update(pkmn["Venusaur"])
+        || own(pkmn["Charmeleon"]) && update(pkmn["Charizard"])
+        || own(pkmn["Wartortle"]) && update(pkmn["Blastoise"])
+        )
+)
+//First Gym Area:
+obtain("Caterpie", 1, pkmn["Caterpie"], badges["Brock"])
+obtain("Metapod", 2, pkmn["Metapod"], badges["Brock"])
+evolve("Butterfree", 3, pkmn["Butterfree"], pkmn["Metapod"], badges["Brock"])
+obtain("Weedle", 1, pkmn["Weedle"], badges["Brock"])
+obtain("Kakuna", 2, pkmn["Kakuna"], badges["Brock"])
+evolve("Beedrill", 3, pkmn["Beedrill"], pkmn["Kakuna"], badges["Brock"])
+obtain("Pidgey", 1, pkmn["Pidgey"], badges["Brock"])
+evolve("Pidgeotto", 2, pkmn["Pidgeotto"], pkmn["Pidgey"], badges["Brock"])
+evolve("Pidgeot", 3, pkmn["Pidgeot"], pkmn["Pidgeotto"], badges["Brock"])
+obtain("Rattata", 1, pkmn["Rattata"], badges["Brock"])
+evolve("Raticate", 2, pkmn["Raticate"], pkmn["Rattata"], badges["Brock"])
+obtain("Spearow", 1, pkmn["Spearow"], badges["Brock"])
+evolve("Fearow", 2, pkmn["Fearow"], pkmn["Spearow"], badges["Brock"])
+obtain("Pikachu", 1, pkmn["Pikachu"], badges["Brock"])
+obtain("NidoranF", 1, pkmn["NidoranF"], badges["Brock"])
+evolve("Nidorina", 2, pkmn["Nidorina"], pkmn["NidoranF"], badges["Brock"])
+obtain("NidoranM", 1, pkmn["NidoranM"], badges["Brock"])
+evolve("Nidorino", 2, pkmn["Nidorino"], pkmn["NidoranM"], badges["Brock"])
+
+/*
+Check starter flags as they will only contribute a total sum of 3 as there's only one evolution line.
+Each array will then be combined into the following badge to account for ALL pokemon caught.
+*/
+
+brock_mons = [ 
+    pkmn["Bulbasaur"],
+    pkmn["Ivysaur"],
+    pkmn["Venusaur"],
+    pkmn["Charmander"],
+    pkmn["Charmeleon"],
+    pkmn["Charizard"],
+    pkmn["Squirtle"],
+    pkmn["Wartortle"],
+    pkmn["Blastoise"],
+    pkmn["Caterpie"],
+    pkmn["Metapod"],
+    pkmn["Butterfree"],
+    pkmn["Weedle"],
+    pkmn["Kakuna"],
+    pkmn["Beedrill"],
+    pkmn["Pidgey"],
+    pkmn["Pidgeotto"],
+    pkmn["Pidgeot"],
+    pkmn["Rattata"],
+    pkmn["Raticate"],
+    pkmn["Spearow"],
+    pkmn["Fearow"],
+    pkmn["Pikachu"],
+    pkmn["NidoranF"],
+    pkmn["Nidorina"],
+    pkmn["NidoranM"],
+    pkmn["Nidorino"]                
+]
+
+achievement(
+    "Badge of Rock",
+    "Obtain the Boulder Badge by defeating Brock with all 21 possible Pokemon Obtained",
+    points=10,
+    trigger=
+        measured(sum_of(brock_mons, b => b) == 21) &&
+        trigger_when(map_bank == brock_gym && badges["Brock"] > prev(badges["Brock"]))
+)
+
