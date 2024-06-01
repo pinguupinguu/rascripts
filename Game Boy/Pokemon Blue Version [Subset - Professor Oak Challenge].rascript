@@ -1,0 +1,383 @@
+// Pokemon Blue Version [Subset - Professor Oak Challenge]
+// #ID = 29295
+
+// $CD3D: 3>2>1>00 Caught
+// $CEEC: 0x00 = evolved
+// $CFCB: Character on Map (8-bit)
+//        
+//        0xff = Invalid
+//        0x00 = No
+//        0x01 = Yes
+
+// $D2F6: Dex Starts below
+// $D2F7: 1-8
+//        [bit0] Bulbasaur (Starter)
+//        [bit1] Ivysaur (Starter)
+//        [bit2] Venusaur (Starter)
+//        [bit3] Charmander (Starter)
+//        [bit4] Charmeleon (Starter)
+//        [bit5] Charizard (Starter)
+//        [bit6] Squirtle (Starter)
+//        [bit7] Wartortle (Starter)
+// $D2F8: 8-16
+//        [bit0] Blastoise (Starter)
+//        [bit1] Caterpie
+//        [bit2] Metapod
+//        [bit3] Butterfree
+//        [bit4] Weedle
+//        [bit5] Kakuna
+//        [bit6] Beedrill
+//        [bit7] Pidgey
+// $D2F9: 17-24
+//        [bit0] Pidgeotto
+//        [bit1] Pidgeot
+//        [bit2] Rattata
+//        [bit3] Raticate
+//        [bit4] Spearow
+//        [bit5] Fearow
+//        [bit6] Ekans (R)
+//        [bit7] Arbok (R)
+// $D2FA: 25-32
+//        [bit0] Pikachu
+//        [bit1] Raichu
+//        [bit2] Sandshrew (B)
+//        [bit3] Sandslash (B)
+//        [bit4] NidoranF
+//        [bit5] Nidorina
+//        [bit6] Nidoqueen
+//        [bit7] NidoranM
+// $D2FB: 33-40
+//        [bit0] Nidorino
+//        [bit1] Nidoking
+//        [bit2] Clefairy
+//        [bit3] Clefable
+//        [bit4] Vulpix (B)
+//        [bit5] Ninetales (B)
+//        [bit6] Jigglypuff
+//        [bit7] Wigglytuff
+// $D2FC: 41-48
+//        [bit0] Zubat
+//        [bit1] Golbat
+//        [bit2] Oddish (R)
+//        [bit3] Gloom (R)
+//        [bit4] Vileplume (R)
+//        [bit5] Paras
+//        [bit6] Parasect
+//        [bit7] Venonat
+// $D2FD: 49-56
+//        [bit0] Venomoth
+//        [bit1] Diglett
+//        [bit2] Dugtrio
+//        [bit3] Meowth (B)
+//        [bit4] Persian (B)
+//        [bit5] Psyduck
+//        [bit6] Golduck
+//        [bit7] Mankey (R)
+// $D2FE: 57-64
+//        [bit0] Primeape (R)
+//        [bit1] Growlithe (R)
+//        [bit2] Arcanine (R)
+//        [bit3] Poliwag
+//        [bit4] Poliwhirl
+//        [bit5] Poliwrath
+//        [bit6] Abra
+//        [bit7] Kadabra
+// $D2FF: 65-72
+//        [bit0] Alakazam (Trade)
+//        [bit1] Machop
+//        [bit2] Machoke
+//        [bit3] Machamp (Trade)
+//        [bit4] Bellsprout (B)
+//        [bit5] Weepinbell (B)
+//        [bit6] Victreebel (B)
+//        [bit7] Tentacool
+// $D300: 73-80
+//        [bit0] Tentacruel
+//        [bit1] Geodude
+//        [bit2] Graveler
+//        [bit3] Golem (Trade)
+//        [bit4] Ponyta
+//        [bit5] Rapidash
+//        [bit6] Slowpoke
+//        [bit7] Slowbro
+// $D301: 81-88
+//        [bit0] Magnemite
+//        [bit1] Magneton
+//        [bit2] Farfetch'd
+//        [bit3] Doduo
+//        [bit4] Dodrio
+//        [bit5] Seel
+//        [bit6] Dewgong
+//        [bit7] Grimer
+// $D302: 89-96
+//        [bit0] Muk
+//        [bit1] Shellder
+//        [bit2] Cloyster
+//        [bit3] Gastly
+//        [bit4] Haunter
+//        [bit5] Gengar (Trade)
+//        [bit6] Onix
+//        [bit7] Drowzee
+// $D303: 97-104
+//        [bit0] Hypno
+//        [bit1] Krabby
+//        [bit2] Kingler
+//        [bit3] Voltorb
+//        [bit4] Electrode
+//        [bit5] Exeggcute
+//        [bit6] Exeggutor
+//        [bit7] Cubone
+// $D304: 105-112
+//        [bit0] Marowak
+//        [bit1] Hitmonlee (Choice)
+//        [bit2] Hitmonchan (Choice)
+//        [bit3] Lickitung
+//        [bit4] Koffing
+//        [bit5] Weezing
+//        [bit6] Rhyhorn
+//        [bit7] Rhydon
+// $D305: 113-120
+//        [bit0] Chansey
+//        [bit1] Tangela
+//        [bit2] Kangaskhan
+//        [bit3] Horsea
+//        [bit4] Seadra
+//        [bit5] Goldeen
+//        [bit6] Seaking
+//        [bit7] Staryu
+// $D306: 121-128
+//        [bit0] Starmie
+//        [bit1] Mr. Mime
+//        [bit2] Scyther (R)
+//        [bit3] Jynx
+//        [bit4] Electabuzz (R)
+//        [bit5] Magmar (B)
+//        [bit6] Pinsir (B)
+//        [bit7] Tauros
+// $D307: 129-136
+//        [bit0] Magikarp
+//        [bit1] Gyrados
+//        [bit2] Lapras
+//        [bit3] Ditto
+//        [bit4] Eevee
+//        [bit5] Vaporeon (Choice)
+//        [bit6] Jolteon (Choice)
+//        [bit7] Flareon (Choice)
+// $D308: 137-144
+//        [bit0] Porygon
+//        [bit1] Omanyte (Choice)
+//        [bit2] Omastar (Choice)
+//        [bit3] Kabuto (Choice)
+//        [bit4] Kabutops (Choice)
+//        [bit5] Aerodactyl
+//        [bit6] Snorlax
+//        [bit7] Articuno
+// $D309: Pokedex Caught End 145-151 / 7F=full
+//        [bit0] Zapdos
+//        [bit1] Moltres
+//        [bit2] Dratini
+//        [bit3] Dragonair
+//        [bit4] Dragonite
+//        [bit5] Mewtwo
+//        [bit6] Mew (Unobtainable)
+// $D356: Badges
+// $D35B: [8bit] Audio Bank
+//        00=None
+
+// $D367: bit 7 = Title Screen
+// $D5AE: bit5 = Eevee
+// $D72E: bit0 = Lapras
+// $D737: Trades
+//        bit0 = Nidorino for Nidorina Trade
+//        bit1 = Abra for Mr. Mime Trade
+//        bit3 = Ponyta for Seel Trade
+//        bit4 = Spearow for Farfetch'd Trade
+//        bit5 = Slowbro for Lickitung
+//        bit6 = Poliwhirl for Jynx Trade
+//        bit7 = Raichu for Electrode Trade
+// $D738: Trades
+//        bit0 = Venonat for Tangela Trade
+//        bit1 = Nidoran M for Nidoran F Trade
+// $D7B1: bit0 = Claimed Prize
+//        bit1 = Blackbelt 01 (Karate Master)
+//        bit2 = Blackbelt 02
+//        bit3 = Blackbelt 03
+//        bit4 = Blackbelt 04
+//        bit5 = Blackbelt 05
+//        bit6 = Hitmonlee
+//        bit7 = Hitmonchan
+// $D7C6: bit7 = Bought Magikarp
+// $DA40: Hours (2 bytes)
+// $DA42: Minutes (2 bytes)
+// $DA44: Seconds
+// $DA45: Frames
+
+
+// $D35E: [8bit] Map Bank
+//        0x28=Oak's Lab
+map_bank = byte(0xd35e)
+oak_lab = 0x28
+// $D164: [8bit] First Pokemon In Slot
+//        0xff=Invalid
+//        0x99=Bulbasaur
+//        0xb0=Charmander
+//        0xb1=Squirtle
+first_slot = byte(0xd164)
+invalid = 0xff
+bulbasaur = 0x99
+charmander = 0xb0
+squirtle = 0xb1
+function caught(flag) => flag > prev(flag)
+pokemon_flags = { //Reference table as pokemon_flags[name] for calls.
+    "Bulbasaur": bit0(0xdf27),
+    "Ivysaur": bit1(0xdf27),
+    "Venusaur": bit2(0xdf27),
+    "Charmander": bit3(0xdf27),
+    "Charmeleon": bit4(0xdf27),
+    "Charizard": bit5(0xdf27),
+    "Squirtle": bit6(0xdf27),
+    "Wartortle": bit7(0xdf27),
+    "Blastoise": bit0(0xd2f8),
+    "Caterpie": bit1(0xd2f8),
+    "Metapod": bit2(0xd2f8),
+    "Butterfree": bit3(0xd2f8),
+    "Weedle": bit4(0xd2f8),
+    "Kakuna": bit5(0xd2f8),
+    "Beedrill": bit6(0xd2f8),
+    "Pidgey": bit7(0xd2f8),
+    "Pidgeotto": bit0(0xd2f9),
+    "Pidgeot": bit1(0xd2f9),
+    "Rattata": bit2(0xd2f9),
+    "Raticate": bit3(0xd2f9),
+    "Spearow": bit4(0xd2f9),
+    "Fearow": bit5(0xd2f9),
+    "Ekans": bit6(0xd2f9),
+    "Arbok": bit7(0xd2f9),
+    "Pikachu": bit0(0xd2fa),
+    "Raichu": bit1(0xd2fa),
+    "Sandshrew": bit2(0xd2fa),
+    "Sandslash": bit3(0xd2fa),
+    "NidoranF": bit4(0xd2fa),
+    "Nidorina": bit5(0xd2fa),
+    "Nidoqueen": bit6(0xd2fa),
+    "NidoranM": bit7(0xd2fa),
+    "Nidorino": bit0(0xd2fb),
+    "Nidoking": bit1(0xd2fb),
+    "Clefairy": bit2(0xd2fb),
+    "Clefable": bit3(0xd2fb),
+    "Vulpix": bit4(0xd2fb),
+    "Ninetales": bit5(0xd2fb),
+    "Jigglypuff": bit6(0xd2fb),
+    "Wigglytuff": bit7(0xd2fb),
+    "Zubat": bit0(0xd2fc),
+    "Golbat": bit1(0xd2fc),
+    "Oddish": bit2(0xd2fc),
+    "Gloom": bit3(0xd2fc),
+    "Vileplume": bit4(0xd2fc),
+    "Paras": bit5(0xd2fc),
+    "Parasect": bit6(0xd2fc),
+    "Venonat": bit7(0xd2fc),
+    "Venomoth": bit0(0xd2fd),
+    "Diglett": bit1(0xd2fd),
+    "Dugtrio": bit2(0xd2fd),
+    "Meowth": bit3(0xd2fd),
+    "Persian": bit4(0xd2fd),
+    "Psyduck": bit5(0xd2fd),
+    "Golduck": bit6(0xd2fd),
+    "Mankey": bit7(0xd2fd),
+    "Primeape": bit0(0xd2fe),
+    "Growlithe": bit1(0xd2fe),
+    "Arcanine": bit2(0xd2fe),
+    "Poliwag": bit3(0xd2fe),
+    "Poliwhirl": bit4(0xd2fe),
+    "Poliwrath": bit5(0xd2fe),
+    "Abra": bit6(0xd2fe),
+    "Kadabra": bit7(0xd2fe),
+    "Alakazam": bit0(0xd2ff),
+    "Machop": bit1(0xd2ff),
+    "Machoke": bit2(0xd2ff),
+    "Machamp": bit3(0xd2ff),
+    "Bellsprout": bit4(0xd2ff),
+    "Weepinbell": bit5(0xd2ff),
+    "Victreebel": bit6(0xd2ff),
+    "Tentacool": bit7(0xd2ff),
+    "Tentacruel": bit0(0xd300),
+    "Geodude": bit1(0xd300),
+    "Graveler": bit2(0xd300),
+    "Golem": bit3(0xd300),
+    "Ponyta": bit4(0xd300),
+    "Rapidash": bit5(0xd300),
+    "Slowpoke": bit6(0xd300),
+    "Slowbro": bit7(0xd300),
+    "Magnemite": bit0(0xd301),
+    "Magneton": bit1(0xd301),
+    "Farfetch'd": bit2(0xd301),
+    "Doduo": bit3(0xd301),
+    "Dodrio": bit4(0xd301),
+    "Seel": bit5(0xd301),
+    "Dewgong": bit6(0xd301),
+    "Grimer": bit7(0xd301),
+    "Muk": bit0(0xd302),
+    "Shellder": bit1(0xd302),
+    "Cloyster": bit2(0xd302),
+    "Gastly": bit3(0xd302),
+    "Haunter": bit4(0xd302),
+    "Gengar": bit5(0xd302),
+    "Onix": bit6(0xd302),
+    "Drowzee": bit7(0xd302),
+    "Hypno": bit0(0xd303),
+    "Krabby": bit1(0xd303),
+    "Kingler": bit2(0xd303),
+    "Voltorb": bit3(0xd303),
+    "Electrode": bit4(0xd303),
+    "Exeggcute": bit5(0xd303),
+    "Exeggutor": bit6(0xd303),
+    "Cubone": bit7(0xd303),
+    "Marowak": bit0(0xd304),
+    "Hitmonlee": bit1(0xd304),
+    "Hitmonchan": bit2(0xd304),
+    "Lickitung": bit3(0xd304),
+    "Koffing": bit4(0xd304),
+    "Weezing": bit5(0xd304),
+    "Rhyhorn": bit6(0xd304),
+    "Rhydon": bit7(0xd304),
+    "Chansey": bit0(0xd305),
+    "Tangela": bit1(0xd305),
+    "Kangaskhan": bit2(0xd305),
+    "Horsea": bit3(0xd305),
+    "Seadra": bit4(0xd305),
+    "Goldeen": bit5(0xd305),
+    "Seaking": bit6(0xd305),
+    "Staryu": bit7(0xd305),
+    "Starmie": bit0(0xd306),
+    "Mr. Mime": bit1(0xd306),
+    "Scyther": bit2(0xd306),
+    "Jynx": bit3(0xd306),
+    "Electabuzz": bit4(0xd306),
+    "Magmar": bit5(0xd306),
+    "Pinsir": bit6(0xd306),
+    "Tauros": bit7(0xd306),
+    "Magikarp": bit0(0xd307),
+    "Gyrados": bit1(0xd307),
+    "Lapras": bit2(0xd307),
+    "Ditto": bit3(0xd307),
+    "Eevee": bit4(0xd307),
+    "Vaporeon": bit5(0xd307),
+    "Jolteon": bit6(0xd307),
+    "Flareon": bit7(0xd307),
+    "Porygon": bit0(0xd308),
+    "Omanyte": bit1(0xd308),
+    "Omastar": bit2(0xd308),
+    "Kabuto": bit3(0xd308),
+    "Kabutops": bit4(0xd308),
+    "Aerodactyl": bit5(0xd308),
+    "Snorlax": bit6(0xd308),
+    "Articuno": bit7(0xd308),
+    "Zapdos": bit0(0xd309),
+    "Moltres": bit1(0xd309),
+    "Dratini": bit2(0xd309),
+    "Dragonair": bit3(0xd309),
+    "Dragonite": bit4(0xd309),
+    "Mewtwo": bit5(0xd309),
+    "Mew": bit6(0xd309)
+}
