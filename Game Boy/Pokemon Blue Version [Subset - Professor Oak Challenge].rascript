@@ -218,6 +218,7 @@
 map_bank = byte(0xd35e)
 oak_lab = 0x28
 brock_gym = 0x36
+cerulean_gym = 0x41
 in_title = 0x00
 save_protection = prev(map_bank) != in_title
 // $D164: [8bit] First Pokemon In Slot
@@ -492,7 +493,7 @@ Check starter flags as they will only contribute a total sum of 3 as there's onl
 Each array will then be combined into the following badge to account for ALL pokemon caught.
 */
 
-brock_mons = [ 
+gym_mons = [ 
     pkmn["Bulbasaur"],
     pkmn["Ivysaur"],
     pkmn["Venusaur"],
@@ -521,7 +522,7 @@ brock_mons = [
     pkmn["NidoranM"],
     pkmn["Nidorino"]                
 ]
-brock_check = sum_of(brock_mons, b => b) == 21
+brock_check = sum_of(gym_mons, b => b) == 21
 achievement(
     "Badge of Rock",
     "Obtain the Boulder Badge by defeating Brock with all 21 possible Pokemon Obtained",
@@ -530,39 +531,72 @@ achievement(
        measured(brock_check) &&
         trigger_when(map_bank == brock_gym && badges["Brock"] > prev(badges["Brock"]))
 )
-/* End total: 21
-Start Badge 2: */
-obtain("Clefairy", 1, pkmn["Clefairy"], badges["Misty"], 1, brock_check)
-obtain("Jigglypuff", 1, pkmn["Jigglypuff"], badges["Misty"], 1, brock_check)
-obtain("Zubat", 1, pkmn["Zubat"], badges["Misty"], 1, brock_check)
-evolve("Golbat", 2, pkmn["Golbat"], pkmn["Zubat"], badges["Misty"], 1, brock_check)
-obtain("Paras", 1, pkmn["Paras"], badges["Misty"], 1, brock_check)
-evolve("Parasect", 2, pkmn["Parasect"], pkmn["Paras"], badges["Misty"], 1, brock_check)
-obtain("Diglett", 1, pkmn["Diglett"], badges["Misty"], 1, brock_check)
-obtain("Dugtrio", 2, pkmn["Dugtrio"], badges["Misty"], 1, brock_check)
-obtain("Abra", 1, pkmn["Abra"], badges["Misty"], 1, brock_check)
-evolve("Kadabra", 2, pkmn["Kadabra"], pkmn["Abra"], badges["Misty"], 1, brock_check)
-obtain("Geodude", 1, pkmn["Geodude"], badges["Misty"], 1, brock_check)
-evolve("Graveler", 2, pkmn["Graveler"], pkmn["Geodude"], badges["Misty"], 1, brock_check)
-obtain("Farfetch'd", 1, pkmn["Farfetch'd"], badges["Misty"], 1, brock_check)
-obtain("Drowzee", 1, pkmn["Drowzee"], badges["Misty"], 1, brock_check)
-evolve("Hypno", 2, pkmn["Hypno"], pkmn["Drowzee"], badges["Misty"], 1, brock_check)
-obtain("Mr. Mime", 1, pkmn["Mr. Mime"], badges["Misty"], 1, brock_check)
-obtain("Magikarp", 1, pkmn["Magikarp"], badges["Misty"], 1, brock_check)
-evolve("Gyrados", 2, pkmn["Gyrados"], pkmn["Magikarp"], badges["Misty"], 1, brock_check)
-obtain("Sandshrew", 1, pkmn["Sandshrew"], badges["Misty"], 1, brock_check)
-evolve("Sandslash", 2, pkmn["Sandslash"], pkmn["Sandshrew"], badges["Misty"], 1, brock_check)
-obtain("Meowth", 1, pkmn["Meowth"], badges["Misty"], 1, brock_check)
-evolve("Persian", 2, pkmn["Persian"], pkmn["Meowth"], badges["Misty"], 1, brock_check)
-obtain("Bellsprout", 1, pkmn["Bellsprout"], badges["Misty"], 1, brock_check)
-evolve("Weepinbell", 2, pkmn["Weepinbell"], pkmn["Bellsprout"], badges["Misty"], 1, brock_check)
 
+function gym(pkmn){
+    array_push(gym_mons, pkmn)
+}
+/* End total: 21
+Start Badge 2: 
+Each time we add a new Pokemon, we will array_push() that Pokemon into the gym check
+*/
+obtain("Clefairy", 1, pkmn["Clefairy"], badges["Misty"], 1, brock_check)
+gym(pkmn["Clefairy"])
+obtain("Jigglypuff", 1, pkmn["Jigglypuff"], badges["Misty"], 1, brock_check)
+gym(pkmn["Jigglypuff"])
+obtain("Zubat", 1, pkmn["Zubat"], badges["Misty"], 1, brock_check)
+gym(pkmn["Zubat"])
+evolve("Golbat", 2, pkmn["Golbat"], pkmn["Zubat"], badges["Misty"], 1, brock_check)
+gym(pkmn["Golbat"])
+obtain("Paras", 1, pkmn["Paras"], badges["Misty"], 1, brock_check)
+gym(pkmn["Paras"])
+evolve("Parasect", 2, pkmn["Parasect"], pkmn["Paras"], badges["Misty"], 1, brock_check)
+gym(pkmn["Parasect"])
+obtain("Diglett", 1, pkmn["Diglett"], badges["Misty"], 1, brock_check)
+gym(pkmn["Diglett"])
+obtain("Dugtrio", 2, pkmn["Dugtrio"], badges["Misty"], 1, brock_check)
+gym(pkmn["Dugtrio"])
+obtain("Abra", 1, pkmn["Abra"], badges["Misty"], 1, brock_check)
+gym(pkmn["Abra"])
+evolve("Kadabra", 2, pkmn["Kadabra"], pkmn["Abra"], badges["Misty"], 1, brock_check)
+gym(pkmn["Kadabra"])
+obtain("Geodude", 1, pkmn["Geodude"], badges["Misty"], 1, brock_check)
+gym(pkmn["Geodude"])
+evolve("Graveler", 2, pkmn["Graveler"], pkmn["Geodude"], badges["Misty"], 1, brock_check)
+gym(pkmn["Graveler"])
+obtain("Farfetch'd", 1, pkmn["Farfetch'd"], badges["Misty"], 1, brock_check)
+gym(pkmn["Farfetch'd"])
+obtain("Drowzee", 1, pkmn["Drowzee"], badges["Misty"], 1, brock_check)
+gym(pkmn["Drowzee"])
+evolve("Hypno", 2, pkmn["Hypno"], pkmn["Drowzee"], badges["Misty"], 1, brock_check)
+gym(pkmn["Hypno"])
+obtain("Mr. Mime", 1, pkmn["Mr. Mime"], badges["Misty"], 1, brock_check)
+gym(pkmn["Mr. Mime"])
+obtain("Magikarp", 1, pkmn["Magikarp"], badges["Misty"], 1, brock_check)
+gym(pkmn["Magikarp"])
+evolve("Gyrados", 2, pkmn["Gyrados"], pkmn["Magikarp"], badges["Misty"], 1, brock_check)
+gym(pkmn["Gyrados"])
+obtain("Sandshrew", 1, pkmn["Sandshrew"], badges["Misty"], 1, brock_check)
+gym(pkmn["Sandshrew"])
+evolve("Sandslash", 2, pkmn["Sandslash"], pkmn["Sandshrew"], badges["Misty"], 1, brock_check)
+gym(pkmn["Sandslash"])
+obtain("Meowth", 1, pkmn["Meowth"], badges["Misty"], 1, brock_check)
+gym(pkmn["Meowth"])
+evolve("Persian", 2, pkmn["Persian"], pkmn["Meowth"], badges["Misty"], 1, brock_check)
+gym(pkmn["Persian"])
+obtain("Bellsprout", 1, pkmn["Bellsprout"], badges["Misty"], 1, brock_check)
+gym(pkmn["Bellsprout"])
+evolve("Weepinbell", 2, pkmn["Weepinbell"], pkmn["Bellsprout"], badges["Misty"], 1, brock_check)
+gym(pkmn["Weepinbell"])
 moon_stone_choices = [
     pkmn["Nidoqueen"],
     pkmn["Nidoking"],
     pkmn["Clefable"],
     pkmn["Wigglytuff"]    
 ]
+gym(pkmn["Nidoqueen"])
+gym(pkmn["Nidoking"])
+gym(pkmn["Clefable"])
+gym(pkmn["Wigglytuff"])
 achievement(
     "Moon Power I",
     "Obtain one of the following: Nidoqueen, Nidoking, Clefable, or Wigglytuff",
@@ -591,4 +625,11 @@ achievement(
         || evolve_raw(pkmn["Wigglytuff"], pkmn["Jigglypuff"])
         )                
 )
-
+achievement(
+    "Badge of Water",
+    "Obtain the Cascade Badge by defeating Misty with all 47 possible Pokemon obtained",
+    points=10,
+    trigger=
+        measured(sum_of(gym_mons, b => b) == 47) &&
+        trigger_when(map_bank == cerulean_gym && badges["Misty"] > prev(badges["Misty"]))
+)
