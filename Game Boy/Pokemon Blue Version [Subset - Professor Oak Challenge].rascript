@@ -409,7 +409,11 @@ Catching OR evolving (Middle Evolution)
 Evolving (Final evolution)
 We need to create three separate functions to account for these events across the dex.
 */
-function obtain(name, points, flag, badge){
+function gym_check(mode, checks) {
+    if(mode == 1) return checks 
+    else return 0==0
+}
+function obtain(name, points, flag, badge, mode, checks){
     achievement(
         name,
         "Obtain " + name,
@@ -417,14 +421,17 @@ function obtain(name, points, flag, badge){
         trigger=
             save_protection &&
             badge == 0 &&
-            update(flag)
+            update(flag) &&
+            gym_check(mode, checks)
     )
 }
 /*
 Check for either evolve or caught pokemon
 by utilizing two addresses in alts
 */
-function evolve(name, points, flag, last_flag, badge){
+
+function evolve_raw(flag, last_flag) => prev(last_flag) == 1 && update(flag)
+function evolve(name, points, flag, last_flag, badge, mode, checks){
     achievement(
         name,
         "Obtain " + name,
@@ -432,7 +439,8 @@ function evolve(name, points, flag, last_flag, badge){
         trigger=
             save_protection &&
             badge == 0 &&
-            prev(last_flag) == 1 && update(flag)
+            prev(last_flag) == 1 && update(flag) &&
+            gym_check(mode, checks)
     )
 }
 achievement(
@@ -460,24 +468,24 @@ achievement(
         )
 )
 //First Gym Area:
-obtain("Caterpie", 1, pkmn["Caterpie"], badges["Brock"])
-obtain("Metapod", 2, pkmn["Metapod"], badges["Brock"])
-evolve("Butterfree", 3, pkmn["Butterfree"], pkmn["Metapod"], badges["Brock"])
-obtain("Weedle", 1, pkmn["Weedle"], badges["Brock"])
-obtain("Kakuna", 2, pkmn["Kakuna"], badges["Brock"])
-evolve("Beedrill", 3, pkmn["Beedrill"], pkmn["Kakuna"], badges["Brock"])
-obtain("Pidgey", 1, pkmn["Pidgey"], badges["Brock"])
-evolve("Pidgeotto", 2, pkmn["Pidgeotto"], pkmn["Pidgey"], badges["Brock"])
-evolve("Pidgeot", 3, pkmn["Pidgeot"], pkmn["Pidgeotto"], badges["Brock"])
-obtain("Rattata", 1, pkmn["Rattata"], badges["Brock"])
-evolve("Raticate", 2, pkmn["Raticate"], pkmn["Rattata"], badges["Brock"])
-obtain("Spearow", 1, pkmn["Spearow"], badges["Brock"])
-evolve("Fearow", 2, pkmn["Fearow"], pkmn["Spearow"], badges["Brock"])
-obtain("Pikachu", 1, pkmn["Pikachu"], badges["Brock"])
-obtain("NidoranF", 1, pkmn["NidoranF"], badges["Brock"])
-evolve("Nidorina", 2, pkmn["Nidorina"], pkmn["NidoranF"], badges["Brock"])
-obtain("NidoranM", 1, pkmn["NidoranM"], badges["Brock"])
-evolve("Nidorino", 2, pkmn["Nidorino"], pkmn["NidoranM"], badges["Brock"])
+obtain("Caterpie", 1, pkmn["Caterpie"], badges["Brock"], 0 , 0)
+obtain("Metapod", 2, pkmn["Metapod"], badges["Brock"], 0, 0)
+evolve("Butterfree", 3, pkmn["Butterfree"], pkmn["Metapod"], badges["Brock"], 0 , 0)
+obtain("Weedle", 1, pkmn["Weedle"], badges["Brock"], 0 , 0)
+obtain("Kakuna", 2, pkmn["Kakuna"], badges["Brock"], 0 , 0)
+evolve("Beedrill", 3, pkmn["Beedrill"], pkmn["Kakuna"], badges["Brock"], 0 , 0)
+obtain("Pidgey", 1, pkmn["Pidgey"], badges["Brock"], 0 , 0)
+evolve("Pidgeotto", 2, pkmn["Pidgeotto"], pkmn["Pidgey"], badges["Brock"], 0 , 0)
+evolve("Pidgeot", 3, pkmn["Pidgeot"], pkmn["Pidgeotto"], badges["Brock"], 0 , 0)
+obtain("Rattata", 1, pkmn["Rattata"], badges["Brock"], 0 , 0)
+evolve("Raticate", 2, pkmn["Raticate"], pkmn["Rattata"], badges["Brock"], 0 , 0)
+obtain("Spearow", 1, pkmn["Spearow"], badges["Brock"], 0, 0)
+evolve("Fearow", 2, pkmn["Fearow"], pkmn["Spearow"], badges["Brock"], 0 , 0)
+obtain("Pikachu", 1, pkmn["Pikachu"], badges["Brock"], 0 , 0)
+obtain("NidoranF", 1, pkmn["NidoranF"], badges["Brock"], 0 , 0)
+evolve("Nidorina", 2, pkmn["Nidorina"], pkmn["NidoranF"], badges["Brock"], 0 , 0)
+obtain("NidoranM", 1, pkmn["NidoranM"], badges["Brock"], 0 , 0)
+evolve("Nidorino", 2, pkmn["Nidorino"], pkmn["NidoranM"], badges["Brock"], 0 , 0)
 
 /*
 Check starter flags as they will only contribute a total sum of 3 as there's only one evolution line.
@@ -513,13 +521,74 @@ brock_mons = [
     pkmn["NidoranM"],
     pkmn["Nidorino"]                
 ]
-
+brock_check = sum_of(brock_mons, b => b) == 21
 achievement(
     "Badge of Rock",
     "Obtain the Boulder Badge by defeating Brock with all 21 possible Pokemon Obtained",
     points=10,
     trigger=
-        measured(sum_of(brock_mons, b => b) == 21) &&
+       measured(brock_check) &&
         trigger_when(map_bank == brock_gym && badges["Brock"] > prev(badges["Brock"]))
+)
+/* End total: 21
+Start Badge 2: */
+obtain("Clefairy", 1, pkmn["Clefairy"], badges["Misty"], 1, brock_check)
+obtain("Jigglypuff", 1, pkmn["Jigglypuff"], badges["Misty"], 1, brock_check)
+obtain("Zubat", 1, pkmn["Zubat"], badges["Misty"], 1, brock_check)
+evolve("Golbat", 2, pkmn["Golbat"], pkmn["Zubat"], badges["Misty"], 1, brock_check)
+obtain("Paras", 1, pkmn["Paras"], badges["Misty"], 1, brock_check)
+evolve("Parasect", 2, pkmn["Parasect"], pkmn["Paras"], badges["Misty"], 1, brock_check)
+obtain("Diglett", 1, pkmn["Diglett"], badges["Misty"], 1, brock_check)
+obtain("Dugtrio", 2, pkmn["Dugtrio"], badges["Misty"], 1, brock_check)
+obtain("Abra", 1, pkmn["Abra"], badges["Misty"], 1, brock_check)
+evolve("Kadabra", 2, pkmn["Kadabra"], pkmn["Abra"], badges["Misty"], 1, brock_check)
+obtain("Geodude", 1, pkmn["Geodude"], badges["Misty"], 1, brock_check)
+evolve("Graveler", 2, pkmn["Graveler"], pkmn["Geodude"], badges["Misty"], 1, brock_check)
+obtain("Farfetch'd", 1, pkmn["Farfetch'd"], badges["Misty"], 1, brock_check)
+obtain("Drowzee", 1, pkmn["Drowzee"], badges["Misty"], 1, brock_check)
+evolve("Hypno", 2, pkmn["Hypno"], pkmn["Drowzee"], badges["Misty"], 1, brock_check)
+obtain("Mr. Mime", 1, pkmn["Mr. Mime"], badges["Misty"], 1, brock_check)
+obtain("Magikarp", 1, pkmn["Magikarp"], badges["Misty"], 1, brock_check)
+evolve("Gyrados", 2, pkmn["Gyrados"], pkmn["Magikarp"], badges["Misty"], 1, brock_check)
+obtain("Sandshrew", 1, pkmn["Sandshrew"], badges["Misty"], 1, brock_check)
+evolve("Sandslash", 2, pkmn["Sandslash"], pkmn["Sandshrew"], badges["Misty"], 1, brock_check)
+obtain("Meowth", 1, pkmn["Meowth"], badges["Misty"], 1, brock_check)
+evolve("Persian", 2, pkmn["Persian"], pkmn["Meowth"], badges["Misty"], 1, brock_check)
+obtain("Bellsprout", 1, pkmn["Bellsprout"], badges["Misty"], 1, brock_check)
+evolve("Weepinbell", 2, pkmn["Weepinbell"], pkmn["Bellsprout"], badges["Misty"], 1, brock_check)
+
+moon_stone_choices = [
+    pkmn["Nidoqueen"],
+    pkmn["Nidoking"],
+    pkmn["Clefable"],
+    pkmn["Wigglytuff"]    
+]
+achievement(
+    "Moon Power I",
+    "Obtain one of the following: Nidoqueen, Nidoking, Clefable, or Wigglytuff",
+    points=3,
+    trigger=
+        brock_check &&
+        sum_of(moon_stone_choices, b=>prev(b)) == 0 &&
+        (always_false()
+        || evolve_raw(pkmn["Nidoqueen"], pkmn["Nidorina"])
+        || evolve_raw(pkmn["Nidoking"], pkmn["Nidorino"])
+        || evolve_raw(pkmn["Clefable"], pkmn["Clefairy"])
+        || evolve_raw(pkmn["Wigglytuff"], pkmn["Jigglypuff"])
+        )                
+)
+achievement(
+    "Moon Power II",
+    "Obtain one of the following: Nidoqueen, Nidoking, Clefable, or Wigglytuff",
+    points=3,
+    trigger=
+        brock_check &&
+        sum_of(moon_stone_choices, b=>prev(b)) == 1 &&
+        (always_false()
+        || evolve_raw(pkmn["Nidoqueen"], pkmn["Nidorina"])
+        || evolve_raw(pkmn["Nidoking"], pkmn["Nidorino"])
+        || evolve_raw(pkmn["Clefable"], pkmn["Clefairy"])
+        || evolve_raw(pkmn["Wigglytuff"], pkmn["Jigglypuff"])
+        )                
 )
 
