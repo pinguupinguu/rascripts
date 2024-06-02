@@ -219,6 +219,7 @@ map_bank = byte(0xd35e)
 oak_lab = 0x28
 brock_gym = 0x36
 cerulean_gym = 0x41
+fuchsia_gym = 0x9d
 in_title = 0x00
 save_protection = prev(map_bank) != in_title
 // $D164: [8bit] First Pokemon In Slot
@@ -706,3 +707,164 @@ obtain("Rhyhorn", 1, pkmn["Rhyhorn"], badges["Koga"], 1, curr_check)
 gym(pkmn["Rhyhorn"])
 evolve("Rhydon", 2, pkmn["Rhydon"], pkmn["Rhyhorn"], badges["Koga"], 1, curr_check)
 gym(pkmn["Rhydon"])
+obtain("Chansey", 1, pkmn["Chansey"], badges["Koga"], 1, curr_check)
+gym(pkmn["Chansey"])
+obtain("Kangaskhan", 1, pkmn["Kangaskhan"], badges["Koga"], 1, curr_check)
+gym(pkmn["Kangaskhan"])
+obtain("Horsea", 1, pkmn["Horsea"], badges["Koga"], 1, curr_check)
+gym(pkmn["Horsea"])
+evolve("Seadra", 2, pkmn["Seadra"], pkmn["Horsea"], badges["Koga"], 1, curr_check)
+gym(pkmn["Seadra"])
+obtain("Goldeen", 1, pkmn["Goldeen"], badges["Koga"], 1, curr_check)
+gym(pkmn["Goldeen"])
+evolve("Seaking", 2, pkmn["Seaking"], pkmn["Goldeen"], badges["Koga"], 1, curr_check)
+gym(pkmn["Seaking"])
+obtain("Staryu", 1, pkmn["Staryu"], badges["Koga"], 1, curr_check)
+gym(pkmn["Staryu"])
+evolve("Starmie", 2, pkmn["Starmie"], pkmn["Staryu"], badges["Koga"], 1, curr_check)
+gym(pkmn["Starmie"])
+obtain("Jynx", 1, pkmn["Jynx"], badges["Koga"], 1, curr_check)
+gym(pkmn["Jynx"])
+obtain("Tauros", 1, pkmn["Tauros"], badges["Koga"], 1, curr_check)
+gym(pkmn["Tauros"])
+obtain("Lapras", 1, pkmn["Lapras"], badges["Koga"], 1, curr_check)
+gym(pkmn["Lapras"])
+obtain("Ditto", 1, pkmn["Ditto"], badges["Koga"], 1, curr_check)
+gym(pkmn["Ditto"])
+obtain("Eevee", 1, pkmn["Eevee"], badges["Koga"], 1, curr_check)
+gym(pkmn["Eevee"])
+obtain("Porygon", 1, pkmn["Porygon"], badges["Koga"], 1, curr_check)
+gym(pkmn["Porygon"])
+obtain("Snorlax", 1, pkmn["Snorlax"], badges["Koga"], 1, curr_check)
+gym(pkmn["Snorlax"])
+obtain("Dratini", 1, pkmn["Dratini"], badges["Koga"], 1, curr_check)
+gym(pkmn["Dratini"])
+evolve("Dragonair", 2, pkmn["Dragonair"], pkmn["Dratini"], badges["Koga"], 1, curr_check)
+gym(pkmn["Dragonair"])
+evolve("Dragonite", 3, pkmn["Dragonite"], pkmn["Dragonair"], badges["Koga"], 1, curr_check)
+gym(pkmn["Dragonite"])
+obtain("Vulpix", 1, pkmn["Vulpix"], badges["Koga"], 1, curr_check)
+gym(pkmn["Vulpix"])
+evolve("Ninetales", 1, pkmn["Ninetales"], pkmn["Vulpix"], badges["Koga"], 1, curr_check)
+gym(pkmn["Ninetales"])
+evolve("Victreebel", 3, pkmn["Victreebel"], pkmn["Weepinbell"], badges["Koga"], 1, curr_check)
+gym(pkmn["Victreebel"])
+obtain("Pinsir", 1, pkmn["Pinsir"], badges["Koga"], 1, curr_check)
+gym(pkmn["Pinsir"])
+//Eevolution #1:
+eevolutions = [
+    pkmn["Vaporeon"],
+    pkmn["Jolteon"],
+    pkmn["Flareon"]    
+]
+gym(pkmn["Vaporeon"])
+gym(pkmn["Jolteon"])
+gym(pkmn["Flareon"])
+// Add to checklist.
+
+
+/*
+achievement(
+    "Moon Power II",
+    "Obtain one of the following: Nidoqueen, Nidoking, Clefable, or Wigglytuff",
+    points=3,
+    trigger=
+        brock_check &&
+        sum_of(moon_stone_choices, b=>prev(b)) == 1 &&
+        (always_false()
+        || evolve_raw(pkmn["Nidoqueen"], pkmn["Nidorina"])
+        || evolve_raw(pkmn["Nidoking"], pkmn["Nidorino"])
+        || evolve_raw(pkmn["Clefable"], pkmn["Clefairy"])
+        || evolve_raw(pkmn["Wigglytuff"], pkmn["Jigglypuff"])
+        )                
+)
+*/
+achievement(
+    "Eeevolution Round I",
+    "Obtain your First eveelution",
+    2,
+    trigger=
+        curr_check &&
+        sum_of(eevolutions, b => prev(b)) == 0 &&
+        (always_false()
+        || update(pkmn["Vaporeon"])
+        || update(pkmn["Jolteon"])
+        || update(pkmn["Flareon"])
+        )
+)
+achievement(
+    "Moon Power III",
+    "Obtain one of the following: Nidoqueen, Nidoking, Clefable, or Wigglytuff",
+    points=3,
+    trigger=
+        curr_check &&
+        sum_of(moon_stone_choices, b=>prev(b)) == 2 &&
+        (always_false()
+        || evolve_raw(pkmn["Nidoqueen"], pkmn["Nidorina"])
+        || evolve_raw(pkmn["Nidoking"], pkmn["Nidorino"])
+        || evolve_raw(pkmn["Clefable"], pkmn["Clefairy"])
+        || evolve_raw(pkmn["Wigglytuff"], pkmn["Jigglypuff"])
+        )                
+)
+achievement(
+    "Moon Power IV",
+    "Obtain one of the following: Nidoqueen, Nidoking, Clefable, or Wigglytuff",
+    points=3,
+    trigger=
+        curr_check &&
+        sum_of(moon_stone_choices, b=>prev(b)) == 3 &&
+        (always_false()
+        || evolve_raw(pkmn["Nidoqueen"], pkmn["Nidorina"])
+        || evolve_raw(pkmn["Nidoking"], pkmn["Nidorino"])
+        || evolve_raw(pkmn["Clefable"], pkmn["Clefairy"])
+        || evolve_raw(pkmn["Wigglytuff"], pkmn["Jigglypuff"])
+        )                
+)
+achievement(
+    "The Dojo Reward",
+    "Choose either Hitmonlee or Hitomnchan as your prize",
+    1,
+    trigger=
+        curr_check &&
+        (always_false()
+        || update(pkmn["Hitmonlee"])
+        || update(pkmn["Hitmonchan"])
+        )
+)
+gym(pkmn["Hitmonlee"])
+gym(pkmn["Hitmonchan"])
+curr_check = sum_of(gym_mons, b => b) == 105 
+achievement(
+    "Badge of Poison",
+    "Obtain the Soul Badge by defeating Koga with all 105 possible Pokemon obtained",
+    points=10,
+    trigger=
+        measured(curr_check) &&
+        trigger_when(map_bank == fuchsia_gym && badges["Misty"] > prev(badges["Misty"]))
+    
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
