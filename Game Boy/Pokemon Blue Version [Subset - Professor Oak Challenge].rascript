@@ -220,6 +220,7 @@ oak_lab = 0x28
 brock_gym = 0x36
 cerulean_gym = 0x41
 fuchsia_gym = 0x9d
+celadon_gym = 0x86
 in_title = 0x00
 save_protection = prev(map_bank) != in_title
 // $D164: [8bit] First Pokemon In Slot
@@ -840,29 +841,185 @@ achievement(
     points=10,
     trigger=
         measured(curr_check) &&
-        trigger_when(map_bank == fuchsia_gym && badges["Misty"] > prev(badges["Misty"]))
+        trigger_when(map_bank == fuchsia_gym && badges["Koga"] > prev(badges["Koga"]))    
+)
+obtain("Ponyta", 1, pkmn["Ponyta"], badges["Erika"], 1, curr_check)
+gym(pkmn["Ponyta"])
+evolve("Rapidash", 2, pkmn["Rapidash"], pkmn["Ponyta"], badges["Erika"], 1, curr_check)
+gym(pkmn["Rapidash"])
+obtain("Magnemite", 1, pkmn["Magnemite"], badges["Erika"], 1, curr_check)
+gym(pkmn["Magnemite"])
+evolve("Magneton", 2, pkmn["Magneton"], pkmn["Magnemite"], badges["Erika"], 1, curr_check)
+gym(pkmn["Magneton"])
+obtain("Seel", 1, pkmn["Seel"], badges["Erika"], 1, curr_check)
+gym(pkmn["Seel"])
+evolve("Dewgong", 2, pkmn["Dewgong"], pkmn["Seel"], badges["Erika"], 1, curr_check)
+gym(pkmn["Dewgong"])
+obtain("Grimer", 1, pkmn["Grimer"], badges["Erika"], 1, curr_check)
+gym(pkmn["Grimer"])
+evolve("Muk", 2, pkmn["Muk"], pkmn["Grimer"], badges["Erika"], 1, curr_check)
+gym(pkmn["Muk"])
+obtain("Koffing", 1, pkmn["Koffing"], badges["Erika"], 1, curr_check)
+gym(pkmn["Koffing"])
+evolve("Weezing", 2, pkmn["Weezing"], pkmn["Koffing"], badges["Erika"], 1, curr_check)
+gym(pkmn["Weezing"])
+obtain("Tangela", 1, pkmn["Tangela"], badges["Erika"], 1, curr_check)
+gym(pkmn["Tangela"])
+obtain("Aerodactyl", 1, pkmn["Aerodactyl"], badges["Erika"], 1, curr_check)
+gym(pkmn["Aerodactyl"])
+obtain("Zapdos", 5, pkmn["Zapdos"], badges["Erika"], 1, curr_check)
+gym(pkmn["Zapdos"])
+obtain("Magmar", 1, pkmn["Magmar"], badges["Erika"], 1, curr_check)
+gym(pkmn["Magmar"])
+
+/*
+badges ={
+    "Brock":bit0(0xd356),
+    "Misty":bit1(0xd356),
+    "Lt. Surge":bit2(0xd356),
+    "Erika":bit3(0xd356),
+    "Koga":bit4(0xd356),
+    "Sabrina":bit5(0xd356),
+    "Blaine":bit6(0xd356),
+    "Giovanni":bit7(0xd356)
     
+    
+}
+*/
+//For Fossils
+curr_badges = [badges["Brock"], badges["Misty"], badges["Koga"]]
+curr_badge_sum = sum_of(curr_badges, b => b) == 3
+achievement(
+    "Fossil Picker I",
+    "Obtain either Kabuto or Omanyte",
+    points=1,
+    trigger=
+        save_protection &&
+        curr_badge_sum &&
+        badges["Erika"] == 0 &&
+        (always_false()
+        || update(pkmn["Kabuto"])
+        || update(pkmn["Omanyte"])
+        )
+)
+gym(pkmn["Kabuto"])
+gym(pkmn["Omanyte"])
+achievement(
+    "Fossil Picker II",
+    "Obtain either Kabutops or Omastar",
+    points=2,
+    trigger=
+        save_protection &&
+        curr_badge_sum &&
+        badges["Erika"] == 0 &&
+        (always_false()
+        || pkmn["Kabuto"] == 1 && update(pkmn["Kabutops"])
+        || pkmn["Omanyte"] == 1 && update(pkmn["Omastar"])
+        )
 )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+gym(pkmn["Kabutops"])
+gym(pkmn["Omastar"])
+curr_check = sum_of(gym_mons, b => b) == 121
+achievement(
+    "Badge of Rainbow",
+    "Obtain the Rainbow Badge by defeating Erika with all 121 possible Pokemon obtained",
+    points=10,
+    trigger=
+        measured(curr_check) &&
+        trigger_when(map_bank == celadon_gym && badges["Erika"] > prev(badges["Erika"]))
+)
+array_push(curr_badges, badges["Erika"])
+achievement(
+    "Articuno",
+    "Obtain Articuno",
+    5,
+    trigger=
+        save_protection &&
+        curr_check &&
+        update(pkmn["Articuno"]) &&
+        badges["Lt. Surge"] == 0 &&
+        badges["Sabrina"] == 0 &&
+        badges["Blaine"] == 0 &&
+        sum_of(curr_badges, b => b) == 4
+)
+gym(pkmn["Articuno"])
+vermillion_gym = 0x5c
+curr_check = sum_of(gym_mons, b=>b) == 122
+achievement(
+    "Badge of Thunder",
+    "Obtain the Thunder Badge by defeating Lt. Surge with all 122 possible Pokmeon obtained",
+    10,
+    trigger=
+        measured(curr_check) &&
+        trigger_when(map_bank == vermillion_gym && badges["Lt. Surge"] > prev(badges["Lt. Surge"]))
+)  
+saffron_gym = 0xb2
+achievement(
+    "Badge of Psychic",
+    "Obtain the Marsh Badge by defeating Sabrina with all 122 possible Pokemon obtained",
+    10,
+    trigger=
+        measured(curr_check) &&
+        trigger_when(map_bank == saffron_gym && badges["Sabrina"] > prev(badges["Sabrina"]))
+)
+cinnabar_gym = 0xa6
+achievement(
+    "Badge of Lava",
+    "Obtain the Volcano Badge by defeating Blaine with all 122 possible Pokemon obtained",
+    10,
+    trigger=
+        measured(curr_check) &&
+        trigger_when(map_bank == cinnabar_gym && badges["Blaine"] > prev(badges["Blaine"]))
+)
+viridian_gym = 0x2d
+achievement(
+    "Badges of Ground",
+    "Obtain the Earth Badge by defeating Giovanni with all 122 possible Pokmeon obtained",
+    10,
+    trigger=
+        measured(curr_check) &&
+        trigger_when(map_bank == viridian_gym && badges["Giovanni"] > prev(badges["Giovanni"]))
+)
+array_push(curr_badges, badges["Lt. Surge"])
+array_push(curr_badges, badges["Sabrina"])
+array_push(curr_badges, badges["Blaine"])
+array_push(curr_badges, badges["Giovanni"])
+badges_full = sum_of(curr_badges, b=>b) == 8
+achievement(
+    "Moltres",
+    "Obtain Moltres",
+    5,
+    trigger=
+        save_protection &&
+        curr_check &&
+        badges_full &&
+        update(pkmn["Moltres"])
+)
+gym(pkmn["Moltres"])
+curr_check = sum_of(gym_mons, b => b) == 123
+achievement(
+    "Champion of Blue",
+    "Defeat the Elite 4 with all 123 possible Pokemon obtained",
+    10,
+    trigger=
+        save_protection &&
+        measured(curr_check) &&
+        badges_full &&
+        prev(map_bank) == 0x78 &&
+        trigger_when(map_bank == 0x76)
+)
+cerulean_cave = 0xe3
+achievement(
+    "End of the Road - Blue",
+    "Obtain Mewtwo after you've defeated the Elite 4 and have obtained all 123 possible Pokemon",
+    points=5,
+    trigger=
+        save_protection &&
+        measured(curr_check) &&
+        badges_full &&
+        update(pkmn["Mewtwo"])
+)
 
 
 
