@@ -550,63 +550,35 @@ Start Badge 2:
 Each time we add a new Pokemon, we will array_push() that Pokemon into the gym check
 */
 obtain("Clefairy", 1, pkmn["Clefairy"], badges["Misty"], 1, brock_check)
-gym(pkmn["Clefairy"])
 obtain("Jigglypuff", 1, pkmn["Jigglypuff"], badges["Misty"], 1, brock_check)
-gym(pkmn["Jigglypuff"])
 obtain("Zubat", 1, pkmn["Zubat"], badges["Misty"], 1, brock_check)
-gym(pkmn["Zubat"])
 evolve("Golbat", 2, pkmn["Golbat"], pkmn["Zubat"], badges["Misty"], 1, brock_check)
-gym(pkmn["Golbat"])
 obtain("Paras", 1, pkmn["Paras"], badges["Misty"], 1, brock_check)
-gym(pkmn["Paras"])
 evolve("Parasect", 2, pkmn["Parasect"], pkmn["Paras"], badges["Misty"], 1, brock_check)
-gym(pkmn["Parasect"])
 obtain("Diglett", 1, pkmn["Diglett"], badges["Misty"], 1, brock_check)
-gym(pkmn["Diglett"])
 obtain("Dugtrio", 2, pkmn["Dugtrio"], badges["Misty"], 1, brock_check)
-gym(pkmn["Dugtrio"])
 obtain("Abra", 1, pkmn["Abra"], badges["Misty"], 1, brock_check)
-gym(pkmn["Abra"])
 evolve("Kadabra", 2, pkmn["Kadabra"], pkmn["Abra"], badges["Misty"], 1, brock_check)
-gym(pkmn["Kadabra"])
 obtain("Geodude", 1, pkmn["Geodude"], badges["Misty"], 1, brock_check)
-gym(pkmn["Geodude"])
 evolve("Graveler", 2, pkmn["Graveler"], pkmn["Geodude"], badges["Misty"], 1, brock_check)
-gym(pkmn["Graveler"])
 obtain("Farfetch'd", 1, pkmn["Farfetch'd"], badges["Misty"], 1, brock_check)
-gym(pkmn["Farfetch'd"])
 obtain("Drowzee", 1, pkmn["Drowzee"], badges["Misty"], 1, brock_check)
-gym(pkmn["Drowzee"])
 evolve("Hypno", 2, pkmn["Hypno"], pkmn["Drowzee"], badges["Misty"], 1, brock_check)
-gym(pkmn["Hypno"])
 obtain("Mr. Mime", 1, pkmn["Mr. Mime"], badges["Misty"], 1, brock_check)
-gym(pkmn["Mr. Mime"])
 obtain("Magikarp", 1, pkmn["Magikarp"], badges["Misty"], 1, brock_check)
-gym(pkmn["Magikarp"])
 evolve("Gyrados", 2, pkmn["Gyrados"], pkmn["Magikarp"], badges["Misty"], 1, brock_check)
-gym(pkmn["Gyrados"])
 obtain("Sandshrew", 1, pkmn["Sandshrew"], badges["Misty"], 1, brock_check)
-gym(pkmn["Sandshrew"])
 evolve("Sandslash", 2, pkmn["Sandslash"], pkmn["Sandshrew"], badges["Misty"], 1, brock_check)
-gym(pkmn["Sandslash"])
 obtain("Meowth", 1, pkmn["Meowth"], badges["Misty"], 1, brock_check)
-gym(pkmn["Meowth"])
 evolve("Persian", 2, pkmn["Persian"], pkmn["Meowth"], badges["Misty"], 1, brock_check)
-gym(pkmn["Persian"])
 obtain("Bellsprout", 1, pkmn["Bellsprout"], badges["Misty"], 1, brock_check)
-gym(pkmn["Bellsprout"])
 evolve("Weepinbell", 2, pkmn["Weepinbell"], pkmn["Bellsprout"], badges["Misty"], 1, brock_check)
-gym(pkmn["Weepinbell"])
 moon_stone_choices = [
     pkmn["Nidoqueen"],
     pkmn["Nidoking"],
     pkmn["Clefable"],
     pkmn["Wigglytuff"]    
 ]
-gym(pkmn["Nidoqueen"])
-gym(pkmn["Nidoking"])
-gym(pkmn["Clefable"])
-gym(pkmn["Wigglytuff"])
 achievement(
     "Moon Power I",
     "Obtain one of the following: Nidoqueen, Nidoking, Clefable, or Wigglytuff",
@@ -635,122 +607,240 @@ achievement(
         || evolve_raw(pkmn["Wigglytuff"], pkmn["Jigglypuff"])
         )                
 )
+gym_mons_two = [ 
+    pkmn["Bulbasaur"],
+    pkmn["Ivysaur"],
+    pkmn["Venusaur"],
+    pkmn["Charmander"],
+    pkmn["Charmeleon"],
+    pkmn["Charizard"],
+    pkmn["Squirtle"],
+    pkmn["Wartortle"],
+    pkmn["Blastoise"],
+    pkmn["Caterpie"],
+    pkmn["Metapod"],
+    pkmn["Butterfree"],
+    pkmn["Weedle"],
+    pkmn["Kakuna"],
+    pkmn["Beedrill"],
+    pkmn["Pidgey"],
+    pkmn["Pidgeotto"],
+    pkmn["Pidgeot"],
+    pkmn["Rattata"],
+    pkmn["Raticate"],
+    pkmn["Spearow"],
+    pkmn["Fearow"],
+    pkmn["Pikachu"],
+    pkmn["NidoranF"],
+    pkmn["Nidorina"],
+    pkmn["NidoranM"],
+    pkmn["Nidorino"],
+    pkmn["Clefairy"],
+    pkmn["Jigglypuff"],
+    pkmn["Zubat"],
+    pkmn["Golbat"],
+    pkmn["Paras"],
+    pkmn["Parasect"],
+    pkmn["Diglett"],
+    pkmn["Dugtrio"],
+    pkmn["Abra"],
+    pkmn["Kadabra"],
+    pkmn["Geodude"],
+    pkmn["Graveler"],
+    pkmn["Farfetch'd"],
+    pkmn["Drowzee"],
+    pkmn["Hypno"],
+    pkmn["Mr. Mime"],
+    pkmn["Magikarp"],
+    pkmn["Gyrados"],
+    pkmn["Sandshrew"],
+    pkmn["Sandslash"],
+    pkmn["Meowth"],
+    pkmn["Persian"],
+    pkmn["Bellsprout"],
+    pkmn["Weepinbell"],
+    pkmn["Nidoqueen"],
+    pkmn["Nidoking"],
+    pkmn["Clefable"],
+    pkmn["Wigglytuff"]
+]
+misty_check = sum_of(gym_mons_two, b =>b) == 47
+
+
 achievement(
     "Badge of Water",
     "Obtain the Cascade Badge by defeating Misty with all 47 possible Pokemon obtained",
     points=10,
     trigger=
-        measured(sum_of(gym_mons, b => b) == 47) &&
+        measured(misty_check) &&
         trigger_when(map_bank == cerulean_gym && badges["Misty"] > prev(badges["Misty"]))
 )
-curr_check = sum_of(gym_mons, b => b) == 47 
-evolve("Raichu", 2, pkmn["Raichu"], pkmn["Pikachu"], badges["Koga"], 1, curr_check)
+gym_mons_two_one = [ 
+    pkmn["Bulbasaur"],
+    pkmn["Ivysaur"],
+    pkmn["Venusaur"],
+    pkmn["Charmander"],
+    pkmn["Charmeleon"],
+    pkmn["Charizard"],
+    pkmn["Squirtle"],
+    pkmn["Wartortle"],
+    pkmn["Blastoise"],
+    pkmn["Caterpie"],
+    pkmn["Metapod"],
+    pkmn["Butterfree"],
+    pkmn["Weedle"],
+    pkmn["Kakuna"],
+    pkmn["Beedrill"],
+    pkmn["Pidgey"],
+    pkmn["Pidgeotto"],
+    pkmn["Pidgeot"],
+    pkmn["Rattata"],
+    pkmn["Raticate"],
+    pkmn["Spearow"],
+    pkmn["Fearow"],
+    pkmn["Pikachu"],
+    pkmn["NidoranF"],
+    pkmn["Nidorina"],
+    pkmn["NidoranM"],
+    pkmn["Nidorino"],
+    pkmn["Clefairy"],
+    pkmn["Jigglypuff"],
+    pkmn["Zubat"],
+    pkmn["Golbat"],
+    pkmn["Paras"],
+    pkmn["Parasect"],
+    pkmn["Diglett"],
+    pkmn["Dugtrio"],
+    pkmn["Abra"],
+    pkmn["Kadabra"],
+    pkmn["Geodude"],
+    pkmn["Graveler"],
+    pkmn["Farfetch'd"],
+    pkmn["Drowzee"],
+    pkmn["Hypno"],
+    pkmn["Mr. Mime"],
+    pkmn["Magikarp"],
+    pkmn["Gyrados"],
+    pkmn["Sandshrew"],
+    pkmn["Sandslash"],
+    pkmn["Meowth"],
+    pkmn["Persian"],
+    pkmn["Bellsprout"],
+    pkmn["Weepinbell"]
+]
+misty_check_two = sum_of(gym_mons_two_one, b => b) == 45 
+evolve("Raichu", 2, pkmn["Raichu"], pkmn["Pikachu"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Raichu"])
-obtain("Venonat", 1, pkmn["Venonat"], badges["Koga"], 1, curr_check)
+obtain("Venonat", 1, pkmn["Venonat"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Venonat"])
-evolve("Venomoth", 2, pkmn["Venomoth"], pkmn["Venonat"], badges["Koga"], 1, curr_check)
+evolve("Venomoth", 2, pkmn["Venomoth"], pkmn["Venonat"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Venomoth"])
-obtain("Psyduck", 1, pkmn["Psyduck"], badges["Koga"], 1, curr_check)
+obtain("Psyduck", 1, pkmn["Psyduck"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Psyduck"])
-evolve("Golduck", 2, pkmn["Golduck"], pkmn["Psyduck"], badges["Koga"], 1, curr_check)
+evolve("Golduck", 2, pkmn["Golduck"], pkmn["Psyduck"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Golduck"])
-obtain("Poliwag", 1, pkmn["Poliwag"], badges["Koga"], 1, curr_check)
+obtain("Poliwag", 1, pkmn["Poliwag"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Poliwag"])
-evolve("Poliwhirl", 2, pkmn["Poliwhirl"], pkmn["Poliwag"], badges["Koga"], 1, curr_check)
+evolve("Poliwhirl", 2, pkmn["Poliwhirl"], pkmn["Poliwag"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Poliwhirl"])
-evolve("Poliwrath", 3, pkmn["Poliwrath"], pkmn["Poliwhirl"], badges["Koga"], 1, curr_check)
+evolve("Poliwrath", 3, pkmn["Poliwrath"], pkmn["Poliwhirl"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Poliwrath"])
-obtain("Machop", 1, pkmn["Machop"], badges["Koga"], 1, curr_check)
+obtain("Machop", 1, pkmn["Machop"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Machop"])
-evolve("Machoke", 2, pkmn["Machoke"], pkmn["Machop"], badges["Koga"], 1, curr_check)
+evolve("Machoke", 2, pkmn["Machoke"], pkmn["Machop"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Machoke"])
-obtain("Tentacool", 1, pkmn["Tentacool"], badges["Koga"], 1, curr_check)
+obtain("Tentacool", 1, pkmn["Tentacool"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Tentacool"])
-evolve("Tentacruel", 2, pkmn["Tentacruel"], pkmn["Tentacool"], badges["Koga"], 1, curr_check)
+evolve("Tentacruel", 2, pkmn["Tentacruel"], pkmn["Tentacool"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Tentacruel"])
-obtain("Slowpoke", 1, pkmn["Slowpoke"], badges["Koga"], 1, curr_check)
+obtain("Slowpoke", 1, pkmn["Slowpoke"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Slowpoke"])
-evolve("Slowbro", 1, pkmn["Slowbro"], pkmn["Slowpoke"], badges["Koga"], 1, curr_check)
+evolve("Slowbro", 1, pkmn["Slowbro"], pkmn["Slowpoke"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Slowbro"])
-obtain("Doduo", 1, pkmn["Doduo"], badges["Koga"], 1, curr_check)
+obtain("Doduo", 1, pkmn["Doduo"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Doduo"])
-evolve("Dodrio", 2, pkmn["Dodrio"], pkmn["Doduo"], badges["Koga"], 1, curr_check)
+evolve("Dodrio", 2, pkmn["Dodrio"], pkmn["Doduo"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Dodrio"])
-obtain("Shellder", 1, pkmn["Shellder"], badges["Koga"], 1, curr_check)
+obtain("Shellder", 1, pkmn["Shellder"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Shellder"])
-evolve("Cloyster", 1, pkmn["Cloyster"], pkmn["Shellder"], badges["Koga"], 1, curr_check)
+evolve("Cloyster", 1, pkmn["Cloyster"], pkmn["Shellder"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Cloyster"])
-obtain("Gastly", 1, pkmn["Gastly"], badges["Koga"], 1, curr_check)
+obtain("Gastly", 1, pkmn["Gastly"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Gastly"])
-evolve("Haunter", 2, pkmn["Haunter"], pkmn["Gastly"], badges["Koga"], 1, curr_check)
+obtain("Haunter", 2, pkmn["Haunter"], badges["Koga"], 1, misty_check_two)
+
 gym(pkmn["Haunter"])
-obtain("Onix", 1, pkmn["Onix"], badges["Koga"], 1, curr_check)
+
+
+
+
+obtain("Onix", 1, pkmn["Onix"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Onix"])
-obtain("Krabby", 1, pkmn["Krabby"], badges["Koga"], 1, curr_check)
+obtain("Krabby", 1, pkmn["Krabby"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Krabby"])
-evolve("Kingler", 2, pkmn["Kingler"], pkmn["Krabby"], badges["Koga"], 1, curr_check)
+evolve("Kingler", 2, pkmn["Kingler"], pkmn["Krabby"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Kingler"])
-obtain("Voltorb", 1, pkmn["Voltorb"], badges["Koga"], 1, curr_check)
+obtain("Voltorb", 1, pkmn["Voltorb"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Voltorb"])
-evolve("Electrode", 2, pkmn["Electrode"], pkmn["Voltorb"], badges["Koga"], 1, curr_check)
+evolve("Electrode", 2, pkmn["Electrode"], pkmn["Voltorb"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Electrode"])
-obtain("Exeggcute", 1, pkmn["Exeggcute"], badges["Koga"], 1, curr_check)
+obtain("Exeggcute", 1, pkmn["Exeggcute"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Exeggcute"])
-evolve("Exeggutor", 2, pkmn["Exeggutor"], pkmn["Exeggcute"], badges["Koga"], 1, curr_check)
+evolve("Exeggutor", 2, pkmn["Exeggutor"], pkmn["Exeggcute"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Exeggutor"])
-obtain("Cubone", 1, pkmn["Cubone"], badges["Koga"], 1, curr_check)
+obtain("Cubone", 1, pkmn["Cubone"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Cubone"])
-evolve("Marowak", 2, pkmn["Marowak"], pkmn["Cubone"], badges["Koga"], 1, curr_check)
+evolve("Marowak", 2, pkmn["Marowak"], pkmn["Cubone"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Marowak"])
-obtain("Lickitung", 1, pkmn["Lickitung"], badges["Koga"], 1, curr_check)
+obtain("Lickitung", 1, pkmn["Lickitung"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Lickitung"])
-obtain("Rhyhorn", 1, pkmn["Rhyhorn"], badges["Koga"], 1, curr_check)
+obtain("Rhyhorn", 1, pkmn["Rhyhorn"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Rhyhorn"])
-evolve("Rhydon", 2, pkmn["Rhydon"], pkmn["Rhyhorn"], badges["Koga"], 1, curr_check)
+evolve("Rhydon", 2, pkmn["Rhydon"], pkmn["Rhyhorn"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Rhydon"])
-obtain("Chansey", 1, pkmn["Chansey"], badges["Koga"], 1, curr_check)
+obtain("Chansey", 1, pkmn["Chansey"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Chansey"])
-obtain("Kangaskhan", 1, pkmn["Kangaskhan"], badges["Koga"], 1, curr_check)
+obtain("Kangaskhan", 1, pkmn["Kangaskhan"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Kangaskhan"])
-obtain("Horsea", 1, pkmn["Horsea"], badges["Koga"], 1, curr_check)
+obtain("Horsea", 1, pkmn["Horsea"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Horsea"])
-evolve("Seadra", 2, pkmn["Seadra"], pkmn["Horsea"], badges["Koga"], 1, curr_check)
+evolve("Seadra", 2, pkmn["Seadra"], pkmn["Horsea"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Seadra"])
-obtain("Goldeen", 1, pkmn["Goldeen"], badges["Koga"], 1, curr_check)
+obtain("Goldeen", 1, pkmn["Goldeen"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Goldeen"])
-evolve("Seaking", 2, pkmn["Seaking"], pkmn["Goldeen"], badges["Koga"], 1, curr_check)
+evolve("Seaking", 2, pkmn["Seaking"], pkmn["Goldeen"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Seaking"])
-obtain("Staryu", 1, pkmn["Staryu"], badges["Koga"], 1, curr_check)
+obtain("Staryu", 1, pkmn["Staryu"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Staryu"])
-evolve("Starmie", 2, pkmn["Starmie"], pkmn["Staryu"], badges["Koga"], 1, curr_check)
+evolve("Starmie", 2, pkmn["Starmie"], pkmn["Staryu"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Starmie"])
-obtain("Jynx", 1, pkmn["Jynx"], badges["Koga"], 1, curr_check)
+obtain("Jynx", 1, pkmn["Jynx"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Jynx"])
-obtain("Tauros", 1, pkmn["Tauros"], badges["Koga"], 1, curr_check)
+obtain("Tauros", 1, pkmn["Tauros"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Tauros"])
-obtain("Lapras", 1, pkmn["Lapras"], badges["Koga"], 1, curr_check)
+obtain("Lapras", 1, pkmn["Lapras"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Lapras"])
-obtain("Ditto", 1, pkmn["Ditto"], badges["Koga"], 1, curr_check)
+obtain("Ditto", 1, pkmn["Ditto"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Ditto"])
-obtain("Eevee", 1, pkmn["Eevee"], badges["Koga"], 1, curr_check)
+obtain("Eevee", 1, pkmn["Eevee"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Eevee"])
-obtain("Porygon", 1, pkmn["Porygon"], badges["Koga"], 1, curr_check)
+obtain("Porygon", 1, pkmn["Porygon"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Porygon"])
-obtain("Snorlax", 1, pkmn["Snorlax"], badges["Koga"], 1, curr_check)
+obtain("Snorlax", 1, pkmn["Snorlax"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Snorlax"])
-obtain("Dratini", 1, pkmn["Dratini"], badges["Koga"], 1, curr_check)
+obtain("Dratini", 1, pkmn["Dratini"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Dratini"])
-evolve("Dragonair", 2, pkmn["Dragonair"], pkmn["Dratini"], badges["Koga"], 1, curr_check)
+evolve("Dragonair", 2, pkmn["Dragonair"], pkmn["Dratini"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Dragonair"])
-evolve("Dragonite", 3, pkmn["Dragonite"], pkmn["Dragonair"], badges["Koga"], 1, curr_check)
+evolve("Dragonite", 3, pkmn["Dragonite"], pkmn["Dragonair"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Dragonite"])
-obtain("Vulpix", 1, pkmn["Vulpix"], badges["Koga"], 1, curr_check)
+obtain("Vulpix", 1, pkmn["Vulpix"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Vulpix"])
-evolve("Ninetales", 1, pkmn["Ninetales"], pkmn["Vulpix"], badges["Koga"], 1, curr_check)
+evolve("Ninetales", 1, pkmn["Ninetales"], pkmn["Vulpix"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Ninetales"])
-evolve("Victreebel", 3, pkmn["Victreebel"], pkmn["Weepinbell"], badges["Koga"], 1, curr_check)
+evolve("Victreebel", 3, pkmn["Victreebel"], pkmn["Weepinbell"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Victreebel"])
-obtain("Pinsir", 1, pkmn["Pinsir"], badges["Koga"], 1, curr_check)
+obtain("Pinsir", 1, pkmn["Pinsir"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Pinsir"])
 //Eevolution #1:
 eevolutions = [
@@ -785,48 +875,40 @@ achievement(
     "Obtain your First eveelution",
     2,
     trigger=
-        curr_check &&
+        misty_check_two &&
         sum_of(eevolutions, b => prev(b)) == 0 &&
         (always_false()
         || update(pkmn["Vaporeon"])
         || update(pkmn["Jolteon"])
         || update(pkmn["Flareon"])
         )
-)
+) //badges["Misty"] == 1 &&
 achievement(
     "Moon Power III",
     "Obtain one of the following: Nidoqueen, Nidoking, Clefable, or Wigglytuff",
     points=3,
     trigger=
-        curr_check &&
+        misty_check_two &&
+        badges["Misty"] == 1 &&
         sum_of(moon_stone_choices, b=>prev(b)) == 2 &&
-        (always_false()
-        || evolve_raw(pkmn["Nidoqueen"], pkmn["Nidorina"])
-        || evolve_raw(pkmn["Nidoking"], pkmn["Nidorino"])
-        || evolve_raw(pkmn["Clefable"], pkmn["Clefairy"])
-        || evolve_raw(pkmn["Wigglytuff"], pkmn["Jigglypuff"])
-        )                
+        sum_of(moon_stone_choices, b=>b) == 3             
 )
 achievement(
     "Moon Power IV",
     "Obtain one of the following: Nidoqueen, Nidoking, Clefable, or Wigglytuff",
     points=3,
     trigger=
-        curr_check &&
+        misty_check_two &&
+        badges["Misty"] == 1 &&
         sum_of(moon_stone_choices, b=>prev(b)) == 3 &&
-        (always_false()
-        || evolve_raw(pkmn["Nidoqueen"], pkmn["Nidorina"])
-        || evolve_raw(pkmn["Nidoking"], pkmn["Nidorino"])
-        || evolve_raw(pkmn["Clefable"], pkmn["Clefairy"])
-        || evolve_raw(pkmn["Wigglytuff"], pkmn["Jigglypuff"])
-        )                
+        sum_of(moon_stone_choices, b=>b) == 4              
 )
 achievement(
     "The Dojo Reward",
     "Choose either Hitmonlee or Hitomnchan as your prize",
     1,
     trigger=
-        curr_check &&
+        misty_check_two &&
         (always_false()
         || update(pkmn["Hitmonlee"])
         || update(pkmn["Hitmonchan"])
