@@ -22,7 +22,7 @@ function balls() => byte(0x0000F5)
 // $0428: [8bit] Game State (Also for In Game Pause)
 //        00 = Paused/InMenu
 //        01 = InGame/Unpaused
-function globalstate() => byte(0x000428)
+function globalstate() => byte(0x0033)
 
 // $1F85: [8bit] Stage ID
 function stageID() => byte(0x001F85)
@@ -76,7 +76,7 @@ for progression in levelDefinitions{
         badge = badgeID,
         id=cheevID,
         trigger =
-            prev(globalstate()) == 1 &&
+            prev(globalstate()) == 2 &&
             stageID() == stage &&
             balls() < prev(balls()) &&
             balls() == 0            
@@ -91,7 +91,7 @@ achievement(
     badge="169548",
     id=151394,
     trigger = 
-        prev(globalstate()) == 1 &&
+        prev(globalstate()) == 2 &&
         speed() == 2 &&
         stageID() == stage &&
         balls() < prev(balls()) &&
@@ -113,10 +113,9 @@ speeds = {
     1:"⏩",
     2:"⏭️"
 }
-rich_presence_conditional_display(globalstate() == 1 && balls() != 0, "Adventuring on Stage {0}. 🏆 {1} {2}", 
+rich_presence_conditional_display(globalstate() == 2 && balls() != 0, "Adventuring on Stage {0}. 🏆 {1} {2}", 
     rich_presence_value("stageNumber", stageID()),
     rich_presence_value("Score", scoreones() + scoretens() * 10 + scorehundreds() * 100 + scorethousands() * 1000 + scoretenthousands() * 10000, "POINTS"),
     rich_presence_lookup("Speed", speed(), speeds)
 )
-rich_presence_conditional_display(globalstate() == 0 && balls() != 0, "Paused")
 rich_presence_display("In Menu")
