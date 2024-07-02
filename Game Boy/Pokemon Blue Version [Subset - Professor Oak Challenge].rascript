@@ -222,6 +222,8 @@ cerulean_gym = 0x41
 fuchsia_gym = 0x9d
 celadon_gym = 0x86
 in_title = 0x00
+
+starters_register = byte(0xd2f7)
 save_protection = prev(map_bank) != in_title
 // $D164: [8bit] First Pokemon In Slot
 //        0xff=Invalid
@@ -808,7 +810,7 @@ evolve("Seadra", 2, pkmn["Seadra"], pkmn["Horsea"], badges["Koga"], 1, misty_che
 gym(pkmn["Seadra"])
 obtain("Goldeen", 1, pkmn["Goldeen"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Goldeen"])
-evolve("Seaking", 2, pkmn["Seaking"], pkmn["Goldeen"], badges["Koga"], 1, misty_check_two)
+obtain("Seaking", 2, pkmn["Seaking"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Seaking"])
 obtain("Staryu", 1, pkmn["Staryu"], badges["Koga"], 1, misty_check_two)
 gym(pkmn["Staryu"])
