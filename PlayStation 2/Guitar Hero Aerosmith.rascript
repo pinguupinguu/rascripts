@@ -7,11 +7,13 @@ data_type_unlocked = 0xfef4e1e8
 data_type_purchaseable = 0x61ee5765
 data_type_cash = 0xf9461a46
 data_type_career_score = 0xcd66c8ae
+data_type_career_star = 0xfee23fd3
 function item_node_next_node(addr) => dword(addr + 0xc)
 function item_node_2nd_node(addr) => dword(item_node_next_node(addr) + 0xc)
 function item_node_3rd_node(addr) => dword(item_node_2nd_node(addr) + 0xC)
 function item_node_4th_node(addr) => dword(item_node_3rd_node(addr) + 0xC)
 function item_node_unlock_flag(addr) => byte(addr + 0x8)
+function item_node_career_star_flag(addr) => dword(addr + 0x8)
 function item_has_been_unlocked_4nodes(node) {
     node_2nd = item_node_2nd_node(node)
     node_3rd = item_node_3rd_node(node)
@@ -35,7 +37,86 @@ function item_has_been_unlocked_4nodes(node) {
             )
     )
 }
+difficulty = dword(0x00376af4)
+easy = 0
+medium = 1
+hard = 2
+expert = 3
+static_track = dword(0x37b088)
+track_state_offset = 0xdc
+function track_state(offset) => dword(static_track + offset) 
+function career_song_score_clear(node, song_checksum) {
+    node_2nd = item_node_2nd_node(node)
+    node_3rd = item_node_3rd_node(node)
+    node_4th = item_node_4th_node(node)
+    return (
+            difficulty == expert &&
+            track_state(track_state_offset) == 1 &&
+            
+            (
+                prev(item_node_career_star_flag(node)) == 0 &&  item_node_career_star_flag(node) != 0 ||
+                prev(item_node_career_star_flag(node_2nd)) == 0 &&  item_node_career_star_flag(node_2nd) != 0 ||
+                prev(item_node_career_star_flag(node_3rd)) == 0 && item_node_career_star_flag(node_3rd) != 0 ||
+                prev(item_node_career_star_flag(node_4th))  == 0 &&  item_node_career_star_flag(node_4th) != 0
+            )
+    )
+    
+}
+song_database = {
+    1:{"Name":"Dream Police", "Hash":0x33a34f1d},
+2:{"Name":"All the Young Dudes (cover)", "Hash":0x5d5b4613},
+3:{"Name":"Make It", "Hash":0x1f690027},
+4:{"Name":"Uncle Salty", "Hash":0xcc50d114},
+5:{"Name":"Draw the Line", "Hash":0x364619ba},
+6:{"Name":"I Hate Myself For Loving You", "Hash":0xa04034a1},
+7:{"Name":"All Day and All of the Night (cover)", "Hash":0x3cb1ab4f},
+8:{"Name":"No Surprize", "Hash":0x1d0e54d6},
+9:{"Name":"Movin' Out", "Hash":0x78c666ab},
+10:{"Name":"Sweet Emotion", "Hash":0x9475da58},
+11:{"Name":"Complete Control", "Hash":0xe440d771},
+12:{"Name":"Personality Crisis (cover)", "Hash":0x5afb1da6},
+13:{"Name":"Livin' on the Edge", "Hash":0x91618154},
+14:{"Name":"Rag Doll", "Hash":0x8b5d73b0},
+15:{"Name":"Love in an Elevator", "Hash":0xf18717a0},
+16:{"Name":"She Sells Sanctuary", "Hash":0x781fe608},
+17:{"Name":"King of Rock", "Hash":0xb71fc4cf},
+18:{"Name":"Nobody's Fault", "Hash":0x29b81328},
+19:{"Name":"Bright Light Fright", "Hash":0x9fbd7d7c},
+20:{"Name":"Walk This Way (Run DMC)", "Hash":0x55a1fc1d},
+21:{"Name":"Hard to Handle (cover)", "Hash":0xbdbbcd8f},
+22:{"Name":"Always On The Run", "Hash":0xe1597714},
+23:{"Name":"Back In The Saddle", "Hash":0x8c295d0e},
+24:{"Name":"Beyond Beautiful", "Hash":0xfb394005},
+25:{"Name":"Dream On", "Hash":0x81a8efa2},
+26:{"Name":"Cat Scratch Fever", "Hash":0xa9229259},
+27:{"Name":"Sex Type Thing", "Hash":0x248c18bc},
+28:{"Name":"Mama Kin", "Hash":0xf3d54ab1},
+29:{"Name":"Toys in the Attic", "Hash":0x287d05a1},
+30:{"Name":"Train Kept a Rollin'", "Hash":0x2ddd4e48},
+31:{"Name":"Walk This Way", "Hash":0x5f3b269a},
+32:{"Name":"Rats in the Cellar", "Hash":0x00a7df47},
+33:{"Name":"Kings and Queens", "Hash":0xb16f766a},
+34:{"Name":"Combination", "Hash":0x21f6e550},
+35:{"Name":"Let the Music Do the Talking", "Hash":0x77937bb0},
+36:{"Name":"Shakin' My Cage", "Hash":0xfe9dee81},
+37:{"Name":"Pink", "Hash":0xd39c8e29},
+38:{"Name":"Talk Talkin'", "Hash":0xd7b44e85},
+39:{"Name":"Mercy", "Hash":0x64fbf1ed},
+40:{"Name":"Pandora's Box", "Hash":0x855bd7b8},
+41:{"Name":"Joe Perry Guitar Battle (Solo)", "Hash":0x8ae074aa},
+}
 
+
+
+hate_myself = dword(dword(0x0055b10c) + 0x4)
+achievement(
+    "Instrumental Upgrades",
+    "Clear all Career songs in the 'Getting the Band Together' setlist on Expert.",
+    points=10,
+    trigger=
+        difficulty == expert &&
+        career_song_score_clear(hate_myself)
+)
 
 function guitar_battle_clear(node) { //Since we are checking the same final offset of flag, we just change conditionals to be for career score, as well as a score increment!
     node_2nd = item_node_2nd_node(node)
