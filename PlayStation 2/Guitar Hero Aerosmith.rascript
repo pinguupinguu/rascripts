@@ -118,6 +118,10 @@ function career_song_clear(my_name, my_desc, my_points, my_type, node, my_diffic
 }
 
 
+
+
+
+
 draw_the_line = dword(dword(0x0055b10c) + 0x4) //Encore - Getting the Band Together
 sweet_emotion = dword(dword(0x0055aa94) + 0x4) //Encore - First Taste of Success
 love_in_an_elevator = dword(dword(0x0055a3bc) + 0x4) //Encore - The Triumphant Return
@@ -155,6 +159,33 @@ career_song_clear("Striking New Chords", "Clear all Career songs in the 'The Tri
 career_song_clear("Mr. Worldwide", "Clear all Career songs in the 'International Superstars' setlist on Expert.", 10, "", run_dmc_walk_this_way, expert, song_database["Walk This Way (Run DMC)"])
 career_song_clear("The Face of America", "Clear all Career songs in the 'The Great American Band' setlist on Expert.", 10, "", dream_on, expert, song_database["Dream On"])
 career_song_clear("Rock And Roll Hall of Famers", "Clear all Career songs in the 'Rock 'n Roll Legends' setlist on Expert.", 25, "win_condition", train_kept_a_rollin, expert, song_database["Train Kept a Rollin'"])
+
+//Career Five Star Experts
+//dream_police = dword(dword(0x005581c0) + 0x4)
+
+function career_song_five_star_clear(my_name, my_desc, my_points, node, song_checksum){
+    node_2nd = item_node_2nd_node(node)
+    node_3rd = item_node_3rd_node(node)
+    node_4th = item_node_4th_node(node)
+    achievement(
+        my_name,
+        my_desc,
+        my_points,
+        trigger=
+            difficulty == expert &&
+            song_id == song_checksum &&
+            (
+                prev(item_node_career_star_flag(node)) != 5 &&  item_node_career_star_flag(node) == 5 ||
+                prev(item_node_career_star_flag(node_2nd)) != 5 &&  item_node_career_star_flag(node_2nd) == 5 ||
+                prev(item_node_career_star_flag(node_3rd)) != 5 && item_node_career_star_flag(node_3rd) == 5 ||
+                prev(item_node_career_star_flag(node_4th))  != 5 &&  item_node_career_star_flag(node_4th) == 5
+            )
+        
+        
+    )
+}
+//career_song_five_star_clear("Dream Police", "Clear 'Dream Police' in Career on Expert Guitar with five stars", 10, dream_police, song_database["Dream Police"])
+
 
 
 index_joe_perry = dword(dword(0x0055b838) +0x4)
