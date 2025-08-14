@@ -26,8 +26,30 @@ extras_blacklist = [
     bit0(0x18bd69), //Regenerate Hearts
     bit3(0x18bd69) //Invincibility    
 ]
-function cheat_blocks() => all_of(extras_blacklist, b => unless(once(b == 1)))
-function utility_protections() => debug_inactive() && profile_protection() && load_protection() && cheat_blocks() //Reference for all achievements for proper protections.
+function cheat_return(){
+    return(
+        never(prev(bit1(0x18bd68)) + 
+        prev(bit5(0x18bd68)) +
+        prev(bit0(0x18bd69)) +
+        prev(bit3(0x18bd69)) == 1 &&
+        bit1(0x18bd68) +
+        bit5(0x18bd68) +
+        bit0(0x18bd69) +
+        bit3(0x18bd69) == 0)
+        
+        
+        
+        
+    )
+    
+       
+    }
+
+
+function cheat_blocks() => all_of(extras_blacklist, b => unless(once(b > prev(b))))
+function cheat_reset() => always_false() || cheat_return()
+                          
+function utility_protections() => debug_inactive() && profile_protection() && load_protection() && cheat_blocks() && (cheat_reset()) //Reference for all achievements for proper protections.
 function raw_utility_protections() => debug_inactive() && profile_protection() && load_protection()
 function progression(target) => utility_protections() && target > prev(target)
 // $17107D: [NBit] Level Flags
