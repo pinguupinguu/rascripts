@@ -2253,7 +2253,7 @@ achievement(
     "Evolve Finneon into Lumineon",
     points=2,
     trigger=
-        evolve(badges["Cobble"], pokedex["Finneon"], pokedex["Lumineon"])
+        catch(badges["Cobble"], pokedex["Lumineon"])
 )
 achievement(
     "Gliscor",
