@@ -68,7 +68,107 @@ class RaceMechs {
     Position = byte(0xffc2)
     
     Race_Number = byte(0xffe3) //Increments to +1 above max to indicate end of championship.
+    
     Flag_GardenUnlock = bit6(0xffb2) // For Unlock: Check $ffe3 = 0x13
     Flag_Paused = bit3(0xffc8)
     Flag_EndRace = bit7(0xffc0)
 }
+
+//Standard Progression 
+Progression_Titles = [
+    "Spooked Like A Baby",
+    "Through The Graves",
+    "This is Halloween"    
+]
+
+Progression_Descriptions = [
+    "Clear all 8 races and win a Rookie Championship",
+    "Clear all 15 races and win an Advanced Championship",
+    "Clear all 18 races and win an Expert Championship"
+]
+Progression_Points = [
+    10,
+    25,
+    25
+]
+Progression_IDS = [
+    549116,
+    549117,
+    549118
+]
+Progression_Difficulties = [
+    Diff_Rookie,
+    Diff_Advanced,
+    Diff_Expert
+]
+Progression_RaceCounts = [
+    8,
+    15,
+    18
+]
+Race = RaceMechs()
+for i in range(0, length(Progression_Titles) - 1){
+    title = Progression_Titles[i]
+    description = Progression_Descriptions[i]
+    points = Progression_Points[i]
+    id = Progression_IDS[i]
+    //tbd: ID
+    achievement(
+        title,
+        description,
+        points,
+        id=id,
+        type="win_condition",
+        trigger=
+            GetCurrMode(Mode_Championship) &&
+            GetCurrDiff(Progression_Difficulties[i]) &&
+            prev(Race.Race_Number) == Progression_RaceCounts[i] &&
+            Race.Race_Number == Progression_RaceCounts[i] + 1
+    )
+    
+}
+
+achievement(
+    "First to the Grave",
+    "Clear all 8 races of a Rookie Championship while always obtaining first place",
+    points=25,
+    trigger=
+        unless(GetCurrMode(Mode_Championship)) &&
+        once(
+            GetCurrDiff(Diff_Rookie) &&
+            prev(GetGameState(GameState_Menu)) &&
+            GetGameState(GameState_InRace) 
+            
+        ) &&
+        trigger_when(
+                prev(Race.Race_Number == 8) &&
+                Race.Race_Number == 9
+                
+            ) &&
+        never(
+            Race.Lap_Number == 2 &&
+            Race.Position != 1 &&
+            Race.Flag_EndRace > prev(Race.Flag_EndRace)
+        )    &&
+        never( prev(GetGameState(GameState_InRace)) &&
+                GetGameState(GameState_Menu)                                
+        )
+                   
+)
+
+
+
+
+
+//Rich Presence Beginning!
+
+CurrCharacter = byte(0xffb7)
+Character_Lookup = {
+   0: "Bunny Rabbit",
+   1: "Knight",
+   2: "Ghoul",
+   3: "Penguin",
+   4: "The Warlock",
+   5: "Witch"    
+}
+
