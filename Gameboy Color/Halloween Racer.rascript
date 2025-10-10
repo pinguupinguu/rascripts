@@ -308,7 +308,7 @@ for i in range(0, 2){
         "Fastest time completion of " + Diff_Lookup[i] + " Championship",
         GetCurrMode(Mode_Championship) && GetCurrDiff(i) && Race.Race_Number == 1 && GetGameState(GameState_InRace) && Race.Flag_PlayerControl > prev(Race.Flag_PlayerControl),
         State_LeaveRace() || Race.Flag_RaceLost > prev(Race.Flag_RaceLost),
-        GetCurrMode(Mode_Championship) && GetCurrDiff(i) && prev(Race.Race_Number) == Progression_RaceCounts[i] && Race.Race_Number == Progression_RaceCounts[i],
+        GetCurrMode(Mode_Championship) && GetCurrDiff(i) && prev(Race.Race_Number) == Progression_RaceCounts[i] && Race.Race_Number == Progression_RaceCounts[i] + 1,
         measured(always_true()),
     "FRAMES",
     true        
@@ -319,7 +319,7 @@ for i in range(0, 2){
         "Highest score on " + Diff_Lookup[i] + " Championship",
         GetCurrMode(Mode_Championship) && GetCurrDiff(i) && Race.Race_Number == 1 && GetGameState(GameState_InRace) && Race.Flag_PlayerControl > prev(Race.Flag_PlayerControl),
         State_LeaveRace() || Race.Flag_RaceLost > prev(Race.Flag_RaceLost),
-        GetCurrMode(Mode_Championship) && GetCurrDiff(i) && prev(Race.Race_Number) == Progression_RaceCounts[i] && Race.Race_Number == Progression_RaceCounts[i],
+        GetCurrMode(Mode_Championship) && GetCurrDiff(i) && prev(Race.Race_Number) == Progression_RaceCounts[i] && Race.Race_Number == Progression_RaceCounts[i] + 1,
         GetCurrScore(),
     "POINTS",
     false        
