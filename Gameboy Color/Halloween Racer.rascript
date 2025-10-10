@@ -51,8 +51,8 @@ GameState_InRace = 0xc3
 function GetGameState(param){
     return CurrGameState == param
 }
-
-
+function State_LeaveRace() => prev(GetGameState(GameState_InRace)) && GetGameState(GameState_Transition)
+function State_EnterRace() => prev(GetGameState(GameState_Menu)) && GetGameState(GameState_InRace)
 
 
 
@@ -75,7 +75,7 @@ class RaceMechs {
     Flag_EndRace = bit5(0xffc0)
     Flag_RaceLost = bit6(0xffc0)
     Flag_Results = bit7(0xffc0)
-    
+    Flag_PlayerControl = bit2(0xffc8)
     Timer_Min = byte(0x00ffc4)
     Timer_Sec = byte(0x00ffc3)
 }
@@ -216,14 +216,13 @@ for i in range(0, length(Course_Names) - 1){
             once(
                 GetCurrDiff(Diff_Expert) &&
                 GetCurrCourse(i) &&
-                prev(GetGameState(GameState_Menu)) &&
-                GetGameState(GameState_InRace)
+                State_EnterRace()
                 
                   
             ) &&
             trigger_when(Race.Timer_Min != 0 && Race.Timer_Sec != 0 && Race.Flag_EndRace > prev(Race.Flag_EndRace)) &&
             never (prev(Race.Clock_PowerupAccel) == 0 && Race.CurrSpeed < prev(Race.CurrSpeed)) &&
-            never(prev(GetGameState(GameState_InRace)) && GetGameState(GameState_Transition)) &&
+            never(State_LeaveRace()) &&
             never(Race.Flag_RaceLost > prev(Race.Flag_RaceLost))            
     )    
 }
@@ -288,7 +287,7 @@ GameState_Transition = 0x3f
 GameState_Menu = 0x42
 GameState_InRace = 0xc3
 */
-rich_presence_conditional_display(GetGameState(GameState_InRace), "Playing as: {0} Course: {1} Mode: {2} {3} Lap: {4}/{5} 🏆{6} ⏳ {7}:{8}",
+rich_presence_conditional_display(GetGameState(GameState_InRace), "Playing as: {0} Course: {1} Mode: {2} {3} Lap: {4}/{5} 🏆{6} ⏳ {7}",
     rich_presence_lookup("Char", CurrCharacter, Character_Lookup),
     rich_presence_lookup("Course", CurrCourse, Course_Lookup),
     rich_presence_lookup("Diff", CurrDiff, Diff_Lookup),
@@ -296,10 +295,38 @@ rich_presence_conditional_display(GetGameState(GameState_InRace), "Playing as: {
     rich_presence_macro("Number", Race.Lap_Number),
     rich_presence_macro("Number", Race.Lap_Max),
     rich_presence_macro("Score", GetCurrScore()),    
-    rich_presence_macro("Number", Race.Timer_Min),
-    rich_presence_macro("Number", Race.Timer_Sec)
+    rich_presence_macro("Seconds", (Race.Timer_Min * 60) + Race.Timer_Sec)
 )
 rich_presence_display("{0}",
     rich_presence_lookup("State", CurrGameState, State_Lookup, "In Menu")
 
 )
+//Leaderboards
+for i in range(0, 2){
+    leaderboard(
+        "" + Diff_Lookup[i] + " Championship - Time",
+        "Fastest time completion of " + Diff_Lookup[i] + " Championship",
+        GetCurrMode(Mode_Championship) && GetCurrDiff(i) && Race.Race_Number == 1 && GetGameState(GameState_InRace) && Race.Flag_PlayerControl > prev(Race.Flag_PlayerControl),
+        State_LeaveRace() || Race.Flag_RaceLost > prev(Race.Flag_RaceLost),
+        GetCurrMode(Mode_Championship) && GetCurrDiff(i) && prev(Race.Race_Number) == Progression_RaceCounts[i] && Race.Race_Number == Progression_RaceCounts[i],
+        measured(always_true()),
+    "FRAMES",
+    true        
+    )
+    
+    leaderboard(
+        "" + Diff_Lookup[i] + " Championship - Score",
+        "Highest score on " + Diff_Lookup[i] + " Championship",
+        GetCurrMode(Mode_Championship) && GetCurrDiff(i) && Race.Race_Number == 1 && GetGameState(GameState_InRace) && Race.Flag_PlayerControl > prev(Race.Flag_PlayerControl),
+        State_LeaveRace() || Race.Flag_RaceLost > prev(Race.Flag_RaceLost),
+        GetCurrMode(Mode_Championship) && GetCurrDiff(i) && prev(Race.Race_Number) == Progression_RaceCounts[i] && Race.Race_Number == Progression_RaceCounts[i],
+        GetCurrScore(),
+    "POINTS",
+    false        
+    )
+    
+}
+
+
+
+
