@@ -35,7 +35,7 @@ spot_address = dword_be(0x0049a670)
 function get_current_spot(param){
     return prior(spot_address == param) && spot_address == 0xffffffff //By checking the prior value, we can safely check that we have loaded in a spot zone in the Manoa Lai Sea.
 }
-
+spot_coral_forest = 1
 function get_current_spot_raw() {
     return prior(spot_address)
 }
@@ -56,8 +56,42 @@ function get_current_stage_rp() {
     return stage_address
 }
 
-ascii_name_start = 0x0049a570
+class Event_Informational {
+    Tutorial_Orientation_Diving = bit0(0x0049a5aa)
+    Tutorial_Orientation_FishInteraction = bit1(0x0049a5aa)
+}
 
+
+class Event_Diving {
+   Location_CoralReef_Dolphin_Sighting = bit4(0x0049a5a5)
+   
+   
+}
+
+class Event_Boat {
+    
+}
+//Define Class Calls
+Diving = Event_Diving()
+Boat = Event_Boat()
+Misc = Event_Informational()
+
+//Achievement Calls
+
+achievement(
+    "An Eccoey Friend",
+    "Complete your first mission exploring the terrain of The Coral Forest!",
+    points=5,
+    type="progression",
+    trigger=
+        get_current_spot(spot_coral_forest) &&
+        prev(Misc.Tutorial_Orientation_FishInteraction) == 1 &&
+        Diving.Location_CoralReef_Dolphin_Sighting > prev(Diving.Location_CoralReef_Dolphin_Sighting)    
+)
+
+
+
+ascii_name_start = 0x0049a570
 function get_ascii_no_name(param){
     return ascii_string_equals(param, "NoName", 6, a => a)
 }
