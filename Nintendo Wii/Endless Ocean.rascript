@@ -47,8 +47,10 @@ stage_address = dword_be(0x0049bbc0)
 stage_sea = 0x10000001
 stage_abyss = 0x10000003
 stage_ruins_moia_atoll = 0x10000005
-stage_great_cove = 0x10000006
+stage_great_cave = 0x10000006
 stage_ship = 0x10000004
+stage_boat = 0x30000000
+stage_aquarium = 0x10000002
 function get_current_stage(param){
     return stage_address == param
 }
@@ -59,22 +61,35 @@ function get_current_stage_rp() {
 class Event_Informational {
     Tutorial_Orientation_Diving = bit0(0x0049a5aa)
     Tutorial_Orientation_FishInteraction = bit1(0x0049a5aa)
+    Tutorial_Orientation_Aquarium = bit5(0x0049a5aa)
 }
 
 
 class Event_Diving {
-   Location_CoralReef_Dolphin_Sighting = bit4(0x0049a5a5)
-   
-   
+   Story_Location_CoralForest_Dolphin_Sighting = bit4(0x0049a5a5)
+   Story_Location_BlueHoles_PreciousObj = bit5(0x0049a5a5)
+   Story_Location_CoralForest_Dolphin_Returned = bit4(0x0049a5a4)
+   Story_Location_CoralForest_AubreyDive_Complete = bit1(0x0049a5b5)
+   Story_Location_GreatAquaCave_First_Enter = bit7(0x0049a5a4)
+   Story_Location_GreatAquaCave_Layout_Explored = bit7(0x0049a5ac)
+   Story_Location_Abyss_Explored = bit0(0x0049a5b3)
+   Story_Location_Abyss_SpermWhale = bit3(0x0049a5ac)
+   Story_Location_Ruins_Explored = bit1(0x0049a5b3)
+   Extra_Location_ShipsRest_MaguTapah = bit7(0x0049a5c4)
+   Story_Location_GreatDropoff_WhiteMother_Cutscene = bit2(0x0049a5c3)
 }
 
 class Event_Boat {
-    
+    Story_Catherine_UnderwaterPhotos = bit0(0x0049a5b5)
+    Story_Catherine_AirMixture = bit4(0x0049a5b5)
 }
 //Define Class Calls
 Diving = Event_Diving()
 Boat = Event_Boat()
 Misc = Event_Informational()
+
+function save_protection() => prev(Misc.Tutorial_Orientation_Diving) == 1
+
 
 //Achievement Calls
 
@@ -86,7 +101,144 @@ achievement(
     trigger=
         get_current_spot(spot_coral_forest) &&
         prev(Misc.Tutorial_Orientation_FishInteraction) == 1 &&
-        Diving.Location_CoralReef_Dolphin_Sighting > prev(Diving.Location_CoralReef_Dolphin_Sighting)    
+        Diving.Story_Location_CoralForest_Dolphin_Sighting > prev(Diving.Story_Location_CoralForest_Dolphin_Sighting)    
+)
+achievement(
+    "A Bottlenosed Discovery!",
+    "Succesfully guide the dolphin back to the Coral Forest, and make a future new friend!",
+    points=5,
+    type="progression",
+    trigger=
+        get_current_stage(stage_sea) &&
+        prev(Diving.Story_Location_BlueHoles_PreciousObj) == 1 &&//Checks stage progression
+        Diving.Story_Location_CoralForest_Dolphin_Returned > prev(Diving.Story_Location_CoralForest_Dolphin_Returned)
+)
+achievement(
+    "Artistic Guidance",
+    "Complete your first Diving Guide mission by escorting Aubrey through the Coral Forest, and unlock the Underwater Pen!",
+    points=5,
+    type="progression",
+    trigger=
+        get_current_stage(stage_boat) &&
+        prev(Diving.Story_Location_CoralForest_Dolphin_Returned) == 1 && //Check last conditional
+        Diving.Story_Location_CoralForest_AubreyDive_Complete > prev(Diving.Story_Location_CoralForest_AubreyDive_Complete)
+)
+achievement(
+    "A Dive Unlike Others!",
+    "Calm Catherine's anxiety and explore the Aquarium for the first time!",
+    points=5,
+    type="progression",
+    trigger =
+        get_current_stage(stage_aquarium) &&
+        prev(Misc.Tutorial_Orientation_FishInteraction) == 1 &&
+        Misc.Tutorial_Orientation_Aquarium > prev(Misc.Tutorial_Orientation_Aquarium)
+)
+data_first_photo = dword_be(0x004b2584)
+achievement(
+    "Making Memories",
+    "Using Catherine's camera, take your first photo of the Manoa Lai Sea!",
+    points=5,
+    type="progression",
+    trigger=
+        prev(Boat.Story_Catherine_UnderwaterPhotos) == 1 &&
+        prior(get_current_stage(stage_boat)) &&
+        get_current_stage(stage_sea) &&
+        prev(Misc.Tutorial_Orientation_Aquarium) == 1 &&
+        prev(data_first_photo) == 0 &&
+        data_first_photo != 0
+)
+achievement(
+    "Mermaid Treasures",
+    "Have Catherine confirm you have fully explored the layout of The Great Aqua Cave! (See comments)",
+    points=5,
+    type="progression",
+    trigger=
+    get_current_stage(stage_great_cave) &&
+    prev(Diving.Story_Location_GreatAquaCave_First_Enter) == 1 &&
+    Diving.Story_Location_GreatAquaCave_Layout_Explored > prev(Diving.Story_Location_GreatAquaCave_Layout_Explored)
+)
+achievement(
+    "Shadows, Steam, and More",
+    "Have Catherine confirm you have fully explored the entirety of The Abyss! (See comments)",
+    points=10,
+    type="progression",
+    trigger=
+    get_current_stage(stage_abyss) &&
+    prev(Diving.Story_Location_Abyss_SpermWhale) == 1 &&
+    Diving.Story_Location_Abyss_Explored > prev(Diving.Story_Location_Abyss_Explored)
+)
+function deity_frag_check() => prev(bit1(0x0049a761)) == 1
+achievement(
+    "Remenants of a Civilzation",
+    "Have Catherine confirm you have fully explored the entirety of the Underwater Ruins of Mo'ia Atoll!",
+    points=10,
+    type="progression",
+    trigger=
+        get_current_stage(stage_ruins_moia_atoll) &&
+        deity_frag_check() &&
+        Diving.Story_Location_Ruins_Explored > prev(Diving.Story_Location_Ruins_Explored)
+)
+
+magu_tapa = bit3(0x00f9ec93)
+achievement(
+    "A Mega Shark!",
+    "Unlock and get obtain a first knowledge level of 'Magu Tapah'",
+    points=10,
+    trigger=
+        get_current_stage(stage_ship) &&
+        prev(bit0(0x0049a765)) == 1 && //Sharkbone Necklace
+        prev(Diving.Extra_Location_ShipsRest_MaguTapah) == 1 &&
+        magu_tapa > prev(magu_tapa)
+)
+jewel_of_life = bit4(0x0049a76b)
+orca = bit3(0x00fc66b3)
+achievement(
+    "Jewel of the Orcas",
+    "Obtain the Jewel of Life and befriend an Orca!",
+    points=5,
+    trigger=
+        get_current_stage(stage_ship) &&
+        prev(jewel_of_life) == 1 &&
+        orca > prev(orca)
+)
+map_array_start = 0x004b73e4
+map_array_size = 467 //True map array list is 468, but this size is inclusive of the start address.
+
+function get_map_elements(start, size){
+    return sum_of(range(start, start + size), b => byte(b))
+}
+patricks_watch = bit6(0x0049a766)
+achievement(
+    "Memory of a Father",
+    "Recover Patrick's Lost Pocket Watch from The Green Garden",
+    points=5,
+    type="progression",
+    trigger=
+        get_current_spot(14) && //Green Garden 
+        get_current_stage(stage_sea) &&
+        prev(Misc.Tutorial_Orientation_FishInteraction) == 1 &&
+        patricks_watch > prev(patricks_watch)
+)
+
+//White UMA
+achievement(
+    "The Big White UMA",
+    "Finish placing all five whale sensors, and discover The Ancient Mother!",
+    points=25,
+    type="win_condition",
+    trigger=
+        get_current_stage(stage_sea) && 
+        prev(Misc.Tutorial_Orientation_FishInteraction) == 1 &&
+        Diving.Story_Location_GreatDropoff_WhiteMother_Cutscene > prev(Diving.Story_Location_GreatDropoff_WhiteMother_Cutscene)
+)
+achievement(
+    "A True Explorer",
+    "Explore 100% of the Manoa Lai Sea Map!",
+    points=25,
+    trigger=
+        save_protection() &&
+        prev(get_map_elements(map_array_start, map_array_size)) < 468 &&
+        measured(get_map_elements(map_array_start, map_array_size) == 468, format="percent")
 )
 
 
@@ -97,8 +249,7 @@ function get_ascii_no_name(param){
 }
 //Rich Presence Calls
 stages = {
-    0x10000002:"Swimming in the Aquarium",
-    0x30000000:"On board The Gabbiano"    
+    0x10000002:"Swimming in the Aquarium"    
 }
 spots_sea = {
     0:"Lagoon",
@@ -177,16 +328,24 @@ spots_ship = {
     4:"Pirate Ship"
 }
 
+
+
+
+
+
 food = ptr(dword_be(0x006a2f70), [0x34c, 0x4c], word_be)
 
 rich_presence_conditional_display(get_current_stage(stage_sea) && get_ascii_no_name(ascii_name_start), "In Menu")
+
+
+rich_presence_conditional_display(get_current_stage(stage_boat), "On board the Gabianno")
 
 rich_presence_conditional_display(get_current_stage(stage_ship), "Swimming in Ship's Rest | {0} Food: {1}/10",
     rich_presence_lookup("Spots_Ship", get_current_spot_raw(), spots_ship),
     rich_presence_value("Number", food)
 )
 
-rich_presence_conditional_display(get_current_stage(stage_great_cove), "Swimming in The Great Aqua Cove | {0} Food: {1}/10",
+rich_presence_conditional_display(get_current_stage(stage_great_cave), "Swimming in The Great Aqua Cove | {0} Food: {1}/10",
     rich_presence_lookup("Spots_Cove", get_current_spot_raw(), spots_cove),
     rich_presence_value("Number", food)
 )
