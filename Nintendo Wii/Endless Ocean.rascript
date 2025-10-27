@@ -182,7 +182,7 @@ achievement(
 magu_tapa = bit3(0x00f9ec93)
 achievement(
     "A Mega Shark!",
-    "Unlock and get obtain a first knowledge level of 'Magu Tapah'",
+    "Unlock and get obtain a first knowledge level of 'Magu Tapa'",
     points=10,
     trigger=
         get_current_stage(stage_ship) &&
@@ -193,8 +193,8 @@ achievement(
 jewel_of_life = bit4(0x0049a76b)
 orca = bit3(0x00fc66b3)
 achievement(
-    "Jewel of the Orcas",
-    "Obtain the Jewel of Life and befriend an Orca!",
+    "Orca Hears A Who",
+    "Obtain the Jewel of Life and Befriend an Orca!",
     points=5,
     trigger=
         get_current_stage(stage_ship) &&
@@ -241,7 +241,376 @@ achievement(
         measured(get_map_elements(map_array_start, map_array_size) == 468, format="percent")
 )
 
+function get_collectible_sum(inputs){
+    if(length(inputs) == 1){
+        return inputs[0] > prev(inputs[0])
+    }
+    else return prev(sum_of(inputs, b => b)) == length(inputs) - 1 &&
+                measured(sum_of(inputs, b => b) == length(inputs))
+}
 
+
+
+achievement(
+    "Drift Champion",
+    "Obtain the Dolphin Medal salvage",
+    points=5,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit2(0x0049a765)])
+)
+achievement(
+    "A Godly Reflection",
+    "Obtain all four fragments of the Whale-God Mirror salvage",
+    points=5,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit0(0x0049a763), bit1(0x0049a763), bit2(0x0049a763), bit3(0x0049a763)] )
+)
+achievement(
+    "Jack Sparrow's Left Behind Treasure!",
+    "Obtain all four fragments of the Pirate's Compass salvage",
+    points=5,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit4(0x0049a763), bit5(0x0049a763), bit6(0x0049a763), bit7(0x0049a763)])
+)
+achievement(
+    "Old Storytelling",
+    "Obtain all four fragments of the Storyboard salvage",
+    points=5,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit0(0x0049a762), bit1(0x0049a762), bit2(0x0049a762), bit3(0x0049a762)])
+)
+achievement(
+    "Ancient Elements",
+    "Obtain all four fragments of the Patterned Pottery salvage",
+    points=5,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit4(0x0049a762), bit5(0x0049a762), bit6(0x0049a762), bit7(0x0049a762)])
+)
+achievement(
+    "The Trademark Treasure of the Sea",
+    "Obtain the Iron Pearl of Manoa Lai salvage",
+    points=5,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit0(0x0049a761)])
+)
+achievement(
+    "Not The American Idol...",
+    "Obtain all four fragments of the Deity Idol salvage",
+    points=5,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit1(0x0049a761), bit2(0x0049a761), bit3(0x0049a761), bit4(0x0049a761)])
+)
+achievement(
+    "Unknown Languages",
+    "Obtain all four fragments of the Inscribed Nephrite salvage",
+    points=5,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit5(0x0049a761), bit6(0x0049a761), bit7(0x0049a761), bit0(0x0049a760)])
+)
+achievement(
+    "Hundreds of Millions Year-Old Fossils!",
+    "Obtain all four fragments of the Anomalocaris Fossil salvage",
+    points=5,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit1(0x0049a760), bit2(0x0049a760), bit3(0x0049a760), bit4(0x0049a760)])
+)
+achievement(
+    "Crimson Branches",
+    "Obtain all four fragments of the Red Coral salvage",
+    points=5,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit5(0x0049a760), bit6(0x0049a760), bit7(0x0049a760), bit0(0x0049a767)])
+)
+achievement(
+    "A Golden Figure",
+    "Obtain all four fragments of the Gold Artifact salvage",
+    points=5,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit1(0x0049a767), bit2(0x0049a767), bit3(0x0049a767), bit4(0x0049a767)])
+)
+achievement(
+    "Mid-Century Antique",
+    "Obtain all four fragments of the Chinese Porcelain salvage",
+    points=5,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit5(0x0049a767), bit6(0x0049a767), bit7(0x0049a767), bit0(0x0049a766)])
+)
+achievement(
+    "Addicted to a Memory",
+    "Obtain the Shell of Memories salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit1(0x0049a766)])
+)
+achievement(
+    "More Fairyland Magic",
+    "Obtain the Shell of the Goddess salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit2(0x0049a766)])
+)
+achievement(
+    "Ya Got Smokes, Man?",
+    "Obtain the Vintage Lighter salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit3(0x0049a766)])
+)
+achievement(
+    "The Micronesia Spirit",
+    "Obtain the Ancestral Carving salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit4(0x0049a766)])
+)
+achievement(
+    "Beep Beep Boop Boop!",
+    "Obtain the Tin Toy salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit5(0x0049a766)])
+)
+achievement(
+    "Authentic Sea Glass!",
+    "Obtain the Hand-Cut Glass salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit7(0x0049a766)])
+)
+achievement(
+    "Nail Biting Evidence!",
+    "Obtain the Shark Tooth Necklace salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit0(0x0049a765)])
+)
+achievement(
+    "Finding Netherland",
+    "Obtain the Rare Ancient Coins salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit1(0x0049a765)])
+)
+achievement(
+    "Chip's Cousin",
+    "Obtain the Porcelain Cup salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit3(0x0049a765)])
+)
+achievement(
+    "An Elegant Delicacy",
+    "Obtain the Silver Fork salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit4(0x0049a765)])
+)
+achievement(
+    "Ocean-Scented Perfume",
+    "Obtain the Perfume Bottle salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit5(0x0049a765)])
+)
+achievement(
+    "Time Capture",
+    "Obtain the Picture Frame salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit6(0x0049a765)])
+)
+achievement(
+    "Queen of the Sea",
+    "Obtain the Tiara salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit7(0x0049a765)])
+)
+achievement(
+    "Elegant Writing Device",
+    "Obtain the Fountain Pen salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit0(0x0049a764)])
+)
+achievement(
+    "Baroque-Era Instrument",
+    "Obtain the German Harmonica salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit1(0x0049a764)])
+)
+achievement(
+    "An Epic Mixtape",
+    "Obtain the Cassette Tape salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit2(0x0049a764)])
+)
+achievement(
+    "Juice Reward",
+    "Obtain the Rare Juice Can salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit3(0x0049a764)])
+)
+achievement(
+    "Reflectant Buoy",
+    "Obtain the Glass Buoy salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit4(0x0049a764)])
+)
+achievement(
+    "This Isn't Aerodactyl!",
+    "Obtain the Fossilized Shell salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit5(0x0049a764)])
+)
+achievement(
+    "A Mysterious Reptile",
+    "Obtain the Lizard in Amber salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit6(0x0049a764)])
+)
+achievement(
+    "Forged In Fire",
+    "Obtain the Obsidian Arrowhead salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit7(0x0049a764)])
+)
+achievement(
+    "Trollin' for Whales",
+    "Obtain the Whalebone Lure salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit0(0x0049a76b)])
+)
+achievement(
+    "A Lucky Find!",
+    "Obtain the Lucky Shell salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit1(0x0049a76b)])
+)
+achievement(
+    "Old Time Swag",
+    "Obtain the Ancient Bracelet salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit2(0x0049a76b)])
+)
+achievement(
+    "Old Fashioned Stamper!",
+    "Obtain the Cylindrical Stamp salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit3(0x0049a76b)])
+)
+achievement(
+    "A Weathered Shell",
+    "Obtain the Scaled Shell salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit5(0x0049a76b)])
+)
+achievement(
+    "Looked Near Bedrock For This!",
+    "Obtain the Aqua Amethyst salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit6(0x0049a76b)])
+)
+achievement(
+    "Mysterious Faces",
+    "Obtain the Stone mask salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit7(0x0049a76b)])
+)
+achievement(
+    "Not Omanyte!",
+    "Obtain the Ammonite Fossil salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit0(0x0049a76a)])   
+)
+achievement(
+    "A Rough Dream",
+    "Obtain the Dream Shell salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit1(0x0049a76a)])
+)
+achievement(
+    "A Valuable Find!",
+    "Obtain the Gold Bar salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit2(0x0049a76a)])
+)
+achievement(
+    "A New Currency",
+    "Obtain the Cameo Brooch salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit3(0x0049a76a)])
+)
+achievement(
+    "THE RED BARON!",
+    "Obtain the Toy Plane salvage",
+    points=2,
+    trigger=
+        save_protection() &&
+        get_collectible_sum([bit4(0x0049a76a)])
+)
 
 ascii_name_start = 0x0049a570
 function get_ascii_no_name(param){
