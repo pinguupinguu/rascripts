@@ -582,7 +582,7 @@ achievement(
 achievement(
     "A Rough Dream",
     "Obtain the Dream Shell salvage",
-    points=2,
+    points=3,
     trigger=
         save_protection() &&
         get_collectible_sum([bit1(0x0049a76a)])
@@ -590,7 +590,7 @@ achievement(
 achievement(
     "A Valuable Find!",
     "Obtain the Gold Bar salvage",
-    points=2,
+    points=3,
     trigger=
         save_protection() &&
         get_collectible_sum([bit2(0x0049a76a)])
@@ -598,7 +598,7 @@ achievement(
 achievement(
     "A New Currency",
     "Obtain the Cameo Brooch salvage",
-    points=2,
+    points=3,
     trigger=
         save_protection() &&
         get_collectible_sum([bit3(0x0049a76a)])
@@ -606,7 +606,7 @@ achievement(
 achievement(
     "THE RED BARON!",
     "Obtain the Toy Plane salvage",
-    points=2,
+    points=3,
     trigger=
         save_protection() &&
         get_collectible_sum([bit4(0x0049a76a)])
@@ -700,8 +700,7 @@ spots_ship = {
 
 
 
-
-
+depth = ptr(dword_be(0x0049cdb8), [0x74], float_be) *-0.328
 food = ptr(dword_be(0x006a2f70), [0x34c, 0x4c], word_be)
 
 rich_presence_conditional_display(get_current_stage(stage_sea) && get_ascii_no_name(ascii_name_start), "In Menu")
@@ -709,28 +708,33 @@ rich_presence_conditional_display(get_current_stage(stage_sea) && get_ascii_no_n
 
 rich_presence_conditional_display(get_current_stage(stage_boat), "On board the Gabianno")
 
-rich_presence_conditional_display(get_current_stage(stage_ship), "Swimming in Ship's Rest | {0} Food: {1}/10",
+rich_presence_conditional_display(get_current_stage(stage_ship), "Swimming in Ship's Rest | {0} | Depth: ~{1} ft. | Food: {2}/10 ",
     rich_presence_lookup("Spots_Ship", get_current_spot_raw(), spots_ship),
+    rich_presence_value("Number", depth),
     rich_presence_value("Number", food)
 )
 
-rich_presence_conditional_display(get_current_stage(stage_great_cave), "Swimming in The Great Aqua Cove | {0} Food: {1}/10",
+rich_presence_conditional_display(get_current_stage(stage_great_cave), "Swimming in The Great Aqua Cove | {0} | Depth: ~{1} ft. | Food: {2}/10",
     rich_presence_lookup("Spots_Cove", get_current_spot_raw(), spots_cove),
+    rich_presence_value("Number", depth),
     rich_presence_value("Number", food)
 )
 
-rich_presence_conditional_display(get_current_stage(stage_ruins_moia_atoll), "Swimming in the Underwater Ruins of Mo'ia Atoll | {0} Food: {1}/10",
+rich_presence_conditional_display(get_current_stage(stage_ruins_moia_atoll), "Swimming in the Underwater Ruins of Mo'ia Atoll | {0} | Depth: ~{1} ft. | Food: {2}/10",
     rich_presence_lookup("Spots_Ruins", get_current_spot_raw(), spots_ruins),
+    rich_presence_value("Number", depth),
     rich_presence_value("Number", food)
 )
 
-rich_presence_conditional_display(get_current_stage(stage_sea), "Swimming in The Manoa Lai Sea | {0} Food: {1}/10",
+rich_presence_conditional_display(get_current_stage(stage_sea), "Swimming in The Manoa Lai Sea | {0} | Depth: ~{1} ft. | Food: {2}/10",
     rich_presence_lookup("Spots_Sea", get_current_spot_raw(), spots_sea),
+    rich_presence_value("Number", depth),
     rich_presence_value("Number", food)
 )
 
-rich_presence_conditional_display(get_current_stage(stage_abyss), "Swimming in The Abyss | {0} Food: {1}/10",
+rich_presence_conditional_display(get_current_stage(stage_abyss), "Swimming in The Abyss | {0} | Depth: ~{1} ft. | Food: {2}/10",
     rich_presence_lookup("Spots_Abyss", get_current_spot_raw(), spots_abyss),
+    rich_presence_value("Number", depth),
     rich_presence_value("Number", food)
 
 )
