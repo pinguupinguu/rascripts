@@ -612,6 +612,117 @@ achievement(
         get_collectible_sum([bit4(0x0049a76a)])
 )
 
+function get_bitcount_with_exclusion(addr, inclusion_array){
+    my_array = []
+    for i in inclusion_array{
+        if i == 0 {
+            array_push(my_array, bit0(addr))
+        }
+        if i == 1 {
+            array_push(my_array, bit1(addr))
+        }
+        if i == 2 {
+            array_push(my_array, bit2(addr))
+        }
+        if i == 3 {
+            array_push(my_array, bit3(addr))
+        }
+        if i == 4 {
+            array_push(my_array, bit4(addr))
+        }
+        if i == 5 {
+            array_push(my_array, bit5(addr))
+        }
+        if i == 6 {
+            array_push(my_array, bit6(addr))
+        }
+        if i == 7 {
+            array_push(my_array, bit7(addr))
+        }
+    }
+    
+    return my_array
+    
+}
+function generate_sum_array(inputs, count){
+    
+        return prev(sum_of(inputs, b => b)) == count - 1 &&
+               measured(sum_of(inputs, b => b) == count)                
+        
+}
+function bitcount_measured(addr) {
+    return prev(bitcount(addr)) == 7 && measured(bitcount(addr) == 8)
+}
+hairstyles_array = []
+
+array_push(hairstyles_array, bitcount(0x0049a73b))
+array_push(hairstyles_array, bitcount(0x0049a73a))
+array_push(hairstyles_array, bitcount(0x0049a739))
+temp_array = get_bitcount_with_exclusion(0x0049a738, [0,1,2,3,4,5])
+for i in temp_array {array_push(hairstyles_array, i)}
+achievement(
+    "Divin' In Style",
+    "Obtain all 30 hairstyles on one save profile!",
+    points=10,
+    trigger=
+        save_protection() &&
+        generate_sum_array(hairstyles_array, 30 )
+)
+achievement(
+    "Protection in Multiple Colors!",
+    "Obtain all 8 Male/Female wesuits on one save profile!",
+    points=5,
+    trigger=
+        save_protection() &&
+        bitcount_measured(0x0049a742)
+)
+achievement(
+    "Diving? More Like Beach Swimming Ready!",
+    "Obtain all 8 bottoms on one save profile!",
+    points=5,
+    trigger=
+        save_protection() && 
+        bitcount_measured(0x0049a743)
+)
+achievement(
+    "Binary Coded Decimal?",
+    "Obtain all 8 BCD suits on one profile!",
+    points=5,
+    trigger=
+        save_protection() &&
+        bitcount_measured(0x0049a74f)
+)
+gloves_array = []
+temp_array = get_bitcount_with_exclusion(0x0049a75f, [1,2,3,4,5,6,7])
+for glove in temp_array{array_push(gloves_array, glove)}
+array_push(gloves_array, bit0(0x0049a75e))
+achievement(
+    "Wear To Prevent Gill Cuts, Wrinkly Hands, And More!",
+    "Obtain all 8 pairs of gloves on one profile!",
+    points=5,
+    trigger=
+        save_protection() &&
+        generate_sum_array(gloves_array, 8)
+)
+achievement(
+    "Ocean Gliders",
+    "Obtain all 8 pairs of fins on one profile!",
+    points=5,
+    trigger=
+        save_protection() &&
+        bitcount_measured(0x0049a757)
+)
+achievement(
+    "You Tank My Breath Away!",
+    "Obtain all 8 tanks on one profile!",
+    points=5,
+    trigger=
+        save_protection() &&
+        bitcount_measured(0x0049a753)
+)
+
+
+
 ascii_name_start = 0x0049a570
 function get_ascii_no_name(param){
     return ascii_string_equals(param, "NoName", 6, a => a)
