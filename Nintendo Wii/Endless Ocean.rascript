@@ -182,7 +182,7 @@ achievement(
 magu_tapa = bit3(0x00f9ec93)
 achievement(
     "A Mega Shark!",
-    "Unlock and get obtain a first knowledge level of 'Magu Tapa'",
+    "Unlock and obtain a first knowledge level of 'Magu Tapa'",
     points=10,
     trigger=
         get_current_stage(stage_ship) &&
