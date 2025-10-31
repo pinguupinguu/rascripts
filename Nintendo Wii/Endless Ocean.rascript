@@ -720,6 +720,21 @@ achievement(
         save_protection() &&
         bitcount_measured(0x0049a753)
 )
+function get_encyclopedia_logic(inputs, count){
+    
+    return  tally_of(inputs, count - 3, b => once(prev(bit3(b)) == 1 && prev(bit4(b)) == 1)) &&
+            measured(tally_of(inputs, count, b => once(bit3(b) == 1 && bit4(b) == 1)))
+           
+    
+}
+
+function get_encyclopedia_flag_alts(inputs) {
+    my_alts = always_false()
+    for animal in inputs{
+        my_alts = my_alts || bit4(animal) == 1 && bit3(animal) > prev(bit3(animal))   
+    }
+    return my_alts
+}
 
 count_coral_dwellers = 40
 encyclopedia_category_coraldwellers = [
@@ -764,7 +779,15 @@ encyclopedia_category_coraldwellers = [
  0xFC1133,
  0xFC1853
 ]
-
+achievement(
+    "Knowledge of the Plants",
+    "Obtain a Knowledge Level of 3 of all animals under the 'Coral Dwellers' encyclopedia category.",
+    points=25,
+    trigger=
+        get_encyclopedia_logic(encyclopedia_category_coraldwellers, count_coral_dwellers) &&
+        get_encyclopedia_flag_alts(encyclopedia_category_coraldwellers) &&
+        never(!save_protection())
+)
 count_smallfish_creatures = 78
 encyclopedia_category_smallfishcreatures = [
  0xF54DD3,
@@ -846,7 +869,15 @@ encyclopedia_category_smallfishcreatures = [
  0xFBC2D3,
  0xFBC9F3
 ]
-
+achievement(
+    "No Amount of Knowledge Too Small!",
+    "Obtain a Knowledge Level of 3 of all animals under the 'Small Creatures & Fish' encyclopedia category.",
+    points=50,
+    trigger=
+        get_encyclopedia_logic(encyclopedia_category_smallfishcreatures, count_smallfish_creatures) &&
+        get_encyclopedia_flag_alts(encyclopedia_category_smallfishcreatures) &&
+        never(!save_protection())
+)
 count_largefish_creatures = 29
 encyclopedia_category_smallfishcreatures = [
  0xF56A53,
@@ -879,7 +910,15 @@ encyclopedia_category_smallfishcreatures = [
  0xFC3BF3,
  0xFC4313
 ]
-
+achievement(
+    "Big Brain Creature Knowledge",
+    "Obtain a Knowledge Level of 3 of all animals under the 'Large Creatures & Fish' encyclopedia cateogyr.",
+    points=10,
+    trigger=
+        get_encyclopedia_logic(encyclopedia_category_smallfishcreatures, count_largefish_creatures) &&
+        get_encyclopedia_flag_alts(encyclopedia_category_smallfishcreatures) &&
+        never(!save_protection())
+)
 count_deepsea_dwellers = 30
 encyclopedia_category_deepseadwellers = [
  0xF5B8B3,
@@ -913,6 +952,15 @@ encyclopedia_category_deepseadwellers = [
  0xFC4A33,
  0xFC5153
 ]
+achievement(
+    "Endless Depths of Knowledge",
+    "Obtain a Knowledge Level of 3 of all animals under the 'Deep-Sea Dwellers' encyclopedia category",
+    points=10,
+    trigger=
+        get_encyclopedia_logic(encyclopedia_category_deepseadwellers, count_deepsea_dwellers) &&
+        get_encyclopedia_flag_alts(encyclopedia_category_deepseadwellers) &&
+        never(!save_protection())
+)
 
 count_dolphinswhales = 12
 encyclopedia_category_dolwhale = [
@@ -929,7 +977,15 @@ encyclopedia_category_dolwhale = [
  0xFC8A53,
  0xFC9173
 ]
-
+achievement(
+    "Cheerful Animal Exploration!",
+    "Obtain a Knowledge Level of 3 of all animals under the 'Dolphins & Whales' encyclopedia category.",
+    points=5,
+    trigger=
+        get_encyclopedia_logic(encyclopedia_category_dolwhale, count_dolphinswhales) &&
+        get_encyclopedia_flag_alts(encyclopedia_category_dolwhale) &&
+        never(!save_protection())
+)
 count_coastaldwellers = 23
 encyclopedia_category_coastdweller = [
  0xF68E73,
@@ -956,7 +1012,15 @@ encyclopedia_category_coastdweller = [
  0xF86BD3,
  0xF89DB3
 ]
-
+achievement(
+    "Non-Ocean Exploration!",
+    "Obtain a Knowledge Level of 3 of all animals under the 'Coastal Dwellers' encyclopedia category.",
+    points=10,
+    trigger=
+        get_encyclopedia_logic(encyclopedia_category_coastdweller, count_coastaldwellers) &&
+        get_encyclopedia_flag_alts(encyclopedia_category_coastdweller) &&
+        never(!save_protection())
+)
 ascii_name_start = 0x0049a570
 function get_ascii_no_name(param){
     return ascii_string_equals(param, "NoName", 6, a => a)
