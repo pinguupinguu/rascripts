@@ -1,6 +1,7 @@
 // Pokémon Ranger: Guardian Signs
 // #ID = 16163
 
+//281 Mon in total, this excludes the s rank subset pokemon.
 pokemon_dict = {
     "Bulbasaur": 0x001447,
     "Ivysaur": 0x001449,
@@ -282,11 +283,33 @@ pokemon_dict = {
     "Dusknoir": 0x0017FF,
     "Froslass": 0x001801,
     "Phione": 0x001817,
-    "Shaymin": 0x00181D,
+    "Shaymin": 0x00181D
 }
 
+function guardian_signs_get_address(offset) {
+    return byte((dword(0x00bd574) * 4 + tbyte(0x000bd570)) + offset)
+}
+function guardian_signs_get_dex_alts(){
+	my_logic = always_false()
+	for pkmn in pokemon_dict {
+	   my_logic = my_logic || prev(byte((dword(0x00bd574) * 4 + tbyte(0x000bd570)) + pokemon_dict[pkmn])) != 6 && byte((dword(0x00bd574) * 4 + tbyte(0x000bd570)) + pokemon_dict[pkmn]) == 6
+	
+	}
+	return my_logic
 
+}
 
+ 
+
+achievement(
+"test",
+"This is a test",
+points=5,
+trigger=
+byte(0x3) == 1 &&
+guardian_signs_get_dex_alts()
+
+)
 
 
 
