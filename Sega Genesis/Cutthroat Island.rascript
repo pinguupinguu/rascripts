@@ -81,7 +81,7 @@ achievement(
     points=5,
     type="progression",
     trigger=
-        stage_clear(stage_jungle_end_one, stage_jungle_end_two)
+        stage_clear(stage_jungle_end_two, stage_cliffs)
 )
 achievement(
     "Cutthroat Cliffhanger",
