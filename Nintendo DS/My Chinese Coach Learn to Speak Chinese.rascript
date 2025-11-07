@@ -139,3 +139,62 @@ for i in range(0,50){
     )  
     prog_ach_id = prog_ach_id + 1
 }
+//Begin Rich Presence Calls
+minigame_page_number = dword(0x00192cd8)
+minigame_page_one_games = {
+    6:"Multiple Choice",
+    7:"Hit-a-Word",
+    8:"Tones",
+    9:"Fading Characters"        
+}
+minigame_page_two_games = {
+    6:"Flash Cards",
+    7:"Fill-in-the-Blank",
+    8:"Spelltastic",
+    9:"Memory"
+}
+minigame_page_three_games = {
+    6:"Write Cards",
+    7:"Word Search",
+    8:"Bridge Builder",
+    9:"Scrolls"
+}
+minigame_difficulties = {
+    0:"Easy",
+    1:"Medium",
+    2:"Hard"
+}
+minigame_id = dword(0x00192d54)
+/*
+category_menu = 0
+category_learning = 1
+category_games = 2
+category_reference = 3
+category_options = 4
+category_help = 8
+*/
+current_lesson = dword(0x00194b60)
+category_lookup = {
+    0:{"var":"PageOne", "dict":minigame_page_one_games},
+    1:{"var":"PageTwo", "dict":minigame_page_two_games},
+    2:{"var":"PageThree", "dict":minigame_page_three_games}    
+}
+for i in range(0,2){   
+    rich_presence_conditional_display(get_game_state(load_state_true) &&  get_current_category(category_games) && minigame_page_number == i, "Playing {0} on {1} difficulty.",
+        rich_presence_lookup(category_lookup[i]["var"], minigame_id, category_lookup[i]["dict"]),
+        rich_presence_lookup("Diff", minigame_difficulty, minigame_difficulties)
+    )
+    
+}
+rich_presence_conditional_display(get_game_state(load_state_true) && get_current_category(category_learning), "Learning Chinese on Lesson #{0}",
+   rich_presence_macro("Number", current_lesson + 1)
+)
+categories_other = {
+    0:"In Menu",
+    3:"In Reference section",
+    4:"Setting options",
+    8:"In Help screen"
+}
+rich_presence_display("{0}",
+    rich_presence_lookup("CatState", current_category, categories_other)
+)
