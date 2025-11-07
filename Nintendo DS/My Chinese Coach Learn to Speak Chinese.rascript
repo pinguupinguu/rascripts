@@ -51,3 +51,12 @@ class IntroTest {
     quest_num = dword(0x00192088)
 }
 Intro = IntroTest()
+
+//Achievement Call Methods:
+function get_save_protection() {
+    return get_cheat_flag_state(off) && !get_current_category(category_options)
+}
+
+function get_lesson_advance(first_num, second_num){
+    return prev(compare_lesson_unlock(first_num)) && compare_lesson_unlock(second_num)    
+}
