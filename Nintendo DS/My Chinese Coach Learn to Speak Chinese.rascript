@@ -53,7 +53,7 @@ class IntroTest {
 Intro = IntroTest()
 
 //Achievement Call Methods:
-function get_save_protection() {
+function get_cheat_protection() {
     return get_cheat_flag_state(off) && !get_current_category(category_options)
 }
 
