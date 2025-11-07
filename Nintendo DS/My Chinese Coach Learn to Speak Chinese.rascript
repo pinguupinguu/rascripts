@@ -65,6 +65,7 @@ achievement(
     "您的中國之旅已經開啟。",
     "Obtain a perfect score of 50 on your Chinese placement exam!",
     points=5,
+    id=558067,
     trigger=
         compare_lesson_unlock(1) &&
         prev(Intro.num_right) == 49 &&
@@ -124,14 +125,17 @@ lesson_cheevos = {
     49:{"title":"沒有休息時間！", "desc":"Complete Lesson 981-1000.", "points":10, "NumEnd":1000},
     50:{"title":"大學專家！", "desc":"Complete Lessons 1001-1019 and master the Chinese language!", "points":10, "NumEnd":1019}
 }
+prog_ach_id = 558088
 for i in range(0,50){
     achievement(
         lesson_cheevos[i]["title"],
         lesson_cheevos[i]["desc"],
         points=lesson_cheevos[i]["points"],
         type="progression", //Assumed for all lesson achievements.
+        id=prog_ach_id,
         trigger=
             get_cheat_protection() &&
             get_lesson_advance(lesson_cheevos[i]["NumEnd"], lesson_cheevos[i]["NumEnd"] + 1)                
-    )   
+    )  
+    prog_ach_id = prog_ach_id + 1
 }
