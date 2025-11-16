@@ -46,10 +46,10 @@ function cheat_return(){
     }
 
 
-function cheat_blocks() => all_of(extras_blacklist, b => unless(once(b > prev(b))))
+function cheat_blocks() => all_of(extras_blacklist, b => b == 0)
 function cheat_reset() => always_false() || cheat_return()
                           
-function utility_protections() => debug_inactive() && profile_protection() && load_protection() && cheat_blocks() && (cheat_reset()) //Reference for all achievements for proper protections.
+function utility_protections() => debug_inactive() && profile_protection() && load_protection() && cheat_blocks() //&& (cheat_reset()) //Reference for all achievements for proper protections.
 function raw_utility_protections() => debug_inactive() && profile_protection() && load_protection()
 function progression(target) => utility_protections() && target > prev(target)
 // $17107D: [NBit] Level Flags
