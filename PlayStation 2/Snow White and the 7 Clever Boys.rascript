@@ -5,6 +5,7 @@ screen_ID = dword(0x001d2410)
 screen_menu = 0xffffffff
 screen_painting = 0x00
 screen_puzzle_sliding = 0x1
+screen_puzzle_matching = 0x2
 screen_puzzle_jigsaw = 0x3
 screen_movie = 0x4
 screen_settings = 0x5
@@ -154,6 +155,44 @@ for i in range(0,9){
     
 }
 
+matching_puzzle_names = [
+    "Harold's New Friend",
+    "Weird Memory Storage...",
+    "Following Moose Tracks!",
+    "This Isn't Caillou!",
+    "The Door to Narnia?"
+    
+]
+matching_puzzle_desc = [
+    "Complete the first matching puzzle!",
+    "Complete the second matching puzzle!",
+    "Complete the third matching puzzle!",
+    "Complete the fourth matching puzzle!",
+    "Complete the fifth matching puzzle!"
+]
+offset_puzzle_matchingid = [0x4]
+offset_matching_timer = [0x80]
+offset_matching_clear = [0x88]
+
+for i in range(0,4){
+    achievement(
+        matching_puzzle_names[i],
+        matching_puzzle_desc[i],
+        points=5,
+        type="progression",
+        trigger=
+            get_curr_screen(screen_puzzle_matching) &&
+            ptr(puzzle_data, offset_puzzle_matchingid, dword) == i &&
+            prev(ptr(puzzle_data, offset_matching_clear, dword)) == 0 &&
+            ptr(puzzle_data, offset_matching_clear, dword) == 1
+        
+    )
+}
+
+
+
+
+
 //RP Calls
 default_screens = {
     screen_menu:"In the Main Menu...",
@@ -164,6 +203,12 @@ solving_jigsaw = {
     0:"Solving",
     1:"Completed"
 }
+rich_presence_conditional_display(get_curr_screen(screen_puzzle_matching) &&  ptr(puzzle_data, offset_puzzle_matchingid, dword) == 0xffffffff, "Selecting a matching puzzle!")
+
+rich_presence_conditional_display(get_curr_screen(screen_puzzle_matching) && ptr(puzzle_data, offset_puzzle_matchingid, dword) != 0xffffffff, "Solving matching puzzle {0}! Time Elapsed: {1}",
+    rich_presence_macro("Number", ptr(puzzle_data, offset_puzzle_matchingid, dword) + 1),
+    rich_presence_macro("Seconds", ptr(puzzle_data, offset_matching_timer, float))
+)
 
 rich_presence_conditional_display(get_curr_screen(screen_puzzle_jigsaw) &&  ptr(puzzle_data, offset_jigsaw_bkgd, dword) == 0, "{0} jigsaw puzzle {1}! Time Elapsed: {2}",
     rich_presence_lookup("IsSolving", ptr(puzzle_data, offset_jigsaw_boolean_complete, dword), solving_jigsaw),
@@ -172,7 +217,7 @@ rich_presence_conditional_display(get_curr_screen(screen_puzzle_jigsaw) &&  ptr(
   )
 rich_presence_conditional_display(get_curr_screen(screen_puzzle_jigsaw) && ptr(puzzle_data, offset_jigsaw_bkgd, dword) == 1, "Selecting a jigsaw puzzle!")
 
-rich_presence_conditional_display(get_curr_screen(screen_puzzle_sliding) && ptr(puzzle_data, offset_sliding_id, dword) == 0xffffffff, "Selecting a sliding puzzle!"))
+rich_presence_conditional_display(get_curr_screen(screen_puzzle_sliding) && ptr(puzzle_data, offset_sliding_id, dword) == 0xffffffff, "Selecting a sliding puzzle!")
 rich_presence_conditional_display(get_curr_screen(screen_puzzle_sliding) && ptr(puzzle_data, offset_sliding_id, dword) != 0xffffffff, "Solving sliding puzzle {0}! Time Elapsed: {1}",
     rich_presence_macro("Number", ptr(puzzle_data, offset_sliding_id, dword) + 1),
     rich_presence_macro("Seconds", ptr(puzzle_data, offset_sliding_timer, float))
@@ -201,4 +246,18 @@ for i in range(0, 9){
         "SECS",
         true
     )        
+}
+
+for i in range(0, 4){
+  leaderboard(
+      "Matching Puzzle " + i + 1 + " - Time",
+      "Fastest time to clear",
+      get_curr_screen(screen_puzzle_sliding) && ptr(puzzle_data, offset_puzzle_matchingid, dword) == i && prev(ptr(puzzle_data, offset_matching_timer, float)) < 1.0 && ptr(puzzle_data, offset_matching_timer, float) >= 1.0,
+      get_curr_screen(screen_menu) || ptr(puzzle_data, offset_puzzle_matchingid, dword) != i,
+      prev(ptr(puzzle_data, offset_matching_clear, dword)) == 0 && ptr(puzzle_data, offset_matching_clear, dword) == 1,
+       ptr(puzzle_data, offset_matching_timer, float),
+       "SECS",
+       true
+  )  
+  
 }
