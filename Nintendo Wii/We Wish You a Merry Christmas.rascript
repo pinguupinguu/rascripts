@@ -93,6 +93,20 @@ function get_candycane_sum(param){
 minigame_candycane_state = dword_be(0x001bdce8)
 
 
+//Achievements
+achievement(
+    "Rudolph the Jump Nose Reindeer!",
+    "Jump to a height of 1.000M or higher!",
+    points=5,
+    trigger=
+        get_curr_bkgd(bkgd_reindeerjump) &&
+        minigame_reindeer_state == 2 && //Playing
+        prev(minigame_reindeer_height) < 1000 &&
+        minigame_reindeer_height >= 1000
+)
+
+
+
 //RP Calls
 basic_bkgds = {
     0:"In the Living Room",
@@ -163,6 +177,16 @@ bkgd_presentcatch = 0x7
 bkgd_reindeerjump = 0x8
 bkgd_santasleigh = 0x9
 */
+leaderboard(
+    "Deck the Halls - Matching Master!",
+    "Highest score",
+    get_curr_bkgd(bkgd_deckhalls) && (always_false() || minigame_state_change(minigame_deck_state, 6, 2)  || minigame_state_change(minigame_deck_state, 0xb, 0)),
+    !get_curr_bkgd(bkgd_deckhalls),
+    minigame_state_change(minigame_deck_state, 6, 8),
+    minigame_deck_score
+    
+)
+
 
 leaderboard(
     "Reindeer Games - Soaring Limits!",
