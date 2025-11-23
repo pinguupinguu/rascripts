@@ -180,29 +180,61 @@ bkgd_santasleigh = 0x9
 leaderboard(
     "Deck the Halls - Matching Master!",
     "Highest score",
-    get_curr_bkgd(bkgd_deckhalls) && (always_false() || minigame_state_change(minigame_deck_state, 6, 2)  || minigame_state_change(minigame_deck_state, 0xb, 0)),
-    !get_curr_bkgd(bkgd_deckhalls),
+    get_curr_bkgd(bkgd_deckhalls) && get_curr_players(1) && (always_false() || minigame_state_change(minigame_deck_state, 6, 2)  || minigame_state_change(minigame_deck_state, 0xb, 0)),
+    !get_curr_bkgd(bkgd_deckhalls) || prev(minigame_deck_state) !=  0 && minigame_deck_state == 0,
     minigame_state_change(minigame_deck_state, 6, 8),
     minigame_deck_score
     
 )
-
-
+leaderboard(
+    "Present Catch - Bagging ALL Presents!",
+    "Highest score - single life",
+    get_curr_bkgd(bkgd_presentcatch) && get_curr_players(1) &&  (always_false() || minigame_state_change(minigame_presents_state, 1 ,2) || minigame_state_change(minigame_presents_state, 8, 0)),
+    !get_curr_bkgd(bkgd_presentcatch) || prev(minigame_presents_state) != 0 && minigame_presents_state == 0,
+    minigame_presents_lives < prev(minigame_presents_lives),
+    minigame_presents_score
+)
+leaderboard(
+    "Present Catch - Bagging Presents!",
+    "Highest score - single game",
+    get_curr_bkgd(bkgd_presentcatch) && get_curr_players(1) &&  (always_false() || minigame_state_change(minigame_presents_state, 1 ,2) || minigame_state_change(minigame_presents_state, 8, 0)),
+    !get_curr_bkgd(bkgd_presentcatch) || prev(minigame_presents_state) != 0 && minigame_presents_state == 0,
+    minigame_state_change(minigame_presents_state,2, 5),
+    minigame_presents_score
+)
+leaderboard(
+    "Santa's Sleigh - Delivery Assistance!",
+    "Highest score",
+    get_curr_bkgd(bkgd_santasleigh) && get_curr_players(1) &&  (always_false() || minigame_state_change(minigame_santasleigh_state, 1 ,2) || minigame_state_change(minigame_santasleigh_state, 0xb, 0)),
+    !get_curr_bkgd(bkgd_santasleigh) || prev(minigame_santasleigh_state) != 0 && minigame_santasleigh_state == 0,
+    minigame_state_change(minigame_santasleigh_state, 5, 9),
+    minigame_santasleigh_score
+    
+    
+)
 leaderboard(
     "Reindeer Games - Soaring Limits!",
-    "Highest heignt in meters (Boosts Allowed)",
-    get_curr_bkgd(bkgd_reindeerjump) && (always_false() || minigame_state_change(minigame_reindeer_state, 1 , 2) || minigame_state_change(minigame_reindeer_state, 7 , 0)),
-    !get_curr_bkgd(bkgd_reindeerjump),
+    "Highest height in meters (Boosts Allowed)",
+    get_curr_bkgd(bkgd_reindeerjump) && get_curr_players(1) && (always_false() || minigame_state_change(minigame_reindeer_state, 1 , 2) || minigame_state_change(minigame_reindeer_state, 7 , 0)),
+    !get_curr_bkgd(bkgd_reindeerjump) || prev(minigame_reindeer_state) != 0 && minigame_reindeer_state == 0,
     minigame_state_change(minigame_reindeer_state, 2, 3),
     minigame_reindeer_height
     
 )
 leaderboard(
     "Reindeer Games - Reaching Limits!",
-    "Highest heignt in meters (NO Boosts Allowed)",
-    get_curr_bkgd(bkgd_reindeerjump) && (always_false() || minigame_state_change(minigame_reindeer_state, 1 , 2) || minigame_state_change(minigame_reindeer_state, 7 , 0)),
-    !get_curr_bkgd(bkgd_reindeerjump),
-    always_false() || minigame_state_change(minigame_reindeer_state, 2, 3) || (minigame_reindeer_boost != 0x0 && minigame_reindeer_boost != 0x3f800000),
+    "Highest height in meters (NO Boosts Allowed)",
+    get_curr_bkgd(bkgd_reindeerjump) && get_curr_players(1) && (always_false() || minigame_state_change(minigame_reindeer_state, 1 , 2) || minigame_state_change(minigame_reindeer_state, 7 , 0)),
+    !get_curr_bkgd(bkgd_reindeerjump) || prev(minigame_reindeer_state) != 0 && minigame_reindeer_state == 0,
+    always_false() || minigame_state_change(minigame_reindeer_state, 2, 3) || (minigame_reindeer_boost != 0x0 && minigame_reindeer_boost != 0x3f800000) ,
     minigame_reindeer_height
     
+)
+leaderboard(
+    "Hot Chocolate - 'Oh, WE GOT IT!'",
+    "Highest score",
+    get_curr_bkgd(bkgd_hotcoco) && get_curr_players(1) && (always_false() || minigame_state_change(minigame_hotcoco_state, 3 , 4) || minigame_state_change(minigame_hotcoco_state, 0xd , 0)),
+    !get_curr_bkgd(bkgd_hotcoco) || prev(minigame_hotcoco_state) != 0 && minigame_hotcoco_state == 0,
+    minigame_state_change(minigame_hotcoco_state, 5, 0xa),
+    minigame_hotcoco_score
 )
