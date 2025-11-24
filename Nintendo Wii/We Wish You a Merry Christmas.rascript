@@ -30,6 +30,14 @@ function ptr(base, offsets, accessor=dword_be)
     
     return val
 }
+index = dword_be(0x001c63a0)
+save_padding = 0x2ff8
+function save_index_pointer(base, accessor){
+    return accessor((index * save_padding)  + base)
+}
+
+
+
 player_num = dword_be(0x001c62e4)
 function get_curr_players(param){
     return player_num == param
@@ -80,6 +88,7 @@ coco_lost = 0xa
 
 minigame_candycane_currframe = dword_be(0x001be2c8)
 minigame_candycane_array_start = 0x001be308
+minigame_candycane_state = dword_be(0x001bdce8)
 lanes_lost = 0x6
 
 minigame_elfhunt_puzzle_index = dword_be(0x001c55cc)
@@ -90,22 +99,120 @@ puzzle_select = 0
 function get_candycane_sum(param){
     return sum_of(range(param, param + 80, 4), b => dword_be(b))   
 }
-minigame_candycane_state = dword_be(0x001bdce8)
 
 
-//Achievements
+//Progression
+function ornament_unlock(curr_bkgd, base, accessor){
+    return index==prev(index) && get_curr_bkgd(curr_bkgd) && save_index_pointer(base, accessor) > prev(save_index_pointer(base, accessor))
+}
+ornament_base = 0x001ce5f4
+ornament_titles = [
+    "Master of the Toys",
+    "Bagging Another One!",
+    "Santa's Little Helper",
+    "Hoppin' Up the Presents!",
+    "Drink Mix Master",
+    "Elf Punishment"
+]
+ornament_desc = [
+    "Unlock the 'Deck the Halls' ornament by beating the default high score of 3.000 points!",
+    "Unlock the 'Present Catch' ornament by beating the default high score of 500 points!",
+    "Unlock the 'Santa's Sleigh' ornament by beating the default high score of 3.000 points!",
+    "Unlock the 'Reindeer Games' ornament by beating the default high score of 1000M!",
+    "Unlock the 'Hot Chocolate' ornament by beating the default high score of 250 points!",
+    "Unlock the 'Candy Cane Lanes' ornament by beating the default high score of 125 points!"    
+]
+ornament_bkgds = [
+    bkgd_deckhalls,
+    bkgd_presentcatch,
+    bkgd_santasleigh,
+    bkgd_reindeerjump,
+    bkgd_hotcoco,
+    bkgd_candylane
+]
+
+ornament_flags = [
+    bit5,
+    bit2,
+    bit4,
+    bit3,
+    bit1,
+    bit6
+]
+for i in range(0, 5){
+    achievement(
+        ornament_titles[i],
+        ornament_desc[i],
+        points=10,
+        type="progression",
+        trigger=
+            ornament_unlock(ornament_bkgds[i], ornament_base, ornament_flags[i])
+    )        
+}
+deckhall_round = dword_be(0x001bd8dc)
+deckhall_combo = dword_be(0x001bd8a0)
 achievement(
-    "Rudolph the Jump Nose Reindeer!",
-    "Jump to a height of 1.000M or higher!",
-    points=5,
+    "Decked Out for New Opportunities",
+    "Clear ten rounds of 'Deck the Halls'",
+    points=10,
     trigger=
-        get_curr_bkgd(bkgd_reindeerjump) &&
-        minigame_reindeer_state == 2 && //Playing
-        prev(minigame_reindeer_height) < 1000 &&
-        minigame_reindeer_height >= 1000
+        get_curr_bkgd(bkgd_deckhalls) &&
+        get_curr_players(1) &&
+        prev(deckhall_round) == 9 && 
+        deckhall_round == 10        
+)
+achievement(
+    "Frozen Gridmaster",
+    "Obtain a combo of 7 or more on a single move in 'Deck the Halls'",
+    points=10,
+    trigger=
+        get_curr_bkgd(bkgd_deckhalls) &&
+        get_curr_players(1) &&
+        prev(deckhall_combo) == 6 &&
+        deckhall_combo == 7
+)
+
+achievement(
+    "Never a Christmas Quite Like This",
+    "Score 2000 points in 'Present Catch' without losing a life",
+    points=10,
+    trigger=
+        get_curr_bkgd(bkgd_presentcatch) &&
+        get_curr_players(1) &&
+        minigame_presents_lives == 5 &&
+        trigger_when(prev(minigame_presents_score) < 2000 && minigame_presents_score >= minigame_presents_score)
 )
 
 
+
+function reindeer_get_height(param){
+    return get_curr_bkgd(bkgd_reindeerjump) &&
+        minigame_reindeer_state == 2 && //Playing
+        get_curr_players(1) &&
+        prev(minigame_reindeer_height) < param &&
+        minigame_reindeer_height >= param
+}
+achievement(
+    "Rudolph the Jump Nose Reindeer!",
+    "Jump to a height of 1500M or higher!",
+    points=5,
+    trigger=
+        reindeer_get_height(1500)
+)
+achievement(
+    "Fly Me to the MOOOON!",
+    "Jump to a height of 2000M or higher!",
+    points=10,
+    trigger=
+        reindeer_get_height(2000)
+)
+achievement(
+    "The Spirit of Christmas",
+    "Jump to a height of 5000M or higher and spread Christmas joy!",
+    points=25,
+    trigger=
+       reindeer_get_height(5000)
+)
 
 //RP Calls
 basic_bkgds = {
