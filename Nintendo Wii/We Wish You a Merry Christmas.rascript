@@ -35,14 +35,10 @@ save_padding = 0x2ff8
 function save_index_pointer(base, accessor){
     return accessor((index * save_padding)  + base)
 }
-
-
-
 player_num = dword_be(0x001c62e4)
 function get_curr_players(param){
     return player_num == param
 }
-
 background_ID = dword_be(0x001c63fc)
 bkgd_livingroom = 0x00
 bkgd_hotcoco = 0x1
@@ -57,7 +53,6 @@ bkgd_santasleigh = 0x9
 function get_curr_bkgd(param){
     return background_ID == param
 }
-
 //Minigame Addresses:
 //Deck the Halls:
 minigame_deck_score = dword_be(0x001bd89c)
@@ -94,13 +89,9 @@ lanes_lost = 0x6
 minigame_elfhunt_puzzle_index = dword_be(0x001c55cc)
 minigame_elfhunt_state = dword_be(0x001c5328)
 puzzle_select = 0
-
-
 function get_candycane_sum(param){
     return sum_of(range(param, param + 80, 4), b => dword_be(b))   
 }
-
-
 //Progression
 function ornament_unlock(curr_bkgd, base, accessor){
     return index==prev(index) && get_curr_bkgd(curr_bkgd) && save_index_pointer(base, accessor) > prev(save_index_pointer(base, accessor))
@@ -130,7 +121,6 @@ ornament_bkgds = [
     bkgd_hotcoco,
     bkgd_candylane
 ]
-
 ornament_flags = [
     bit5,
     bit2,
@@ -149,6 +139,50 @@ for i in range(0, 5){
             ornament_unlock(ornament_bkgds[i], ornament_base, ornament_flags[i])
     )        
 }
+hunt_titles = [
+    "Toy Factory",
+    "Elf Lounge",
+    "Yule Factory"
+]
+hunt_descriptions = [
+    "Clear all objectives on the top page of 'Elf Hunt'!",
+    "Clear all objectives on the bottom left page of 'Elf Hunt'!",
+    "Clear all objectives on the bottom right page of 'Elf Hunt'!"
+]
+for i in range(0, 2 ){
+    achievement(
+        hunt_titles[i],
+        hunt_descriptions[i],
+        points=10,
+        type="progression",
+        trigger=
+            minigame_elfhunt_puzzle_index == i &&
+            prev(minigame_elfhunt_state) == 4 && minigame_elfhunt_state == 5
+    )
+}
+advent_collectibles = [
+    0x001ce5f7,
+    0x001ce5f6,
+    0x001ce5f5,
+    0x001ce5f4
+]
+function advent_collects (){
+    save_index_pointer(bitcount())        
+}
+advent_accessors = [
+    bitcount,
+    bitcount,
+    bitcount,
+    bit0
+]
+achievement(
+    "25 Days of Toil",
+    "Open all 25 days in the advent calendar and extend your collection. Yipeee!",
+    points=10,
+    trigger=
+        prev(sum_of(range(0, 3), b => save_index_pointer(advent_collectibles[b], advent_accessors[b]))) == 24 &&
+        measured(sum_of(range(0, 3), b => save_index_pointer(advent_collectibles[b], advent_accessors[b])) == 25)
+)
 deckhall_round = dword_be(0x001bd8dc)
 deckhall_combo = dword_be(0x001bd8a0)
 achievement(
@@ -163,7 +197,7 @@ achievement(
 )
 achievement(
     "Frozen Gridmaster",
-    "Obtain a combo of 7 or more on a single move in 'Deck the Halls'",
+    "Obtain a combo of 7 or more in a single move in 'Deck the Halls'",
     points=10,
     trigger=
         get_curr_bkgd(bkgd_deckhalls) &&
@@ -171,7 +205,6 @@ achievement(
         prev(deckhall_combo) == 6 &&
         deckhall_combo == 7
 )
-
 achievement(
     "Never a Christmas Quite Like This",
     "Score 2000 points in 'Present Catch' without losing a life",
@@ -182,9 +215,35 @@ achievement(
         minigame_presents_lives == 5 &&
         trigger_when(prev(minigame_presents_score) < 2000 && minigame_presents_score >= minigame_presents_score)
 )
-
-
-
+houses_reqs = [
+    3,
+    7,
+    10,
+    13,
+    15
+]
+santasleigh_round_num = dword_be(0x001fddb0)
+santasleigh_houses_delivered = dword_be(0x001fdde8)
+function tally_houses(){
+    my_tally = always_true()
+    for i in range(0,4){
+        my_tally = my_tally + once(santasleigh_round_num == i && prev(santasleigh_houses_delivered) == houses_reqs[i] - 1 && santasleigh_houses_delivered == houses_reqs[i])
+    }
+    return my_tally
+}
+achievement(
+    "Santa's Perfect Helper",
+    "Get a rank of perfect on all five rounds of present delivery in 'Santa's Sleigh'",
+    points=10,
+    trigger=
+        unless(!get_curr_players(1)) &&
+        unless(!get_curr_bkgd(bkgd_santasleigh)) &&
+        once(get_curr_bkgd(bkgd_santasleigh) && santasleigh_round_num == 0 && prev(minigame_santasleigh_state) == 1 && minigame_santasleigh_state == 2) &&
+        never(minigame_santasleigh_state == 0 || prev(minigame_santasleigh_state) == 5 && minigame_santasleigh_state == 9) &&
+        all_of(range(0,4), b =>  never(santasleigh_round_num == b && santasleigh_houses_delivered != houses_reqs[b] && prev(minigame_santasleigh_state) == 5 && minigame_santasleigh_state == 6)) &&
+        (always_false() || trigger_when(tally_of(range(0,4), 5, b => once(santasleigh_round_num == b && prev(santasleigh_houses_delivered) == houses_reqs[b] - 1 &&  santasleigh_houses_delivered == houses_reqs[b]))) ||
+        measured(tally_of(range(0,4), 5, b => once(santasleigh_round_num == b && prev(santasleigh_houses_delivered) == houses_reqs[b] - 1 &&  santasleigh_houses_delivered == houses_reqs[b]))) )
+)
 function reindeer_get_height(param){
     return get_curr_bkgd(bkgd_reindeerjump) &&
         minigame_reindeer_state == 2 && //Playing
@@ -195,7 +254,7 @@ function reindeer_get_height(param){
 achievement(
     "Rudolph the Jump Nose Reindeer!",
     "Jump to a height of 1500M or higher!",
-    points=5,
+    points=10,
     trigger=
         reindeer_get_height(1500)
 )
@@ -213,7 +272,20 @@ achievement(
     trigger=
        reindeer_get_height(5000)
 )
-
+candycane_array_start = 0x001be308
+achievement(
+    "Worker's Strike!",
+    "Get a perfect score of 300 on 'Candy Cane Lanes'!",
+    points=50,
+    trigger=
+        get_curr_bkgd(bkgd_candylane) &&
+        get_curr_players(1) &&
+        all_of(range(candycane_array_start, candycane_array_start + 0x40, 8), b => dword_be(b) == 0xa) &&
+        dword_be(0x001be350) == 0xa && //Frame 10-1
+        dword_be(0x001be354) == 0xa &&
+        prev(dword_be(0x001be358)) != 0xa &&
+        dword_be(0x001be358) == 0xa
+)
 //RP Calls
 basic_bkgds = {
     0:"In the Living Room",
@@ -267,9 +339,6 @@ rich_presence_display("{0}",
     rich_presence_lookup("Default", background_ID, basic_bkgds, "Loading...")
 )
 
-function minigame_state_change(param, last, next){
-    return prev(param) == last && param == next
-}
 
 /*
 background_ID = dword_be(0x001c63fc)
@@ -284,6 +353,9 @@ bkgd_presentcatch = 0x7
 bkgd_reindeerjump = 0x8
 bkgd_santasleigh = 0x9
 */
+function minigame_state_change(param, last, next){
+    return prev(param) == last && param == next
+}
 leaderboard(
     "Deck the Halls - Matching Master!",
     "Highest score",
