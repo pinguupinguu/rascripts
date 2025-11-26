@@ -18,7 +18,7 @@ mode = {
     1:"B"
 }
 // $1DC228: [8bit] Game B Difficulty (Determines Number of Starting Shapes)
-function game_b_difficulty() => byte(0x1C228)
+function game_b_difficulty() => byte(0x1DC228)
 // $1DC229: [8bit] Game A Level Start
 //          0x00=Level 1
 function game_a_start() => byte(0x1DC229)
