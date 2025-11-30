@@ -147,15 +147,16 @@ for i in range(0, 17){
 }
 combat_pointer = dword(0x3b18b0)
 combat_hp = float(dword(0x3b18b0) + 0x132c)
+combat_death = dword(combat_pointer + 0x198)
 function level_deathless(set, end){ //this method assumes that the start and ends are only two ids for state.
 /* set[0] == prev level id and then set[1] is starting id. This checks for while being in the game and loading
    into 1st level of new stage.
    prev state 5 checks menu into loading level from stage select which is allowed.
 */
-
+//never(combat_pointer != 0 && global_state != set[1] && combat_hp < prev(combat_hp) && combat_hp <= 0.0) &&
     return once(prev(global_state) == set[0] && global_state == set[1] || prev(global_state) == 5 && global_state == set[1]) &&
            trigger_when(prev(global_state) == end[0] && global_state == end[1]) &&
-           never(combat_pointer != 0 &&  combat_hp < prev(combat_hp) && combat_hp == 0.0) &&
+           never(combat_pointer != 0 && prev(combat_death) != 0xb11 && combat_death == 0xb11) &&
            never(prev(global_state) != 5 && global_state == 5)    
 }
 level_data = {
