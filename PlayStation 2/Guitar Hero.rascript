@@ -332,7 +332,12 @@ function five_star_clear(indice){
     }
     return logic
 }
-function save_protection() => prev(byte(0x00b8a8bd)) != 0
+screen_ID = dword(0x00369334)
+screen_game_load = 0xb8c440
+function get_curr_screen(param){
+    return screen_ID == param
+}
+function save_protection() => !prev(get_curr_screen(screen_game_load))
 for i in range(0, length(expert_main_list_names) - 1){
     achievement(
         expert_main_list_names[i]["Name"] + " - Expert Five Stars",
