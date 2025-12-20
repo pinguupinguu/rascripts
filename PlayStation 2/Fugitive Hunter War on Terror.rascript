@@ -293,7 +293,7 @@ function deathless_terrorist_tally(array, type){
     return measured(tally_of(array, 2, b => once(prev(b) == 1 && b == 3)))
 }
 function deathless_challenge(region_lock, initstring, captureflags){
-    return unless(region_bank > region_lock) &&
+    return //unless(region_bank > region_lock) &&
         unless(!get_cheats_state(bool_false)) &&
         init_challenge(ascii_string_equals(0x0034a558, initstring)) &&
         deathless_terrorist_tally(captureflags, "trigger") &&
@@ -304,6 +304,7 @@ achievement(
     "Trial By Fire: Richardson & Webber",
     "Starting from Miami Streets, capture both Jamal Richardson and Casey Webber without using a continue",
     points=25,
+    id=568594,
     trigger=
         deathless_challenge(region_innerstreets, "\\bounty\\efs\\loadscrn\\ls_0203.efs", [objectives_captures[1], objectives_captures[2] ])
 )//Specify lower lim as method checks upper only.
@@ -311,33 +312,37 @@ achievement(
     "Trial By Fire: Marcus & Aker",
     "Starting from Thunder Rock, Utah, capture both Charles Marcus and Lucas Aker without using a continue",
     points=25,
+    id=568595,
     trigger=
-       unless(region_bank < region_thunderrock) &&
+      // unless(region_bank < region_thunderrock) &&
        deathless_challenge(region_militiacompound, "\\bounty\\efs\\loadscrn\\ls_0302.efs", [objectives_captures[3], objectives_captures[4] ])
 )
 achievement(
     "Trial By Fire: Rojas & Perez",
     "Starting from Private Beach, capture both Armando Rojas and Eduardo Perez without using a continue",
     points=25,
+    id=568596,
     trigger=
-        unless(region_bank < region_privatebeach) &&
+       // unless(region_bank < region_privatebeach) &&
         deathless_challenge(region_jungleclearing, "\\bounty\\efs\\loadscrn\\ls_0101.efs", [objectives_captures[5], objectives_captures[6] ])
 )
 achievement(
-    "Trial By Fire: Binasi & Aziz",
-    "Starting from Paris Streets, capture both Ali Binasi and Amand Aziz without using a continue",
+    "Trial By Fire: Binasi, Aziz & Drobek",
+    "Starting from Paris Streets, capture Ali Binasi, Amand Aziz, and Hostinec Drobek without using a continue",
     points=25,
+    id=568597,
     trigger=
-        unless(region_bank < region_paristreets) &&
-        deathless_challenge(region_catacombs, "\\bounty\\efs\\loadscrn\\ls_0401.efs", [objectives_captures[7], objectives_captures[8]] )
+      //  unless(region_bank < region_paristreets) &&
+        deathless_challenge(region_catacombs, "\\bounty\\efs\\loadscrn\\ls_0401.efs", [objectives_captures[7], objectives_captures[8], objectives_captures[9]] )
 )
 achievement(
-    "Trial By Fire: Drobek & Al-NUR",
-    "Starting from Inner Catacombs, capture both Hostinec Drobek and Dr. Al-NUR without using a continue",
+    "Trial By Fire: Al-NUR & Bin Laden",
+    "Starting from Inner Catacombs, capture both Dr. Al-NUR and Osama Bin Laden without using a continue",
     points=50,
+    id=568598,
     trigger=
-        unless(region_bank < region_innercatacombs) &&
-        deathless_challenge(region_trainingcamp, "\\bounty\\efs\\loadscrn\\ls_0403.efs", [ objectives_captures[9], objectives_captures[10]] )
+      //  unless(region_bank < region_innercatacombs) &&
+        deathless_challenge(region_trainingcamp, "\\bounty\\efs\\loadscrn\\ls_0502.efs", [ objectives_captures[10], objectives_captures[11]] )
 )
 
 //RP Calls
