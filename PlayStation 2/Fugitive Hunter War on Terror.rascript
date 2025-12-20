@@ -231,6 +231,8 @@ achievement(
         prev(objective_americanpow) == 1 &&
         objective_americanpow == 3
 )
+map_osama = ascii_string_equals(0x0034a558, "\\bounty\\efs\\SFX\\Are05\\Are05_03.bd")
+
 achievement(
     "Handling the Minions",
     "Capture both of Osama Bin Laden's top henchmen in the Afghan Hills",
@@ -246,10 +248,11 @@ achievement(
     "Osama Bin Boxer",  
     "Capture Osama Bin Laden on Hard difficulty without your boxing meter ever going below 85%",
     points=25,
+    id=568393,
     trigger=
         unless(!get_cheats_state(bool_false)) && //Check cheats disabled
         unless(!get_difficulty(hard)) && //Check that you're on hard
-        unless(!get_region(region_mountaincaves)) && //Check you're in the level
+        unless(!map_osama) && //Check you're in the level
        unless( !check_binladen_henchmen_captured()) && //Check the henchmen are already captured, so no mistrigger.
         once(fugitive_state_check(fugitive_state_init, fugitive_state_box)) && //Check that you load the boxing
         trigger_when(fugitive_state_check(fugitive_state_capture, fugitive_state_win)) && //Trigger when you capture the terrorist
@@ -337,7 +340,7 @@ achievement(
 )
 achievement(
     "Trial By Fire: Al-NUR & Bin Laden",
-    "Starting from Inner Catacombs, capture both Dr. Al-NUR and Osama Bin Laden without using a continue",
+    "Starting from Terrorist Training Camp, capture both Dr. Al-NUR and Osama Bin Laden without using a continue",
     points=50,
     id=568598,
     trigger=
