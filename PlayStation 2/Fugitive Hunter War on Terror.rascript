@@ -149,6 +149,7 @@ progression_points = [
     10,
     25
 ]
+curr_id = 566930
 for i in range(0, 11){
     if(i == 0){
         achievement(
@@ -156,9 +157,10 @@ for i in range(0, 11){
             "Capture your first terrorist on the Afghan hills!",
             points=progression_points[i],
             type="progression",
+            id=566929,
             trigger=
                 get_cheats_state(bool_false) &&
-                get_region(progression_banks[i]) &&
+                //get_region(progression_banks[i]) &&
                 prev(objectives_captures[i]) == 1 &&
                 objectives_captures[i] == 3
         )
@@ -174,25 +176,28 @@ for i in range(0, 11){
             progression_desc[i] + "Easy or higher",
             points=progression_points[i],
             type=prog,
+            id=curr_id,
             trigger=
                 get_cheats_state(bool_false) &&
-                get_region(progression_banks[i]) &&
+                //get_region(progression_banks[i]) &&
                  prev(objectives_captures[i]) == 1 &&
                 objectives_captures[i] == 3
         )
+        if(i != 11) prog = ""
         achievement(
             progression_hard_titles[i],
             progression_desc[i] + "Hard",
             points=hardpoints,
             type=prog,
+            id=curr_id + 1,
             trigger=
                 get_cheats_state(bool_false) &&
                 get_difficulty(hard) &&
-                get_region(progression_banks[i]) &&
+                //get_region(progression_banks[i]) &&
                 prev(objectives_captures[i]) == 1 &&
                 objectives_captures[i] == 3
         )
-        
+       curr_id = curr_id + 2 
     }
     
 }
@@ -227,7 +232,7 @@ achievement(
     type="progression",
     trigger=
         get_cheats_state(bool_false) &&
-        get_region(region_mountaincaves) &&
+        //get_region(region_mountaincaves) &&
         prev(objective_americanpow) == 1 &&
         objective_americanpow == 3
 )
@@ -240,7 +245,7 @@ achievement(
     type="progression",
     trigger=
        get_cheats_state(bool_false) &&
-       get_region(region_mountaincaves) &&
+       //get_region(region_mountaincaves) &&
        prev(objective_henchmen) == 1 &&
        objective_henchmen == 3
 )
