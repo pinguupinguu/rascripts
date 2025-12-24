@@ -132,8 +132,22 @@ progression_desc = [
     "Capture Doctor Al-Nur on ",
     "Capture Osama Bin Laden on "
 ]
-
-
+progression_ascii = [
+    "\\bounty\\efs\\SFX\\Are05\\Are05_01.bd",
+    "\\bounty\\efs\\SFX\\Are02\\Are02_03.bd",
+    "\\bounty\\efs\\SFX\\Are02\\Are02_07.bd",
+    "\\bounty\\efs\\SFX\\Are03\\Are03_02.bd",
+    "\\bounty\\efs\\SFX\\Are03\\Are03_04.bd",
+    "\\bounty\\efs\\SFX\\Are01\\Are01_02.bd",
+    "\\bounty\\efs\\SFX\\Are01\\Are01_06.bd", //Perez
+    "\\bounty\\efs\\SFX\\Are04\\Are04_03.bd",
+    "\\bounty\\efs\\SFX\\Are04\\Are04_02.bd",
+    "\\bounty\\efs\\SFX\\Are04\\Are04_03.bd",
+    "\\bounty\\efs\\SFX\\Are05\\Are05_02.bd",
+    "\\bounty\\efs\\SFX\\Are05\\Are05_03.bd"
+    
+]
+string_mainmenu = ascii_string_equals(0x0034a558, "\\bounty\\fmv\\fh_loop.pss")
 
 progression_points = [
     5, //placeholder
@@ -159,7 +173,8 @@ for i in range(0, 11){
             type="progression",
             id=566929,
             trigger=
-                get_cheats_state(bool_false) &&
+                ascii_string_equals(0x0034a558, progression_ascii[0]) &&
+                get_cheats_state(bool_false) &&               
                 //get_region(progression_banks[i]) &&
                 prev(objectives_captures[i]) == 1 &&
                 objectives_captures[i] == 3
@@ -178,6 +193,7 @@ for i in range(0, 11){
             type=prog,
             id=curr_id,
             trigger=
+                ascii_string_equals(0x0034a558, progression_ascii[i]) &&
                 get_cheats_state(bool_false) &&
                 //get_region(progression_banks[i]) &&
                  prev(objectives_captures[i]) == 1 &&
@@ -191,6 +207,7 @@ for i in range(0, 11){
             type=prog,
             id=curr_id + 1,
             trigger=
+                 ascii_string_equals(0x0034a558, progression_ascii[i]) &&
                 get_cheats_state(bool_false) &&
                 get_difficulty(hard) &&
                 //get_region(progression_banks[i]) &&
@@ -280,7 +297,7 @@ Lose challenge by:
 - Arrest Fail
 - Resetting to menu
 */
-string_mainmenu = ascii_string_equals(0x0034a558, "\\bounty\\fmv\\fh_loop.pss")
+
 health_player = float(0x00371ca8)
 shield_player = float(0x00371cac)
 function deathless_challenge_resets(){ //Util function for resets for challenges.
