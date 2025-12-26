@@ -242,6 +242,7 @@ function fugitive_capture_progress() => ptr((fugitive_capture_index * 0x4c) + ob
 function fugitive_state_check(last, next) {
     return prev(fugitive_capture_state()) == last && fugitive_capture_state() == next
 }
+map_osama = ascii_string_equals(0x0034a558, "\\bounty\\efs\\SFX\\Are05\\Are05_03.bd")
 achievement(
     "True Patriot",
     "Rescue the American POW from the clutches of Al-Qaeda in the Afghan Hills",
@@ -249,11 +250,12 @@ achievement(
     type="progression",
     trigger=
         get_cheats_state(bool_false) &&
+        map_osama && 
         //get_region(region_mountaincaves) &&
         prev(objective_americanpow) == 1 &&
         objective_americanpow == 3
 )
-map_osama = ascii_string_equals(0x0034a558, "\\bounty\\efs\\SFX\\Are05\\Are05_03.bd")
+
 
 achievement(
     "Handling the Minions",
@@ -262,6 +264,7 @@ achievement(
     type="progression",
     trigger=
        get_cheats_state(bool_false) &&
+       map_osama &&
        //get_region(region_mountaincaves) &&
        prev(objective_henchmen) == 1 &&
        objective_henchmen == 3
