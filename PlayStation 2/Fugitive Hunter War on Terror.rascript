@@ -315,17 +315,17 @@ function deathless_challenge_resets(){ //Util function for resets for challenges
 function init_challenge(zone_string){
     return once(zone_string && prev(fugitive_capture_index) == -1 && fugitive_capture_index != -1 )        
 }
-function deathless_terrorist_tally(array, type){
+function deathless_terrorist_tally(array, type, tally){
     
-    if(type == "trigger") return trigger_when(tally_of(array, 2, b => once(prev(b) == 1 && b == 3)))
-    return measured(tally_of(array, 2, b => once(prev(b) == 1 && b == 3)))
+    if(type == "trigger") return trigger_when(tally_of(array, tally, b => once(prev(b) == 1 && b == 3)))
+    return measured(tally_of(array, tally, b => once(prev(b) == 1 && b == 3)))
 }
-function deathless_challenge(region_lock, initstring, captureflags){
+function deathless_challenge(tally, initstring, captureflags){
     return //unless(region_bank > region_lock) &&
         unless(!get_cheats_state(bool_false)) &&
         init_challenge(ascii_string_equals(0x0034a558, initstring)) &&
-        deathless_terrorist_tally(captureflags, "trigger") &&
-        (always_false() || deathless_challenge_resets() || deathless_terrorist_tally(captureflags, "measured" ))
+        deathless_terrorist_tally(captureflags, "trigger", tally) &&
+        (always_false() || deathless_challenge_resets() || deathless_terrorist_tally(captureflags, "measured", tally ))
         
 }
 achievement(
@@ -334,7 +334,7 @@ achievement(
     points=25,
     id=568594,
     trigger=
-        deathless_challenge(region_innerstreets, "\\bounty\\efs\\loadscrn\\ls_0203.efs", [objectives_captures[1], objectives_captures[2] ])
+        deathless_challenge(2, "\\bounty\\efs\\loadscrn\\ls_0203.efs", [objectives_captures[1], objectives_captures[2] ])
 )//Specify lower lim as method checks upper only.
 achievement(
     "Trial By Fire: Marcus & Aker",
@@ -343,7 +343,7 @@ achievement(
     id=568595,
     trigger=
       // unless(region_bank < region_thunderrock) &&
-       deathless_challenge(region_militiacompound, "\\bounty\\efs\\loadscrn\\ls_0302.efs", [objectives_captures[3], objectives_captures[4] ])
+       deathless_challenge(2, "\\bounty\\efs\\loadscrn\\ls_0302.efs", [objectives_captures[3], objectives_captures[4] ])
 )
 achievement(
     "Trial By Fire: Rojas & Perez",
@@ -352,7 +352,7 @@ achievement(
     id=568596,
     trigger=
        // unless(region_bank < region_privatebeach) &&
-        deathless_challenge(region_jungleclearing, "\\bounty\\efs\\loadscrn\\ls_0101.efs", [objectives_captures[5], objectives_captures[6] ])
+        deathless_challenge(2, "\\bounty\\efs\\loadscrn\\ls_0101.efs", [objectives_captures[5], objectives_captures[6] ])
 )
 achievement(
     "Trial By Fire: Binasi, Aziz & Drobek",
@@ -361,7 +361,7 @@ achievement(
     id=568597,
     trigger=
       //  unless(region_bank < region_paristreets) &&
-        deathless_challenge(region_catacombs, "\\bounty\\efs\\loadscrn\\ls_0401.efs", [objectives_captures[7], objectives_captures[8], objectives_captures[9]] )
+        deathless_challenge(3, "\\bounty\\efs\\loadscrn\\ls_0401.efs", [objectives_captures[7], objectives_captures[8], objectives_captures[9]] )
 )
 achievement(
     "Trial By Fire: Al-NUR & Bin Laden",
@@ -370,7 +370,7 @@ achievement(
     id=568598,
     trigger=
       //  unless(region_bank < region_innercatacombs) &&
-        deathless_challenge(region_trainingcamp, "\\bounty\\efs\\loadscrn\\ls_0502.efs", [ objectives_captures[10], objectives_captures[11]] )
+        deathless_challenge(2, "\\bounty\\efs\\loadscrn\\ls_0502.efs", [ objectives_captures[10], objectives_captures[11]] )
 )
 
 //RP Calls
