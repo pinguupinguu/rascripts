@@ -176,7 +176,7 @@ for i in range(0, 11){
                 ascii_string_equals(0x0034a558, progression_ascii[0]) &&
                 get_cheats_state(bool_false) &&               
                 //get_region(progression_banks[i]) &&
-                prev(objectives_captures[i]) == 1 &&
+                prev(objectives_captures[i]) != 3 &&
                 objectives_captures[i] == 3
         )
         
@@ -196,7 +196,7 @@ for i in range(0, 11){
                 ascii_string_equals(0x0034a558, progression_ascii[i]) &&
                 get_cheats_state(bool_false) &&
                 //get_region(progression_banks[i]) &&
-                 prev(objectives_captures[i]) == 1 &&
+                 prev(objectives_captures[i]) != 3 &&
                 objectives_captures[i] == 3
         )
         if(i != 11) prog = ""
@@ -211,7 +211,7 @@ for i in range(0, 11){
                 get_cheats_state(bool_false) &&
                 get_difficulty(hard) &&
                 //get_region(progression_banks[i]) &&
-                prev(objectives_captures[i]) == 1 &&
+                prev(objectives_captures[i]) != 3 &&
                 objectives_captures[i] == 3
         )
        curr_id = curr_id + 2 
@@ -252,7 +252,7 @@ achievement(
         get_cheats_state(bool_false) &&
         map_osama && 
         //get_region(region_mountaincaves) &&
-        prev(objective_americanpow) == 1 &&
+        prev(objective_americanpow) != 3 &&
         objective_americanpow == 3
 )
 
@@ -266,7 +266,7 @@ achievement(
        get_cheats_state(bool_false) &&
        map_osama &&
        //get_region(region_mountaincaves) &&
-       prev(objective_henchmen) == 1 &&
+       prev(objective_henchmen) != 3 &&
        objective_henchmen == 3
 )
 achievement(
